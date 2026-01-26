@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4FB420732F2116340076B335 /* Audio in Frameworks */ = {isa = PBXBuildFile; productRef = 4FB420A12F22A0000076B335 /* Audio */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		4FB4202A2F210AC00076B335 /* Interfit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Interfit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FB420732F2116340076B335 /* Audio in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Interfit;
 			packageProductDependencies = (
+				4FB420A12F22A0000076B335 /* Audio */,
 			);
 			productName = Interfit;
 			productReference = 4FB4202A2F210AC00076B335 /* Interfit.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 4FB420212F210AC00076B335;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4FB420A02F22A0000076B335 /* XCLocalSwiftPackageReference "Modules/Audio" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4FB4202B2F210AC00076B335 /* Products */;
 			projectDirPath = "";
@@ -177,7 +186,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -234,7 +243,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -322,6 +331,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		4FB420A02F22A0000076B335 /* XCLocalSwiftPackageReference "Modules/Audio" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Audio;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4FB420A12F22A0000076B335 /* Audio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FB420A02F22A0000076B335 /* XCLocalSwiftPackageReference "Modules/Audio" */;
+			productName = Audio;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4FB420222F210AC00076B335 /* Project object */;
 }

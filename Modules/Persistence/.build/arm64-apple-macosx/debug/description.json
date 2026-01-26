@@ -1,0 +1,902 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.xctest/Contents/MacOS/PersistencePackageTests",
+      "packagePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence",
+      "productName" : "PersistencePackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.Persistence-arm64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PersistenceStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PlanRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/SessionRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/Shared.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Persistence",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/Persistence.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/PersistenceStore.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/PlanRepository.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/SessionRepository.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/Persistence-Swift.h",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "persistence"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/PersistenceStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/PlanRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/SessionRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/Persistence.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PersistenceStore.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PlanRepository.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/SessionRepository.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.PersistencePackageTests-arm64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/PersistenceTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "PersistencePackageTests",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/PersistencePackageTests.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/PersistencePackageTests-Swift.h",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "persistence"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/PersistencePackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.PersistenceTests-arm64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PersistenceStoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PlanRepositoryTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/SessionRepositoryTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/Persistence.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "PersistenceTests",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/PersistenceTests.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "persistence"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/PersistenceTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PersistenceStoreTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PlanRepositoryTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/SessionRepositoryTests.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Shared-arm64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Shared",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/Shared.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/DegradeReason.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/ErrorReason.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Logger.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Plan.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Session.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/SharedVersion.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Shared-Swift.h",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "shared"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/DegradeReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/ErrorReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Logger.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Plan.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Session.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/SharedVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules/Shared.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "Persistence" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "Persistence",
+      "-package-name",
+      "persistence",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PersistenceStore.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PlanRepository.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/SessionRepository.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/Persistence-Swift.h",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "persistence",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "PersistencePackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "PersistencePackageTests",
+      "-package-name",
+      "persistence",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/PersistencePackageTests-Swift.h",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "persistence",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "PersistenceTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "PersistenceTests",
+      "-package-name",
+      "persistence",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PersistenceStoreTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PlanRepositoryTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/SessionRepositoryTests.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "persistence",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "Shared" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "Shared",
+      "-package-name",
+      "shared",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Shared-Swift.h",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "shared",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "Persistence" : [
+      "Shared"
+    ],
+    "PersistencePackageTests" : [
+      "PersistenceTests",
+      "Persistence",
+      "Shared"
+    ],
+    "PersistenceTests" : [
+      "Persistence",
+      "Shared"
+    ],
+    "Shared" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "writeCommands" : {
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PersistenceStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/PlanRepository.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Sources/Persistence/SessionRepository.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/PersistenceStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/PlanRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Persistence.build/SessionRepository.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/DegradeReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/ErrorReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Logger.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Plan.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/Session.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/SharedVersion.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistencePackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PersistenceStoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PlanRepositoryTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/SessionRepositoryTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/PersistenceTests.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/Shared.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

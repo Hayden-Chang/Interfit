@@ -1,0 +1,4 @@
+module Shared {
+    header "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/Shared.build/Shared-Swift.h"
+    requires objc
+}

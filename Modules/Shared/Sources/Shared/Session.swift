@@ -1,0 +1,113 @@
+import Foundation
+
+public enum SessionStatus: String, Sendable, Codable, CaseIterable {
+    case idle
+    case running
+    case paused
+    case completed
+    case ended
+}
+
+/// Lightweight event record for history / debugging (M0).
+/// 后续可在不破坏存量数据的前提下，引入更强类型的事件集合。
+public struct SessionEventRecord: Sendable, Codable, Equatable {
+    public var name: String
+    public var occurredAt: Date
+    public var attributes: [String: String]
+
+    public init(name: String, occurredAt: Date = Date(), attributes: [String: String] = [:]) {
+        self.name = name
+        self.occurredAt = occurredAt
+        self.attributes = attributes
+    }
+}
+
+public enum SessionEventKind: String, Sendable, Codable, CaseIterable {
+    case segmentChanged
+    case paused
+    case resumed
+    case ended
+    case completed
+}
+
+public extension SessionEventRecord {
+    var kind: SessionEventKind? { SessionEventKind(rawValue: name) }
+
+    /// User-facing label for history chips (keep neutral).
+    var label: String {
+        switch kind {
+        case .segmentChanged: "Segment"
+        case .paused: "Paused"
+        case .resumed: "Resumed"
+        case .ended: "Ended"
+        case .completed: "Completed"
+        case .none: name
+        }
+    }
+
+    static func segmentChanged(
+        occurredAt: Date = Date(),
+        from: String? = nil,
+        to: String? = nil
+    ) -> Self {
+        var attrs: [String: String] = [:]
+        if let from { attrs["from"] = from }
+        if let to { attrs["to"] = to }
+        return .init(name: SessionEventKind.segmentChanged.rawValue, occurredAt: occurredAt, attributes: attrs)
+    }
+
+    static func paused(occurredAt: Date = Date(), reason: String? = nil) -> Self {
+        var attrs: [String: String] = [:]
+        if let reason { attrs["reason"] = reason }
+        return .init(name: SessionEventKind.paused.rawValue, occurredAt: occurredAt, attributes: attrs)
+    }
+
+    static func resumed(occurredAt: Date = Date()) -> Self {
+        .init(name: SessionEventKind.resumed.rawValue, occurredAt: occurredAt)
+    }
+
+    static func ended(occurredAt: Date = Date()) -> Self {
+        .init(name: SessionEventKind.ended.rawValue, occurredAt: occurredAt)
+    }
+
+    static func completed(occurredAt: Date = Date()) -> Self {
+        .init(name: SessionEventKind.completed.rawValue, occurredAt: occurredAt)
+    }
+}
+
+/// Minimal Session domain model (M0).
+/// 一次训练会话最小领域模型（M0）。
+public struct Session: Sendable, Codable, Equatable, Identifiable {
+    public var id: UUID
+    public var status: SessionStatus
+    public var startedAt: Date
+    public var endedAt: Date?
+    public var completedSets: Int
+    public var totalSets: Int
+    public var workSeconds: Int
+    public var restSeconds: Int
+    public var events: [SessionEventRecord]
+
+    public init(
+        id: UUID = UUID(),
+        status: SessionStatus,
+        startedAt: Date,
+        endedAt: Date? = nil,
+        completedSets: Int,
+        totalSets: Int,
+        workSeconds: Int,
+        restSeconds: Int,
+        events: [SessionEventRecord] = []
+    ) {
+        self.id = id
+        self.status = status
+        self.startedAt = startedAt
+        self.endedAt = endedAt
+        self.completedSets = completedSets
+        self.totalSets = totalSets
+        self.workSeconds = workSeconds
+        self.restSeconds = restSeconds
+        self.events = events
+    }
+}
+

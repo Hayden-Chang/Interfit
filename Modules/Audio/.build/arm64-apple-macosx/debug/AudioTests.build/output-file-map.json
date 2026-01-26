@@ -1,0 +1,23 @@
+{
+  "": {
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/master.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkAcceptanceTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioVersionTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioVersionTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioVersionTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/arm64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swiftdeps"
+  }
+}

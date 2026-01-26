@@ -10,11 +10,20 @@ import SwiftUI
 @main
 struct InterfitApp: App {
     let persistenceController = PersistenceController.shared
+    private let shouldLaunchModulesDemo = ProcessInfo.processInfo.arguments.contains("-modulesDemo")
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            Group {
+                if shouldLaunchModulesDemo {
+                    NavigationStack {
+                        ModulesDemoView()
+                    }
+                } else {
+                    RootTabView()
+                }
+            }
+            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

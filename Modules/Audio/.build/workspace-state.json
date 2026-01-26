@@ -1,0 +1,24 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "shared",
+          "kind" : "fileSystem",
+          "location" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared",
+          "name" : "Shared"
+        },
+        "state" : {
+          "name" : "fileSystem",
+          "path" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared"
+        },
+        "subpath" : "shared"
+      }
+    ]
+  },
+  "version" : 6
+}

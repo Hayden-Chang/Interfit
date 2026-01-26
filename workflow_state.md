@@ -1,0 +1,203 @@
+# Workflow State (工作流状态)
+
+## 🎯 Current Objective (当前宏大目标)
+
+- [ ]  开发《Interfit》 IOS应用， 设计文档参考design_all_phases_integrated.md。
+- [ ]  技术栈：IOS
+
+## 🔄 Phase & Status (当前阶段与状态)
+
+- **Current Phase**: M0 / 1.6.2 快速开练（in progress）
+- **Last Action**: 已补齐 Tab IA 最小验收路径：Train 可进入 Quick Start/Training，占位页可展示；Plans 可进入 Create Plan -> Edit Plan；并通过 `xcodebuild build`。
+- **Next Step**: 推进 1.6.2（快速开练）验收 1.6.2.1：在 `QuickStartView` 增加“选择预设 Plan（先用内置 3 个模板占位）→ Start 进入 Training（running 占位）”的 3 步路径；完成后执行 `xcodebuild build` 验证通过。
+
+## 📝 Task List (任务清单)
+
+- [ ] 1. M0 任务清单（按依赖顺序）
+  - [ ] 1.1 工程骨架与基础约定（先做）
+    - [x] 1.1.1 初始化 iOS 工程与模块骨架（AppShell/Train/Plans/Shared/Persistence/Audio）
+      - [x] 1.1.1.0 验收前置：确认本机可用目的地并通过 `xcodebuild build`（iPhone 16 / iOS 18.3.1）
+      - [x] 1.1.1.2 创建 `Modules/Shared`（Swift Package）并通过 `swift test`
+      - [x] 1.1.1.1 验收：真机/模拟器可运行；模块可单独编译；有最小示例页。
+      - [x] 1.1.1.3 支持IOS16+
+      - [x] 1.1.1.4 创建 `Modules/Persistence`（Swift Package）并通过 `swift test`
+      - [x] 1.1.1.5 对齐现有 Swift Package 模板（Shared/Persistence）用于新增模块复用
+      - [x] 1.1.1.6 创建 `Modules/Audio/Package.swift`（Swift Package 定义）
+      - [x] 1.1.1.7 创建 `Modules/Audio/Sources/Audio/AudioVersion.swift`（最小实现）
+      - [x] 1.1.1.8 创建 `Modules/Audio/Tests/AudioTests/AudioVersionTests.swift`（最小单测）
+      - [x] 1.1.1.9 验收：`Modules/Audio` 通过 `swift test`
+      - [x] 1.1.1.10 验收：`Modules/Audio` 已集成到 Xcode 工程并通过 `xcodebuild build`
+      - [x] 1.1.1.11 新增最小示例页：`ModulesDemoView`（展示 `AudioVersion`）
+      - [x] 1.1.1.12 验收：示例页引入后 `xcodebuild build` 通过
+      - [x] 1.1.1.13 验收：`Modules/Audio` 复跑 `swift test` 通过（0 failures）
+      - [x] 1.1.1.14 增加启动参数 `-modulesDemo`（用于自动验证示例页可运行）
+      - [x] 1.1.1.15 验收：已在模拟器启动 App 并直达示例页（`-modulesDemo`）
+    - [x] 1.1.2 建立项目架构约定文档（SwiftUI+MVVM、模块依赖规则、目录规范）
+      - [x] 1.1.2.1 验收：新增一个页面/VM/服务有模板可抄；依赖方向清晰（Shared/Persistence/Audio 不反向依赖业务）。
+    - [x] 1.1.3 建立日志接口抽象（Logger）与 No-op 默认实现
+      - [x] 1.1.3.1 验收：业务层不直接依赖第三方；关键路径（开练/切段/暂停/结束）有结构化日志。
+    - [x] 1.1.4 建立错误与降级原因分类（ErrorReason/DegradeReason 的枚举口径）
+      - [x] 1.1.4.1 验收：至少覆盖（权限/资源/网络/播放竞争/系统中断/路由变化）；UI 可展示一致口径。
+  - [ ] 1.2 数据模型（M0 先做最小集）
+    - [x] 1.2.1 定义 Plan 最小领域模型（setsCount/workSeconds/restSeconds/name/isFavorite/createdAt/updatedAt）
+      - [x] 1.2.1.1 验收：能表达模板与用户自建计划；rest=0 合法。
+    - [x] 1.2.2 定义 Session 最小领域模型（status/startedAt/endedAt/completedSets/totalSets/workSeconds/restSeconds/events[]）
+      - [x] 1.2.2.1 验收：结束页与历史页能消耗该模型。
+    - [x] 1.2.3 定义 SessionEvent 最小集合（segmentChanged/paused/resumed/ended/completed）
+      - [x] 1.2.3.1 验收：历史详情能回放“关键事件标签”（先用事件推动）。
+  - [ ] 1.3 本地持久化（先可用、后扩展）
+    - [ ] 1.3.1 选型并落地本地持久化骨架（CoreData/SQLite/Realm 其一）+ schemaVersion
+      - [x] 1.3.1.0 已落地 `schemaVersion` 最小机制（current + stored 读写）与单测
+      - [x] 1.3.1.1 验收：Plan CRUD 与 Session 写入/读取跑通；schemaVersion 可见且可升级。
+    - [x] 1.3.2 实现 Plan CRUD（创建/编辑/删除/复制）与列表查询（最近/全部最小版）
+      - [x] 1.3.2.1 验收：新增/编辑/删除后列表即时刷新；重启后数据仍在。
+    - [ ] 1.3.3 实现 Session 落盘（训练结束写入；最小字段齐全）
+      - [x] 1.3.3.0 已落地 Session 持久化最小实现（Repository + 跨实例保留）与单测
+      - [ ] 1.3.3.1 验收：结束后历史列表出现；详情可打开并展示事件摘要。
+  - [ ] 1.4 训练引擎（Timer/Session 状态机，M0 核心）
+    - [x] 1.4.1 定义 Session 状态机（idle/running/paused/completed/ended）与 PauseReason（user/interruption/safety）
+      - [x] 1.4.1.1 验收：状态转移有单测；非法转移有明确错误。
+    - [x] 1.4.2 实现绝对时间计时核心（避免漂移，不靠每秒累减）
+      - [x] 1.4.2.1 验收：前后台切换后剩余时间合理；不会累计漂移。
+    - [x] 1.4.3 实现段结构与进度计算（Work/Rest、Set i/N、rest=0）
+      - [x] 1.4.3.1 验收：总时长公式正确；段边界不会越界；有单测覆盖边界。
+    - [x] 1.4.4 实现段切换调度（到点切段 → 发出事件）
+      - [x] 1.4.4.1 验收：work→rest→work 连续切换稳定，不重复触发。
+    - [x] 1.4.5 实现 Pause/Resume 与 End 误触护栏（End 二次确认或长按）
+      - [x] 1.4.5.1 验收：暂停原因可记录；结束后 status 正确（completed vs ended）。
+  - [ ] 1.5 提示通道（M0 仅提示音/震动）
+    - [x] 1.5.1 定义 CueEvent（segmentStart/workToRest/restToWork/last3s/paused/resumed/completed）
+      - [x] 1.5.1.1 验收：训练引擎只“发事件”，不依赖具体实现。
+    - [x] 1.5.2 实现 Haptics 通道（可开关；不支持则静默）
+      - [x] 1.5.2.1 验收：切段必可感知（支持设备）；关闭后不触发。  （单测覆盖：map 与 enabled=false；引入 Engine+Haptics 集成单测）
+    - [x] 1.5.3 实现提示音通道（短 beep）与基础 duck 策略占位
+      - [x] 1.5.3.1 验收：提示音不刺耳；与未来音乐播放可共存（接口层面预留）。  （单测覆盖：默认 duck+mix；tone config 限幅；频率 523–1046Hz；duration≤150ms）
+    - [x] 1.5.4 实现 Cue 节流与冲突策略（段切换优先；连续事件合并）
+      - [x] 1.5.4.0 验收：引入 `CueCoalescingSink` 且有单测覆盖
+      - [x] 1.5.4.1 验收：同一秒不会叠加多次提示造成噪声。（新增集成单测）
+  - [ ] 1.6 核心 UI（M0 只做闭环页面）
+    - [x] 1.6.1 实现 Tab IA 最小版（Train/Plans/Me；Community M0 可隐藏）
+      - [x] 1.6.1.0 已创建 `RootTabView`（Train/Plans/Me Tab 壳）并切为默认入口
+      - [x] 1.6.1.1 验收：可从 Train 进入快速开练与训练页；Plans 可进入编辑。（已完成：Train -> Quick Start/Training；Plans -> Create Plan -> Edit Plan；并通过 build）
+    - [ ] 1.6.2 实现“快速开练”页面（默认提示音模式）
+      - [x] 1.6.2.0 已新增 `QuickStartView` 占位页，并在 Train Tab 提供入口
+      - [ ] 1.6.2.1 验收：3 步内进入 running（选预设/点开始）。
+    - [ ] 1.6.3 实现内置模板（3–5 个）与模板卡片摘要统一格式 (work+rest)×sets=total
+      - [ ] 1.6.3.1 验收：模板一键开练可用；参数符合范围校验。
+    - [ ] 1.6.4 实现计划编辑页（模式 A：sets + work/rest）
+      - [ ] 1.6.4.1 验收：边界校验（rest=0/sets=1 合法；非法输入可解释提示）。
+    - [ ] 1.6.5 实现训练主屏（极简默认：段类型 > 大计时 > 组进度；Pause/Resume 主按钮）
+      - [ ] 1.6.5.1 验收：Dynamic Type 不破版；信息层级符合设计。
+    - [ ] 1.6.6 实现训练结束总结页（中性表达：完成/提前结束；CTA：再来一次/保存到计划库）
+      - [ ] 1.6.6.1 验收：不出现压力化指标（streak/排行）。
+    - [ ] 1.6.7 实现训练历史列表与 Session 详情页（来源追溯占位 + 关键事件回顾）
+      - [ ] 1.6.7.1 验收：至少展示（开始时间/计划摘要/完成状态/事件标签）。
+- [ ] 2. M1 任务清单（按依赖顺序）
+  - [ ] 2.1 不可变资产语义（PlanVersion/PlanSnapshot/Apply）
+    - [ ] 2.1.1 引入 PlanVersion（draft/published）与发布规则（published 不可编辑；发布=新版本）
+      - [ ] 2.1.1.1 验收：代码层禁止对 published 写入；UI 明确提示“发布后固定”。
+    - [ ] 2.1.2 引入 PlanSnapshot（Session start 固化）与 SessionOverrides（训练中临时改动）
+      - [ ] 2.1.2.1 验收：训练中修改计划不影响本次 Session；override 默认不写回 Plan。
+    - [ ] 2.1.3 实现 Apply=Fork（从 Post/PlanVersion 复制生成新 Plan），并保存来源字段（forkedFromVersionRef/sourcePostRef）
+      - [ ] 2.1.3.1 验收：fork 后与源互不影响；详情页能看到来源。
+    - [ ] 2.1.4 实现 Apply 去重（同源版本或 contentHash 相同提示“已应用过”，默认打开已有计划）
+      - [ ] 2.1.4.1 验收：重复 Apply 不膨胀计划库；提示文案符合“复制语义”。
+    - [ ] 2.1.5 建立 configVersion 迁移链（纯函数、幂等、copy-on-write）
+      - [ ] 2.1.5.1 验收：旧数据可迁移；迁移失败可解释且不崩溃。
+  - [ ] 2.2 音乐能力（至少一种来源 + Global/Cycle + playMode）
+    - [ ] 2.2.1 定义播放层抽象（PlaybackService）与训练引擎的交互契约（训练引擎只发“切段/切歌意图”）
+      - [ ] 2.2.1.1 验收：训练引擎不直接依赖 MusicKit/AVFoundation；可替换实现（Apple Music / 本地库 / None）。
+    - [ ] 2.2.2 实现基础 AudioSession 管理（类别/路由/duck，且与 Cue 提示音共存）
+      - [ ] 2.2.2.1 验收：开启提示音/震动不影响播放稳定；后续中断处理（M2）可在此基础上扩展。
+    - [ ] 2.2.3 定义 MusicSelection 字段口径（source/type/externalId/displayTitle/artworkUrl?/playMode）
+      - [ ] 2.2.3.1 验收：selection 等价判断只看（source/type/externalId/playMode），不含 display 字段。
+    - [ ] 2.2.4 实现 playMode 三态行为（continue/restart_on_segment/shuffle_on_segment）
+      - [ ] 2.2.4.1 验收：进入段时行为与定义一致；有最小可验证用例。
+    - [ ] 2.2.5 实现音乐策略 Global + Cycle（Work/Rest 各自维护 sequence[]；第 i 组取 i%n）
+      - [ ] 2.2.5.1 验收：Cycle 规则可复现；序列不足/缺项时回退到 global，不中断训练。
+    - [ ] 2.2.6 实现“先转化后授权”音乐权限流程（解释页 → 再请求；仅用户主动触发；支持“先不需要”）
+      - [ ] 2.2.6.1 验收：首启/快速开练路径不弹权限；拒绝后仍可训练（提示音模式）。
+    - [ ] 2.2.7 实现音乐可用性状态机（NotDetermined/Authorized/Denied/Restricted + 订阅不可用/资源不可用）
+      - [ ] 2.2.7.1 验收：任意状态不阻塞开练；都有可解释文案与 CTA。
+    - [ ] 2.2.8 实现 Music Picker（搜索/最近使用≤10/我的歌单占位）与 Denied 空态降级
+      - [ ] 2.2.8.1 验收：Denied 时仍可保存计划并开练；“去设置”入口可达。
+    - [ ] 2.2.9 实现段边界切歌（同 selection 不打断；不同 selection 切换；crossfade 0.5–1.0s 作为可选增强）
+      - [ ] 2.2.9.1 验收：不会闪断/死锁；失败走退回策略。
+    - [ ] 2.2.10 实现失败退回（下一段加载失败→优先继续当前音乐→必要时提示音/静音；记录原因）
+      - [ ] 2.2.10.1 验收：训练节拍不中断；结束总结可回顾“播放降级”。
+    - [ ] 2.2.11 实现训练中“添加音乐”入口（建议仅休息段）写入 SessionOverrides
+      - [ ] 2.2.11.1 验收：本次生效；默认不写回计划；有明确“临时调整”标识。
+- [ ] 3. M2 任务清单（稳定性/恢复/离线/备份/指标）
+  - [ ] 3.1 中断与安全策略（可解释降级）
+    - [ ] 3.1.1 落地中断事件统一模型（来电/闹钟/Siri/音频会话中断/路由变化/他 App 接管）
+      - [ ] 3.1.1.1 验收：任一中断都能映射到 PauseReason/DegradeReason，并写入 Session 事件。
+    - [ ] 3.1.2 实现 Siri 阈值行为（≤3s 不暂停；>3s 暂停）并与设置联动
+      - [ ] 3.1.2.1 验收：阈值可配置；行为可回归测试。
+    - [ ] 3.1.3 实现耳机断连“安全暂停”（避免外放惊吓）并要求用户显式 Resume
+      - [ ] 3.1.3.1 验收：不会自动外放/自动继续；Paused 原因可解释。
+  - [ ] 3.2 崩溃/被杀恢复（可靠性）
+    - [ ] 3.2.1 定义“可恢复 Session”持久化最小集与落盘时机
+      - [ ] 3.2.1.1 验收：被杀后能恢复到 paused；数据损坏有可解释处理。
+    - [ ] 3.2.2 实现启动恢复入口与三选一决策（继续/结束并保存未完成/丢弃）
+      - [ ] 3.2.2.1 验收：三路数据一致；不会崩溃；历史不丢。
+    - [ ] 3.2.3 实现恢复时的时间重算与段边界容错（避免负时间/跳段/重复切段）
+      - [ ] 3.2.3.1 验收：恢复后段切换稳定；override 能回放或可解释。
+    - [ ] 3.2.4 为恢复路径补充测试（单测 + UI 测试占位）
+      - [ ] 3.2.4.1 验收：覆盖“被杀/崩溃/冷启动恢复”关键路径。
+  - [ ] 3.3 离线/弱网（预检/重试/一致提示）
+    - [ ] 3.3.1 实现“开练前轻量预检”（限时；超时即降级不阻塞）并记录结果
+      - [ ] 3.3.1.1 验收：弱网不阻塞开练；结果进入 Session 事件/标签。
+    - [ ] 3.3.2 实现训练中失败重试策略（快速重试 1–2 次 → fallback）与提示一致性
+      - [ ] 3.3.2.1 验收：失败不影响段切换；同一原因在不同页面文案一致。
+    - [ ] 3.3.3 实现离线策略：计划/模板/历史本地可用；社区仅展示已缓存摘要占位
+      - [ ] 3.3.3.1 验收：无网仍可开练与回看历史；社区离线提示不阻塞训练。
+  - [ ] 3.4 备份与灾备（导出/导入）
+    - [ ] 3.4.1 实现 iCloud 备份模式（推荐但不强制）与失败不阻塞开练
+      - [ ] 3.4.1.1 验收：备份失败有可解释提示；训练功能不受影响。
+    - [ ] 3.4.2 实现导出/导入文件形态（JSON 或 zip+json；含 schemaVersion；不含音频本体）
+      - [ ] 3.4.2.1 验收：导入后计划/设置/历史可恢复；未知 schema 有迁移或友好失败。
+  - [ ] 3.5 计划编辑增强（模式 B + 强度预设）
+    - [ ] 3.5.1 实现模式 B：总时长 + 组数 + work:rest 比例 → 计算 work/rest 并可微调
+      - [ ] 3.5.1.1 验收：结果与模式 A 等价；输入/输出可解释；边界校验完整。
+    - [ ] 3.5.2 实现强度预设（轻/中/强）填充比例（不新增必填项）
+      - [ ] 3.5.2.1 验收：一键填充可用；用户可再微调；不影响开练主路径。
+  - [ ] 3.6 指标与隐私（metric-level 验收）
+    - [ ] 3.6.1 建立“埋点事件 → 漏斗指标（design 15.1）”映射文档与验收口径
+      - [ ] 3.6.1.1 验收：至少覆盖 time_to_first_workout_started / first_session_start_rate / first_session_complete_rate / interruption_recovery_rate / plan_reuse_rate / duplicate_apply_block_rate 等。
+    - [ ] 3.6.2 为隐私红线添加回归用例（不采集歌曲名/评论文本；匿名使用数据开关生效）
+      - [ ] 3.6.2.1 验收：自动化或手工检查步骤明确可复现。
+  - [ ] 3.7 锁屏/后台控制（系统集成但不影响节拍）
+    - [ ] 3.7.1 实现锁屏/后台 Now Playing 展示与 Remote Command（Pause/Resume 为主）
+      - [ ] 3.7.1.1 验收：锁屏可暂停/继续训练；不会导致重复切段；与安全暂停逻辑一致。
+    - [ ] 3.7.2 明确后台计时能力边界（静音模式限制）并补充触发条件：快速开练/模板开练/计划开练
+      - [ ] 3.7.2.1 验收：所有进入训练的入口都能在必要时展示一次性提示；不阻塞开练（用户可继续静音或去开启音乐）。
+- [ ] 4. Phase2+ Backlog（非 MVP，依赖在前）
+  - [ ] 4.1 交易/付费
+    - [ ] 4.1.1 接入 StoreKit 商品与订单状态机（含幂等与失败恢复）
+    - [ ] 4.1.2 实现已购恢复与离线权益缓存（换机/重装可恢复）
+    - [ ] 4.1.3 实现退款/撤销与权益回收口径
+  - [ ] 4.2 创作者中心与分成结算
+    - [ ] 4.2.1 CreatorProfile 与入驻流程
+    - [ ] 4.2.2 发布商业化配置（免费/付费、价格档位）
+    - [ ] 4.2.3 PayoutLedger（30% 平台服务费）与结算周期/冲回占位
+  - [ ] 4.3 同步与系统集成增强
+    - [ ] 4.3.1 账号同步（计划/历史/设置；音乐仅同步引用）与匿名资产合并策略
+    - [ ] 4.3.2 Live Activity / Widget / Shortcuts（可开关、默认不打扰）
+    - [ ] 4.3.3 Apple Watch（远程控制 + 触觉提示；独立训练后续）
+  - [ ] 4.4 训练与内容高级形态
+    - [ ] 4.4.1 复杂多段结构（热身/放松/多段组合）与编辑器升级
+    - [ ] 4.4.2 per-set Explicit 音乐配置 + 批量操作
+    - [ ] 4.4.3 零压力复盘增强（不引入 streak/排行）
+
+## 🧠 Memory Bank (记忆库)
+
+- *规则备忘*: Init
+- *环境备忘*: Init
+- *错误预判*: Init
+
+## 🛡️ Rules (行动准则 - 绝对遵守)
+
+1. **自我驱动**：每完成一个动作，**必须**修改本文档的 `Phase`、`Last Action`、`Next Step` 和 `Task List` (打钩)。
+2. **保持循环**：修改完代码后，立即检查 `Next Step` 并执行它。如果遇到 Test 失败，不要跳过，必须进入 "Fix -> Retest" 循环直到通过。
+3. **完成标准**：每完成一个动作，都需要生成一个测试，全部测试都执行成功，同时项目build成功才能执行下一步。
+4. **打钩标准**: 只有一个任务下面所有的子任务都打钩了，当前任务才能被打钩

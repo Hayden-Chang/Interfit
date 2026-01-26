@@ -1,0 +1,16 @@
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/AbsoluteTimerTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/CueCoalescingSinkTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/CueEventTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/HapticsCueSinkTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/LoggerTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/ReasonCatalogTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/SessionStateMachineTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/SessionTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/SharedVersionTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSegmentSchedulerTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueCoalescingTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineHapticsTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutStructureTests.swift
