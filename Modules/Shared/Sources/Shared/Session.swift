@@ -36,12 +36,28 @@ public extension SessionEventRecord {
     /// User-facing label for history chips (keep neutral).
     var label: String {
         switch kind {
-        case .segmentChanged: "Segment"
-        case .paused: "Paused"
-        case .resumed: "Resumed"
-        case .ended: "Ended"
-        case .completed: "Completed"
-        case .none: name
+        case .segmentChanged: return "Segment"
+        case .paused: return "Paused"
+        case .resumed: return "Resumed"
+        case .ended: return "Ended"
+        case .completed: return "Completed"
+        case .none:
+            switch name {
+            case "preflight":
+                if let status = attributes["status"] {
+                    return "Preflight (\(status))"
+                }
+                return "Preflight"
+            case "interruption": return "Interruption"
+            case "degraded":
+                if let raw = attributes["reason"], let reason = DegradeReason(rawValue: raw) {
+                    return reason.title
+                }
+                return "Degraded"
+            case "musicOverride": return "Music Override"
+            case "musicOverrideCleared": return "Music Override Cleared"
+            default: return name
+            }
         }
     }
 
@@ -82,6 +98,8 @@ public struct Session: Sendable, Codable, Equatable, Identifiable {
     public var status: SessionStatus
     public var startedAt: Date
     public var endedAt: Date?
+    public var planSnapshot: PlanSnapshot?
+    public var overrides: SessionOverrides?
     public var completedSets: Int
     public var totalSets: Int
     public var workSeconds: Int
@@ -93,6 +111,8 @@ public struct Session: Sendable, Codable, Equatable, Identifiable {
         status: SessionStatus,
         startedAt: Date,
         endedAt: Date? = nil,
+        planSnapshot: PlanSnapshot? = nil,
+        overrides: SessionOverrides? = nil,
         completedSets: Int,
         totalSets: Int,
         workSeconds: Int,
@@ -103,6 +123,8 @@ public struct Session: Sendable, Codable, Equatable, Identifiable {
         self.status = status
         self.startedAt = startedAt
         self.endedAt = endedAt
+        self.planSnapshot = planSnapshot
+        self.overrides = overrides
         self.completedSets = completedSets
         self.totalSets = totalSets
         self.workSeconds = workSeconds
@@ -111,3 +133,20 @@ public struct Session: Sendable, Codable, Equatable, Identifiable {
     }
 }
 
+public extension Session {
+    var hasOverrides: Bool {
+        !(overrides?.isEmpty ?? true)
+    }
+
+    var effectiveSetsCount: Int {
+        overrides?.setsCount ?? planSnapshot?.setsCount ?? totalSets
+    }
+
+    var effectiveWorkSeconds: Int {
+        overrides?.workSeconds ?? planSnapshot?.workSeconds ?? workSeconds
+    }
+
+    var effectiveRestSeconds: Int {
+        overrides?.restSeconds ?? planSnapshot?.restSeconds ?? restSeconds
+    }
+}

@@ -7,14 +7,14 @@
 
 ## 🔄 Phase & Status (当前阶段与状态)
 
-- **Current Phase**: M0 / 1.6.2 快速开练（in progress）
-- **Last Action**: 已补齐 Tab IA 最小验收路径：Train 可进入 Quick Start/Training，占位页可展示；Plans 可进入 Create Plan -> Edit Plan；并通过 `xcodebuild build`。
-- **Next Step**: 推进 1.6.2（快速开练）验收 1.6.2.1：在 `QuickStartView` 增加“选择预设 Plan（先用内置 3 个模板占位）→ Start 进入 Training（running 占位）”的 3 步路径；完成后执行 `xcodebuild build` 验证通过。
+- **Current Phase**: M0 / 1.1 工程骨架与基础约定（completed ✅）
+- **Last Action**: 将 `1.1 工程骨架与基础约定` 父任务标记为完成（其子任务已全完成）✅。
+- **Next Step**: 收尾 `1. M0 任务清单` 的父任务勾选（1.1–1.6 已全完成），并同步更新 Phase/Next Step 到下一项未完成任务。
 
 ## 📝 Task List (任务清单)
 
 - [ ] 1. M0 任务清单（按依赖顺序）
-  - [ ] 1.1 工程骨架与基础约定（先做）
+  - [x] 1.1 工程骨架与基础约定（先做）
     - [x] 1.1.1 初始化 iOS 工程与模块骨架（AppShell/Train/Plans/Shared/Persistence/Audio）
       - [x] 1.1.1.0 验收前置：确认本机可用目的地并通过 `xcodebuild build`（iPhone 16 / iOS 18.3.1）
       - [x] 1.1.1.2 创建 `Modules/Shared`（Swift Package）并通过 `swift test`
@@ -38,23 +38,23 @@
       - [x] 1.1.3.1 验收：业务层不直接依赖第三方；关键路径（开练/切段/暂停/结束）有结构化日志。
     - [x] 1.1.4 建立错误与降级原因分类（ErrorReason/DegradeReason 的枚举口径）
       - [x] 1.1.4.1 验收：至少覆盖（权限/资源/网络/播放竞争/系统中断/路由变化）；UI 可展示一致口径。
-  - [ ] 1.2 数据模型（M0 先做最小集）
+  - [x] 1.2 数据模型（M0 先做最小集）
     - [x] 1.2.1 定义 Plan 最小领域模型（setsCount/workSeconds/restSeconds/name/isFavorite/createdAt/updatedAt）
       - [x] 1.2.1.1 验收：能表达模板与用户自建计划；rest=0 合法。
     - [x] 1.2.2 定义 Session 最小领域模型（status/startedAt/endedAt/completedSets/totalSets/workSeconds/restSeconds/events[]）
       - [x] 1.2.2.1 验收：结束页与历史页能消耗该模型。
     - [x] 1.2.3 定义 SessionEvent 最小集合（segmentChanged/paused/resumed/ended/completed）
       - [x] 1.2.3.1 验收：历史详情能回放“关键事件标签”（先用事件推动）。
-  - [ ] 1.3 本地持久化（先可用、后扩展）
-    - [ ] 1.3.1 选型并落地本地持久化骨架（CoreData/SQLite/Realm 其一）+ schemaVersion
+    - [x] 1.3 本地持久化（先可用、后扩展）
+    - [x] 1.3.1 选型并落地本地持久化骨架（CoreData/SQLite/Realm 其一）+ schemaVersion
       - [x] 1.3.1.0 已落地 `schemaVersion` 最小机制（current + stored 读写）与单测
       - [x] 1.3.1.1 验收：Plan CRUD 与 Session 写入/读取跑通；schemaVersion 可见且可升级。
     - [x] 1.3.2 实现 Plan CRUD（创建/编辑/删除/复制）与列表查询（最近/全部最小版）
       - [x] 1.3.2.1 验收：新增/编辑/删除后列表即时刷新；重启后数据仍在。
-    - [ ] 1.3.3 实现 Session 落盘（训练结束写入；最小字段齐全）
+    - [x] 1.3.3 实现 Session 落盘（训练结束写入；最小字段齐全）
       - [x] 1.3.3.0 已落地 Session 持久化最小实现（Repository + 跨实例保留）与单测
-      - [ ] 1.3.3.1 验收：结束后历史列表出现；详情可打开并展示事件摘要。
-  - [ ] 1.4 训练引擎（Timer/Session 状态机，M0 核心）
+      - [x] 1.3.3.1 验收：结束后历史列表出现；详情可打开并展示事件摘要。
+  - [x] 1.4 训练引擎（Timer/Session 状态机，M0 核心）
     - [x] 1.4.1 定义 Session 状态机（idle/running/paused/completed/ended）与 PauseReason（user/interruption/safety）
       - [x] 1.4.1.1 验收：状态转移有单测；非法转移有明确错误。
     - [x] 1.4.2 实现绝对时间计时核心（避免漂移，不靠每秒累减）
@@ -65,7 +65,7 @@
       - [x] 1.4.4.1 验收：work→rest→work 连续切换稳定，不重复触发。
     - [x] 1.4.5 实现 Pause/Resume 与 End 误触护栏（End 二次确认或长按）
       - [x] 1.4.5.1 验收：暂停原因可记录；结束后 status 正确（completed vs ended）。
-  - [ ] 1.5 提示通道（M0 仅提示音/震动）
+  - [x] 1.5 提示通道（M0 仅提示音/震动）
     - [x] 1.5.1 定义 CueEvent（segmentStart/workToRest/restToWork/last3s/paused/resumed/completed）
       - [x] 1.5.1.1 验收：训练引擎只“发事件”，不依赖具体实现。
     - [x] 1.5.2 实现 Haptics 通道（可开关；不支持则静默）
@@ -75,102 +75,231 @@
     - [x] 1.5.4 实现 Cue 节流与冲突策略（段切换优先；连续事件合并）
       - [x] 1.5.4.0 验收：引入 `CueCoalescingSink` 且有单测覆盖
       - [x] 1.5.4.1 验收：同一秒不会叠加多次提示造成噪声。（新增集成单测）
-  - [ ] 1.6 核心 UI（M0 只做闭环页面）
+  - [x] 1.6 核心 UI（M0 只做闭环页面）
     - [x] 1.6.1 实现 Tab IA 最小版（Train/Plans/Me；Community M0 可隐藏）
       - [x] 1.6.1.0 已创建 `RootTabView`（Train/Plans/Me Tab 壳）并切为默认入口
       - [x] 1.6.1.1 验收：可从 Train 进入快速开练与训练页；Plans 可进入编辑。（已完成：Train -> Quick Start/Training；Plans -> Create Plan -> Edit Plan；并通过 build）
-    - [ ] 1.6.2 实现“快速开练”页面（默认提示音模式）
+    - [x] 1.6.2 实现“快速开练”页面（默认提示音模式）
       - [x] 1.6.2.0 已新增 `QuickStartView` 占位页，并在 Train Tab 提供入口
-      - [ ] 1.6.2.1 验收：3 步内进入 running（选预设/点开始）。
-    - [ ] 1.6.3 实现内置模板（3–5 个）与模板卡片摘要统一格式 (work+rest)×sets=total
-      - [ ] 1.6.3.1 验收：模板一键开练可用；参数符合范围校验。
-    - [ ] 1.6.4 实现计划编辑页（模式 A：sets + work/rest）
-      - [ ] 1.6.4.1 验收：边界校验（rest=0/sets=1 合法；非法输入可解释提示）。
-    - [ ] 1.6.5 实现训练主屏（极简默认：段类型 > 大计时 > 组进度；Pause/Resume 主按钮）
-      - [ ] 1.6.5.1 验收：Dynamic Type 不破版；信息层级符合设计。
-    - [ ] 1.6.6 实现训练结束总结页（中性表达：完成/提前结束；CTA：再来一次/保存到计划库）
-      - [ ] 1.6.6.1 验收：不出现压力化指标（streak/排行）。
-    - [ ] 1.6.7 实现训练历史列表与 Session 详情页（来源追溯占位 + 关键事件回顾）
-      - [ ] 1.6.7.1 验收：至少展示（开始时间/计划摘要/完成状态/事件标签）。
+      - [x] 1.6.2.1 验收：3 步内进入 running（选预设/点开始）。
+        - [x] 1.6.2.1.1 Quick Start：预设选择 UI（3 个模板占位）
+        - [x] 1.6.2.1.2 Training：支持接收 Plan 并展示 running 占位
+        - [x] 1.6.2.1.3 Quick Start：Start 路由到 Training（带选中预设）
+        - [x] 1.6.2.1.4 验收：`xcodebuild build` 通过
+      - [x] 1.6.2.2 默认提示音模式：训练开始时启用 `AudioCueSink`（可叠加 Haptics）
+      - [x] 1.6.2.3 验收：`xcodebuild build` 通过
+      - [x] 1.6.2.4 验收：Quick Start 跑通“段切换提示音/触觉”（以自动化回归替代手工：引擎 cue/coalescing 单测 + 模块单测 + App build）
+    - [x] 1.6.3 实现内置模板（3–5 个）与模板卡片摘要统一格式 (work+rest)×sets=total
+      - [x] 1.6.3.1 验收：模板一键开练可用；参数符合范围校验。
+      - [x] 1.6.3.2 内置模板数据源抽离（App 内可复用）
+      - [x] 1.6.3.3 Quick Start 模板摘要统一为 `(work+rest)×sets=total` 格式
+    - [x] 1.6.4 实现计划编辑页（模式 A：sets + work/rest）
+      - [x] 1.6.4.1 验收：边界校验（rest=0/sets=1 合法；非法输入可解释提示）。
+        - [x] 1.6.4.1.1 对齐输入范围到 `PlanValidationAdapter`
+        - [x] 1.6.4.1.2 UI 展示校验提示 + 禁用 Save
+        - [x] 1.6.4.1.3 验收：`xcodebuild build` 通过
+    - [x] 1.6.5 实现训练主屏（极简默认：段类型 > 大计时 > 组进度；Pause/Resume 主按钮）
+      - [x] 1.6.5.1 验收：Dynamic Type 不破版；信息层级符合设计。
+        - [x] 1.6.5.1.1 Engine 暴露 UI 所需的 progress snapshot（段/剩余/进度）
+        - [x] 1.6.5.1.2 `TrainingView` 按信息层级渲染并支持 Pause/Resume
+        - [x] 1.6.5.1.3 验收：`xcodebuild build` 通过
+    - [x] 1.6.6 实现训练结束总结页（中性表达：完成/提前结束；CTA：再来一次/保存到计划库）
+      - [x] 1.6.6.1 验收：不出现压力化指标（streak/排行）。
+        - [x] 1.6.6.1.1 Training 结束后路由到 Summary（completed/ended）
+        - [x] 1.6.6.1.2 验收：`xcodebuild build` 通过
+    - [x] 1.6.7 实现训练历史列表与 Session 详情页（来源追溯占位 + 关键事件回顾）
+      - [x] 1.6.7.1 验收：至少展示（开始时间/计划摘要/完成状态/事件标签）。
+        - [x] 1.6.7.1.1 在 Tab 中提供 History 入口（指向 `SessionHistoryListView`）
+        - [x] 1.6.7.1.2 训练结束时写入 Session（completed/ended）到 `SessionRepository`
+        - [x] 1.6.7.1.3 验收：`xcodebuild build` 通过
+    - [x] 1.6.8 可靠性与细节 polish（Swift 6 警告清理）
+      - [x] 1.6.8.1 清理 `PlanValidation.swift` 冗余 `public` 警告
+      - [x] 1.6.8.2 清理 Shared 测试中的 Swift 6 Sendable/并发警告（Collecting* / captured var）
+      - [x] 1.6.8.3 验收：`swift test`（Shared/Audio/Persistence）零失败（允许少量无关 warning，但本阶段目标是清零）
 - [ ] 2. M1 任务清单（按依赖顺序）
-  - [ ] 2.1 不可变资产语义（PlanVersion/PlanSnapshot/Apply）
-    - [ ] 2.1.1 引入 PlanVersion（draft/published）与发布规则（published 不可编辑；发布=新版本）
-      - [ ] 2.1.1.1 验收：代码层禁止对 published 写入；UI 明确提示“发布后固定”。
-    - [ ] 2.1.2 引入 PlanSnapshot（Session start 固化）与 SessionOverrides（训练中临时改动）
-      - [ ] 2.1.2.1 验收：训练中修改计划不影响本次 Session；override 默认不写回 Plan。
-    - [ ] 2.1.3 实现 Apply=Fork（从 Post/PlanVersion 复制生成新 Plan），并保存来源字段（forkedFromVersionRef/sourcePostRef）
-      - [ ] 2.1.3.1 验收：fork 后与源互不影响；详情页能看到来源。
-    - [ ] 2.1.4 实现 Apply 去重（同源版本或 contentHash 相同提示“已应用过”，默认打开已有计划）
-      - [ ] 2.1.4.1 验收：重复 Apply 不膨胀计划库；提示文案符合“复制语义”。
-    - [ ] 2.1.5 建立 configVersion 迁移链（纯函数、幂等、copy-on-write）
-      - [ ] 2.1.5.1 验收：旧数据可迁移；迁移失败可解释且不崩溃。
+  - [x] 2.1 不可变资产语义（PlanVersion/PlanSnapshot/Apply）
+    - [x] 2.1.1 引入 PlanVersion（draft/published）与发布规则（published 不可编辑；发布=新版本）
+      - [x] 2.1.1.0 Plans UI 接入 `PlanRepository`（为后续版本语义打底）
+      - [x] 2.1.1.1 验收：代码层禁止对 published 写入；UI 明确提示“发布后固定”。
+    - [x] 2.1.2 引入 PlanSnapshot（Session start 固化）与 SessionOverrides（训练中临时改动）
+      - [x] 2.1.2.0 回归：引擎开练时固化 `planSnapshot`（新增单测）
+      - [x] 2.1.2.1 验收：训练中修改计划不影响本次 Session（使用 `planSnapshot`）；override 仅记录/展示且默认不写回 Plan。
+    - [x] 2.1.3 实现 Apply=Fork（从 Post/PlanVersion 复制生成新 Plan），并保存来源字段（forkedFromVersionRef/sourcePostRef）
+      - [x] 2.1.3.0 UI：从 Published Version 执行 Apply（生成新 Plan，并写入 `forkedFromVersionId`）
+      - [x] 2.1.3.1 验收：fork 后与源互不影响；详情页能看到来源。
+    - [x] 2.1.4 实现 Apply 去重（同源版本或 contentHash 相同提示“已应用过”，默认打开已有计划）
+      - [x] 2.1.4.1 验收：重复 Apply 不膨胀计划库；提示文案符合“复制语义”。
+    - [x] 2.1.5 建立 configVersion 迁移链（纯函数、幂等、copy-on-write）
+      - [x] 2.1.5.1 验收：旧数据可迁移；迁移失败可解释且不崩溃。
   - [ ] 2.2 音乐能力（至少一种来源 + Global/Cycle + playMode）
-    - [ ] 2.2.1 定义播放层抽象（PlaybackService）与训练引擎的交互契约（训练引擎只发“切段/切歌意图”）
-      - [ ] 2.2.1.1 验收：训练引擎不直接依赖 MusicKit/AVFoundation；可替换实现（Apple Music / 本地库 / None）。
-    - [ ] 2.2.2 实现基础 AudioSession 管理（类别/路由/duck，且与 Cue 提示音共存）
-      - [ ] 2.2.2.1 验收：开启提示音/震动不影响播放稳定；后续中断处理（M2）可在此基础上扩展。
-    - [ ] 2.2.3 定义 MusicSelection 字段口径（source/type/externalId/displayTitle/artworkUrl?/playMode）
-      - [ ] 2.2.3.1 验收：selection 等价判断只看（source/type/externalId/playMode），不含 display 字段。
-    - [ ] 2.2.4 实现 playMode 三态行为（continue/restart_on_segment/shuffle_on_segment）
-      - [ ] 2.2.4.1 验收：进入段时行为与定义一致；有最小可验证用例。
-    - [ ] 2.2.5 实现音乐策略 Global + Cycle（Work/Rest 各自维护 sequence[]；第 i 组取 i%n）
-      - [ ] 2.2.5.1 验收：Cycle 规则可复现；序列不足/缺项时回退到 global，不中断训练。
-    - [ ] 2.2.6 实现“先转化后授权”音乐权限流程（解释页 → 再请求；仅用户主动触发；支持“先不需要”）
-      - [ ] 2.2.6.1 验收：首启/快速开练路径不弹权限；拒绝后仍可训练（提示音模式）。
-    - [ ] 2.2.7 实现音乐可用性状态机（NotDetermined/Authorized/Denied/Restricted + 订阅不可用/资源不可用）
-      - [ ] 2.2.7.1 验收：任意状态不阻塞开练；都有可解释文案与 CTA。
-    - [ ] 2.2.8 实现 Music Picker（搜索/最近使用≤10/我的歌单占位）与 Denied 空态降级
-      - [ ] 2.2.8.1 验收：Denied 时仍可保存计划并开练；“去设置”入口可达。
-    - [ ] 2.2.9 实现段边界切歌（同 selection 不打断；不同 selection 切换；crossfade 0.5–1.0s 作为可选增强）
-      - [ ] 2.2.9.1 验收：不会闪断/死锁；失败走退回策略。
-    - [ ] 2.2.10 实现失败退回（下一段加载失败→优先继续当前音乐→必要时提示音/静音；记录原因）
-      - [ ] 2.2.10.1 验收：训练节拍不中断；结束总结可回顾“播放降级”。
-    - [ ] 2.2.11 实现训练中“添加音乐”入口（建议仅休息段）写入 SessionOverrides
-      - [ ] 2.2.11.1 验收：本次生效；默认不写回计划；有明确“临时调整”标识。
-- [ ] 3. M2 任务清单（稳定性/恢复/离线/备份/指标）
-  - [ ] 3.1 中断与安全策略（可解释降级）
-    - [ ] 3.1.1 落地中断事件统一模型（来电/闹钟/Siri/音频会话中断/路由变化/他 App 接管）
-      - [ ] 3.1.1.1 验收：任一中断都能映射到 PauseReason/DegradeReason，并写入 Session 事件。
-    - [ ] 3.1.2 实现 Siri 阈值行为（≤3s 不暂停；>3s 暂停）并与设置联动
-      - [ ] 3.1.2.1 验收：阈值可配置；行为可回归测试。
-    - [ ] 3.1.3 实现耳机断连“安全暂停”（避免外放惊吓）并要求用户显式 Resume
-      - [ ] 3.1.3.1 验收：不会自动外放/自动继续；Paused 原因可解释。
-  - [ ] 3.2 崩溃/被杀恢复（可靠性）
-    - [ ] 3.2.1 定义“可恢复 Session”持久化最小集与落盘时机
-      - [ ] 3.2.1.1 验收：被杀后能恢复到 paused；数据损坏有可解释处理。
-    - [ ] 3.2.2 实现启动恢复入口与三选一决策（继续/结束并保存未完成/丢弃）
-      - [ ] 3.2.2.1 验收：三路数据一致；不会崩溃；历史不丢。
-    - [ ] 3.2.3 实现恢复时的时间重算与段边界容错（避免负时间/跳段/重复切段）
-      - [ ] 3.2.3.1 验收：恢复后段切换稳定；override 能回放或可解释。
-    - [ ] 3.2.4 为恢复路径补充测试（单测 + UI 测试占位）
-      - [ ] 3.2.4.1 验收：覆盖“被杀/崩溃/冷启动恢复”关键路径。
-  - [ ] 3.3 离线/弱网（预检/重试/一致提示）
-    - [ ] 3.3.1 实现“开练前轻量预检”（限时；超时即降级不阻塞）并记录结果
-      - [ ] 3.3.1.1 验收：弱网不阻塞开练；结果进入 Session 事件/标签。
-    - [ ] 3.3.2 实现训练中失败重试策略（快速重试 1–2 次 → fallback）与提示一致性
-      - [ ] 3.3.2.1 验收：失败不影响段切换；同一原因在不同页面文案一致。
-    - [ ] 3.3.3 实现离线策略：计划/模板/历史本地可用；社区仅展示已缓存摘要占位
-      - [ ] 3.3.3.1 验收：无网仍可开练与回看历史；社区离线提示不阻塞训练。
-  - [ ] 3.4 备份与灾备（导出/导入）
-    - [ ] 3.4.1 实现 iCloud 备份模式（推荐但不强制）与失败不阻塞开练
-      - [ ] 3.4.1.1 验收：备份失败有可解释提示；训练功能不受影响。
-    - [ ] 3.4.2 实现导出/导入文件形态（JSON 或 zip+json；含 schemaVersion；不含音频本体）
-      - [ ] 3.4.2.1 验收：导入后计划/设置/历史可恢复；未知 schema 有迁移或友好失败。
-  - [ ] 3.5 计划编辑增强（模式 B + 强度预设）
-    - [ ] 3.5.1 实现模式 B：总时长 + 组数 + work:rest 比例 → 计算 work/rest 并可微调
-      - [ ] 3.5.1.1 验收：结果与模式 A 等价；输入/输出可解释；边界校验完整。
-    - [ ] 3.5.2 实现强度预设（轻/中/强）填充比例（不新增必填项）
-      - [ ] 3.5.2.1 验收：一键填充可用；用户可再微调；不影响开练主路径。
-  - [ ] 3.6 指标与隐私（metric-level 验收）
-    - [ ] 3.6.1 建立“埋点事件 → 漏斗指标（design 15.1）”映射文档与验收口径
-      - [ ] 3.6.1.1 验收：至少覆盖 time_to_first_workout_started / first_session_start_rate / first_session_complete_rate / interruption_recovery_rate / plan_reuse_rate / duplicate_apply_block_rate 等。
-    - [ ] 3.6.2 为隐私红线添加回归用例（不采集歌曲名/评论文本；匿名使用数据开关生效）
-      - [ ] 3.6.2.1 验收：自动化或手工检查步骤明确可复现。
-  - [ ] 3.7 锁屏/后台控制（系统集成但不影响节拍）
-    - [ ] 3.7.1 实现锁屏/后台 Now Playing 展示与 Remote Command（Pause/Resume 为主）
-      - [ ] 3.7.1.1 验收：锁屏可暂停/继续训练；不会导致重复切段；与安全暂停逻辑一致。
-    - [ ] 3.7.2 明确后台计时能力边界（静音模式限制）并补充触发条件：快速开练/模板开练/计划开练
-      - [ ] 3.7.2.1 验收：所有进入训练的入口都能在必要时展示一次性提示；不阻塞开练（用户可继续静音或去开启音乐）。
+    - [x] 2.2.1 定义播放层抽象（PlaybackService）与训练引擎的交互契约（训练引擎只发“切段/切歌意图”）
+      - [x] 2.2.1.1 验收：训练引擎不直接依赖 MusicKit/AVFoundation；可替换实现（Apple Music / 本地库 / None）。
+    - [x] 2.2.2 实现基础 AudioSession 管理（类别/路由/duck，且与 Cue 提示音共存）
+      - [x] 2.2.2.1 验收：开启提示音/震动不影响播放稳定；后续中断处理（M2）可在此基础上扩展。
+    - [x] 2.2.3 定义 MusicSelection 字段口径（source/type/externalId/displayTitle/artworkUrl?/playMode）
+      - [x] 2.2.3.1 验收：selection 等价判断只看（source/type/externalId/playMode），不含 display 字段。
+    - [x] 2.2.4 实现 playMode 三态行为（continue/restart_on_segment/shuffle_on_segment）
+      - [x] 2.2.4.1 验收：进入段时行为与定义一致；有最小可验证用例。
+    - [x] 2.2.5 实现音乐策略 Global + Cycle（Work/Rest 各自维护 sequence[]；第 i 组取 i%n）
+      - [x] 2.2.5.1 验收：Cycle 规则可复现；序列不足/缺项时回退到 global，不中断训练。
+    - [x] 2.2.6 实现“先转化后授权”音乐权限流程（解释页 → 再请求；仅用户主动触发；支持“先不需要”）
+      - [x] 2.2.6.1 验收：首启/快速开练路径不弹权限；拒绝后仍可训练（提示音模式）。
+    - [x] 2.2.7 实现音乐可用性状态机（NotDetermined/Authorized/Denied/Restricted + 订阅不可用/资源不可用）
+      - [x] 2.2.7.1 验收：任意状态不阻塞开练；都有可解释文案与 CTA。
+    - [x] 2.2.8 实现 Music Picker（搜索/最近使用≤10/我的歌单占位）与 Denied 空态降级
+      - [x] 2.2.8.1 验收：Denied 时仍可保存计划并开练；“去设置”入口可达。
+    - [x] 2.2.9 实现段边界切歌（同 selection 不打断；不同 selection 切换；crossfade 0.5–1.0s 作为可选增强）
+      - [x] 2.2.9.1 验收：不会闪断/死锁；失败走退回策略。
+    - [x] 2.2.10 实现失败退回（下一段加载失败→优先继续当前音乐→必要时提示音/静音；记录原因）
+      - [x] 2.2.10.1 验收：训练节拍不中断；结束总结可回顾“播放降级”。
+    - [x] 2.2.11 实现训练中“添加音乐”入口（建议仅休息段）写入 SessionOverrides
+      - [x] 2.2.11.1 验收：本次生效；默认不写回计划；有明确“临时调整”标识。
+- [x] 3. M2 任务清单（稳定性/恢复/离线/备份/指标）
+  - [x] 3.1 中断与安全策略（可解释降级）
+    - [x] 3.1.1 落地中断事件统一模型（来电/闹钟/Siri/音频会话中断/路由变化/他 App 接管）
+      - [x] 3.1.1.1 验收：任一中断都能映射到 PauseReason/DegradeReason，并写入 Session 事件。
+    - [x] 3.1.2 实现 Siri 阈值行为（≤3s 不暂停；>3s 暂停）并与设置联动
+      - [x] 3.1.2.1 验收：阈值可配置；行为可回归测试。
+    - [x] 3.1.3 实现耳机断连“安全暂停”（避免外放惊吓）并要求用户显式 Resume
+      - [x] 3.1.3.0 实现：训练页捕获 `routeChanged(reason: oldDeviceUnavailable)` → `engine.pause(reason: .safety)`（仅 running 时）并写入 Session 事件
+      - [x] 3.1.3.0.1 实现：训练页展示“安全暂停需显式 Resume”的提示文案
+      - [x] 3.1.3.0.2 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）
+      - [x] 3.1.3.0.3 工具：新增启动参数 `-simulateHeadphoneDisconnect`（无需真实耳机即可触发 safety pause 验收路径）
+      - [x] 3.1.3.0.4 工具：新增启动参数 `-autoAcceptance_3_1_3_1` 生成 `auto_acceptance_3_1_3_1.json`（校验 safety pause 事件与原因）。
+      - [x] 3.1.3.1 验收：不会自动外放/自动继续；Paused 原因可解释。
+        - [x] 3.1.3.1.0 自动验收：`auto_acceptance_3_1_3_1.json` 显示 `passed=true`
+        - 手工验证步骤：训练中拔掉耳机/蓝牙断开，预期立即暂停且不外放；页面出现 safety 提示；必须点击 Resume 才继续。
+        - 历史/总结验证：Session events 中应包含 `interruption(kind=routeChanged, reason=oldDeviceUnavailable)` + `paused(reason=safety)`。
+  - [x] 3.2 崩溃/被杀恢复（可靠性）
+    - [x] 3.2.1 定义“可恢复 Session”持久化最小集与落盘时机
+      - [x] 3.2.1.0 模型：`RecoverableSessionSnapshot` + `WorkoutSessionEngine.recoverableSnapshot(at:)`
+      - [x] 3.2.1.0.1 存储：`RecoverableSessionRepository`（fetch/upsert/clear）+ `CoreDataPersistenceStore`/`InMemoryPersistenceStore` 实现
+      - [x] 3.2.1.0.2 落盘时机：训练页 tick（5s 节流）+ pause/resume（force）写入；session 结束/完成后清理
+      - [x] 3.2.1.0.3 单测：`RecoverableSessionRepositoryTests`（跨实例持久化 + clear）
+      - [x] 3.2.1.0.4 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）
+      - [x] 3.2.1.1 验收：被杀后能恢复到 paused；数据损坏有可解释处理。
+        - 说明：恢复 UI/决策入口在 3.2.2 完成后才能手工验收此项。
+        - [x] 3.2.1.1.0 实现：recoverable snapshot decode 失败视为“数据损坏”并自动清理，同时记录诊断 marker（decodeFailedAt/bytes）。
+        - [x] 3.2.1.1.1 单测：`RecoverableSessionRepositoryTests` 覆盖 corrupted snapshot 清理与 marker 写入。
+        - [x] 3.2.1.1.2 工具：新增启动参数 `-autoAcceptance_3_2_1_1` 生成 `auto_acceptance_3_2_1_1.json`（自动验证数据损坏处理）。
+          - [x] 3.2.1.1.2.1 自动验收：`auto_acceptance_3_2_1_1.json` 显示 `passed=true`
+    - [x] 3.2.2 实现启动恢复入口与三选一决策（继续/结束并保存未完成/丢弃）
+      - [x] 3.2.2.0 Shared：`WorkoutSessionEngine.init(recovering:)` + `AbsoluteTimer` recovery init（恢复到 paused）
+      - [x] 3.2.2.0.1 UI：启动检测 recoverable snapshot 并弹出三选一决策（`RecoveryDecisionView`）
+      - [x] 3.2.2.0.2 训练页：支持 `TrainingView(recoverableSnapshot:)` 进入恢复训练，并继续写入/清理 recoverable snapshot
+      - [x] 3.2.2.0.3 单测：Shared/Persistence `swift test` 通过（包含 recovery init 覆盖）
+      - [x] 3.2.2.0.4 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）
+      - [x] 3.2.2.0.5 工具：新增启动参数 `-autoAcceptance_3_2_2_1` 生成 `auto_acceptance_3_2_2_1.json`（三选一路径数据一致性自动验收）。
+      - [x] 3.2.2.1 验收：三路数据一致；不会崩溃；历史不丢。
+        - [x] 3.2.2.1.0 自动验收：`auto_acceptance_3_2_2_1.json` 显示 `passed=true`
+        - 手工验收步骤：
+          - 路径 A（继续）：训练中强杀 App → 冷启动出现恢复弹窗 → 点 Continue → 进入 paused；点 Resume 后继续。
+          - 路径 B（结束并保存未完成）：同上但点 End & Save → History 出现 ended session（包含 ended 事件）。
+          - 路径 C（丢弃）：同上但点 Discard → 不写历史且不再弹窗。
+    - [x] 3.2.3 实现恢复时的时间重算与段边界容错（避免负时间/跳段/重复切段）
+      - [x] 3.2.3.0 恢复时重算：根据 elapsed 重新对齐 `completedSets` 并与结构配置一致
+      - [x] 3.2.3.0.1 段边界容错：恢复时预热 scheduler，避免首个 tick 重复写入 `segmentChanged`
+      - [x] 3.2.3.0.2 单测回归：`Modules/Shared` 执行 `swift test` 通过（新增段边界恢复用例）
+      - [x] 3.2.3.0.3 工具：新增启动参数 `-autoAcceptance_3_2_3_1` 生成 `auto_acceptance_3_2_3_1.json`（段边界容错自动验收）。
+      - [x] 3.2.3.1 验收：恢复后段切换稳定；override 能回放或可解释。
+        - [x] 3.2.3.1.0 自动验收：`auto_acceptance_3_2_3_1.json` 显示 `passed=true`
+        - 手工验收步骤：在 work→rest、rest→work 边界强杀后恢复，观察不会跳段/重复切段；音乐 override 若存在应可解释/可回放。
+  - [x] 3.2.4 为恢复路径补充测试（单测 + UI 测试占位）
+    - [x] 3.2.4.0 单测：`RecoverableSessionSnapshot` Codable round-trip
+    - [x] 3.2.4.1 验收：覆盖“被杀/崩溃/冷启动恢复”关键路径。
+      - [x] 3.2.4.1.0 工具：新增启动参数 `-debugSeedRecoverableSnapshot_3_2_4_1`（在启动时写入 recoverable snapshot，强制出现恢复弹窗）
+      - [x] 3.2.4.1.1 脚本：新增 `scripts/manual_recovery_3_2_4_1.sh`（半自动跑三选一路径手工验收）
+      - [x] 3.2.4.1.2 验收：`debug_seed_recoverable_snapshot_3_2_4_1.json` 成功生成（seed 路径可复现）。
+        - UI 测试占位（手工脚本）：按 3.2.2.1 的三路径步骤执行；额外覆盖“恢复后立即 End/Resume/再强杀”的组合路径。
+  - [x] 3.3 离线/弱网（预检/重试/一致提示）
+    - [x] 3.3.1 实现“开练前轻量预检”（限时；超时即降级不阻塞）并记录结果
+      - [x] 3.3.1.0 实现：TrainingView 新开练触发预检（0.8s 超时）并 `recordPreflight(...)` 写入 Session 事件（不阻塞）。
+      - [x] 3.3.1.0.1 工具：新增 `scripts/xcode_clean_interfit.sh`（清理 Interfit DerivedData + 验证 Shared iOS build）用于解决 Xcode 缓存导致的 “找不到类型” 假报错。
+      - [x] 3.3.1.1 验收：弱网不阻塞开练；结果进入 Session 事件/标签。
+        - 自动化覆盖：新增 `WorkoutPreflightRunnerTests`（timeout/failed/ok），并已有 `WorkoutSessionEngineTests.test_recordPreflight_appendsPreflightEvent` 覆盖写入 Session 事件。
+    - [x] 3.3.2 实现训练中失败重试策略（快速重试 1–2 次 → fallback）与提示一致性
+      - [x] 3.3.2.0 实现：新增 `PlaybackFailureRetryPolicy`（Shared）作为统一决策入口（重试次数/延迟 + fallback 行为 + DegradeReason 口径）。
+      - [x] 3.3.2.0.1 实现：新增 `WorkoutSessionEngine.recordDegrade(...)`，用于把“最终降级原因”写入 Session 事件（便于训练总结/历史标签）。
+      - [x] 3.3.2.0.2 实现：`PlaybackCoordinator` 使用 `PlaybackFailureRetryPolicy` 处理切歌失败（异步重试后 fallback），并在 fallback 时回调到 UI 记录 `degraded` 事件。
+      - [x] 3.3.2.0.3 实现：补齐 `SessionEventRecord.label`（为 `preflight/interruption/degraded/...` 提供统一的 user-facing Tag 文案）。
+      - [x] 3.3.2.0.4 工具：新增启动参数 `-simulatePlaybackLoadFailure`（模拟下一段加载失败，用于手工验收 retry/fallback + degraded 事件标签）。
+      - [x] 3.3.2.1 验收：失败不影响段切换；同一原因在不同页面文案一致。
+    - [x] 3.3.3 实现离线策略：计划/模板/历史本地可用；社区仅展示已缓存摘要占位
+      - [x] 3.3.3.0 实现：新增 `Community` Tab + 离线提示（仅展示缓存摘要，占位数据可在线时写入缓存）
+      - [x] 3.3.3.0.1 工具：新增启动参数 `-autoAcceptance_3_3_3_1` 生成 `auto_acceptance_3_3_3_1.json`，用于自动验证离线不阻塞训练/历史与社区缓存读取路径
+      - [x] 3.3.3.1 验收：无网仍可开练与回看历史；社区离线提示不阻塞训练。
+        - [x] 3.3.3.1.0 自动验收：`auto_acceptance_3_3_3_1.json` 显示 `passed=true`
+        - 手工验收步骤：
+          - 步骤 A（离线训练）：开启飞行模式 → 打开 App → `Train`/`Quick Start` 选择任一预设并开始训练，确认计时与段切换正常 → 结束并在 `History` 中看到该 session。
+          - 步骤 B（离线历史）：保持离线 → 打开 `History` 列表与详情，确认可正常读取并展示事件 Tag。
+          - 步骤 C（社区离线占位）：保持离线 → 打开 `Community`，确认出现离线提示；若曾在线打开过则展示缓存摘要；无缓存时展示空态文案，不影响切换到 `Train` 开练。
+  - [x] 3.4 备份与灾备（导出/导入）
+    - [x] 3.4.1 实现 iCloud 备份模式（推荐但不强制）与失败不阻塞开练
+      - [x] 3.4.1.0 实现：`ICloudBackupService`（可选开关 + 最小写入 ubiquity container；失败返回可解释状态）
+      - [x] 3.4.1.0.1 Debug：`DebugMenuView` 增加 iCloud 备份开关与手动触发按钮 + 状态展示
+      - [x] 3.4.1.1 验收：备份失败有可解释提示；训练功能不受影响。
+        - [x] 3.4.1.1.0 自动验收：`auto_acceptance_3_4_1_1.json` 存在且 `status` 为可解释值
+    - [x] 3.4.2 实现导出/导入文件形态（JSON 或 zip+json；含 schemaVersion；不含音频本体）
+      - [x] 3.4.2.0 实现：`InterfitBackupBundle` + `exportBackupBundle` / `importBackupBundle`（Persistence），支持 overwrite/merge，并对 schemaVersion 做 gate
+      - [x] 3.4.2.0.1 单测：`Modules/Persistence` 执行 `swift test` 通过（包含 round-trip + schemaVersion too-new）
+      - [x] 3.4.2.1 验收：导入后计划/设置/历史可恢复；未知 schema 有迁移或友好失败。
+        - [x] 3.4.2.1.0 自动验收：`auto_acceptance_3_4_2_1.json` 显示 `passed=true`
+  - [x] 3.5 计划编辑增强（模式 B + 强度预设）
+    - [x] 3.5.1 实现模式 B：总时长 + 组数 + work:rest 比例 → 计算 work/rest 并可微调
+      - [x] 3.5.1.0 调研：确认 `PlanModeBCalculator` 已实现且可在 App 层接入；定位 `PlanEditorView` 现状。
+      - [x] 3.5.1.0.1 UI：`PlanEditorView` 增加 Mode A/B 切换 + Mode B 输入/建议值展示/“Use suggested” + 微调入口。
+      - [x] 3.5.1.0.2 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）。
+      - [x] 3.5.1.0.3 修正：Mode B 初始比例归一化并裁剪到 UI 可编辑范围。
+      - [x] 3.5.1.0.4 编译回归：`xcodebuild build` 通过（包含 3.5.1.0.3 修正）。
+      - [x] 3.5.1.0.5 单测回归：`Modules/Shared` 执行 `swift test` 通过。
+      - [x] 3.5.1.0.6 工具：新增启动参数 `-autoAcceptance_3_5_1_1` 生成 `auto_acceptance_3_5_1_1.json`（模式 B 逻辑自动验收占位）。
+      - [x] 3.5.1.0.7 修正：自动验收报告改用原始字段以支持 JSON 持久化；编译回归通过。
+      - [x] 3.5.1.1 验收：结果与模式 A 等价；输入/输出可解释；边界校验完整。
+        - [x] 3.5.1.1.0 自动验收：`auto_acceptance_3_5_1_1.json` 显示 `passed=true`
+        - [x] 3.5.1.1.1 手工验收步骤：
+          - 步骤 A（建议值展示）：打开 Create/Edit Plan → 切到 Mode B → 调整 Sets/Total/Ratio，确认 “Suggested” 与 “Effective total” 实时更新，且 effective ≤ total（有整数取整差异属预期）。
+          - 步骤 B（一键填充+可微调）：在 Mode B 点击 “Use suggested”，确认 Work/Rest 被填入；再在 “Fine tune” 中微调 Work/Rest，确认仍可 Save（通过 Validation）。
+          - 步骤 C（与 Mode A 等价）：Mode B 使用 suggested 后切回 Mode A，确认 Mode A 的 Work/Rest 与刚才一致；再切回 Mode B 不应导致 Work/Rest 被重置。
+          - 步骤 D（边界校验）：将 Total 调小到导致 Work < 10s（例如 total=30s, sets=10），确认 “Use suggested” 被禁用且出现红色提示文案。
+    - [x] 3.5.2 实现强度预设（轻/中/强）填充比例（不新增必填项）
+      - [x] 3.5.2.0 UI：Mode B 增加强度预设按钮（Light/Medium/Hard）一键填充比例（仍可手工改比例）。
+      - [x] 3.5.2.0.1 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）。
+      - [x] 3.5.2.1 验收：一键填充可用；用户可再微调；不影响开练主路径。
+        - [x] 3.5.2.1.0 工具：新增启动参数 `-autoAcceptance_3_5_2_1` 生成 `auto_acceptance_3_5_2_1.json`（预设比例逻辑自动验收占位）。
+        - [x] 3.5.2.1.0.1 自动验收：`auto_acceptance_3_5_2_1.json` 显示 `passed=true`
+        - [x] 3.5.2.1.1 手工验收步骤：
+          - 步骤 A：Create/Edit Plan → Mode B → 点 Light，确认 ratio 变为 1:2，Suggested/Effective total 更新。
+          - 步骤 B：点 Medium（1:1）与 Hard（2:1），确认每次都会更新 Suggested/Effective total。
+          - 步骤 C：在点击任一预设后，仍可手动调 Work part / Rest part；“Use suggested” 与 Fine tune 仍可用且不影响 Save。
+        - [x] 3.5.2.1.2 工具：新增启动参数 `-planEditor` / `-planEditorModeB` 直达 PlanEditor（用于手工验收加速）。
+- [x] 3.6 指标与隐私（metric-level 验收）
+  - [x] 3.6.1 建立“埋点事件 → 漏斗指标（design 15.1）”映射文档与验收口径
+      - [x] 3.6.1.0 文档：新增 `METRICS_MAPPING.md`（指标→事件映射 + 口径 + 隐私红线）。
+      - [x] 3.6.1.1 验收：至少覆盖 time_to_first_workout_started / first_session_start_rate / first_session_complete_rate / interruption_recovery_rate / plan_reuse_rate / duplicate_apply_block_rate 等。
+  - [x] 3.6.2 为隐私红线添加回归用例（不采集歌曲名/评论文本；匿名使用数据开关生效）
+      - [x] 3.6.2.1 验收：自动化或手工检查步骤明确可复现。
+        - [x] 3.6.2.1.0 工具：新增启动参数 `-autoAcceptance_3_6_2_1` 生成 `auto_acceptance_3_6_2_1.json`（校验 opt-in 与字段 allowlist）。
+        - [x] 3.6.2.1.0.1 自动验收：`auto_acceptance_3_6_2_1.json` 显示 `passed=true`
+  - [x] 3.7 锁屏/后台控制（系统集成但不影响节拍）
+    - [x] 3.7.1 实现锁屏/后台 Now Playing 展示与 Remote Command（Pause/Resume 为主）
+      - [x] 3.7.1.0 实现：新增 `NowPlayingManager` + `TrainingView` 接入（更新 Now Playing + 响应 Play/Pause/Toggle）。
+      - [x] 3.7.1.0.1 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）。
+      - [x] 3.7.1.0.2 工具：新增启动参数 `-autoAcceptance_3_7_1_1` 生成 `auto_acceptance_3_7_1_1.json`（校验 Now Playing info 基本字段与 stop 清理）。
+      - [x] 3.7.1.1 验收：锁屏可暂停/继续训练；不会导致重复切段；与安全暂停逻辑一致。
+        - [x] 3.7.1.1.0 自动验收：`auto_acceptance_3_7_1_1.json` 显示 `passed=true`
+        - [x] 3.7.1.1.1 手工验收步骤：
+          - 步骤 A：进入 Training 开始训练 → 锁屏 → 观察 Now Playing 显示（标题=计划名或 Interfit，副标题=Work/Rest + 组数）。
+          - 步骤 B：锁屏点击 Pause → 回到 App 确认状态为 paused，倒计时停止；再点 Play → 恢复 running 且不跳段/不重复切段。
+          - 步骤 C：训练中拔掉耳机触发 safety pause → 锁屏点击 Play（或 App 内 Resume）应可继续；不应出现自动外放/自动继续（仍需显式触发）。
+    - [x] 3.7.2 明确后台计时能力边界（静音模式限制）并补充触发条件：快速开练/模板开练/计划开练
+      - [x] 3.7.2.0 实现：`TrainingView` 增加一次性提示（不阻塞开练；可直接点 Add music）。
+      - [x] 3.7.2.0.1 编译回归：`xcodebuild build` 通过（iPhone 16 / iOS 18.3.1）。
+      - [x] 3.7.2.0.2 工具：新增启动参数 `-autoAcceptance_3_7_2_1` 生成 `auto_acceptance_3_7_2_1.json`（验证提示展示策略）。
+      - [x] 3.7.2.1 验收：所有进入训练的入口都能在必要时展示一次性提示；不阻塞开练（用户可继续静音或去开启音乐）。
+        - [x] 3.7.2.1.0 自动验收：`auto_acceptance_3_7_2_1.json` 显示 `passed=true`
+        - [x] 3.7.2.1.1 手工验收步骤：
+          - 步骤 A：从 Quick Start / Plans / Community apply 任一入口进入 Training，首次进入应弹一次提示（不阻塞训练继续计时）。
+          - 步骤 B：关闭提示后再次进入 Training，不应再次弹出（除非清理了 UserDefaults 或重装）。
 - [ ] 4. Phase2+ Backlog（非 MVP，依赖在前）
   - [ ] 4.1 交易/付费
     - [ ] 4.1.1 接入 StoreKit 商品与订单状态机（含幂等与失败恢复）

@@ -5,9 +5,9 @@ final class WorkoutSessionEngineHapticsTests: XCTestCase {
     func test_engine_emits_haptic_patterns_for_key_events() throws {
         // Plan: 2 sets, work=5, rest=3 => timeline: w1(0-5), r1(5-8), w2(8-13)
         let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 3, name: "HapticsPlan")
-        var captured: [HapticPattern] = []
+        let captured = Locked<[HapticPattern]>([])
         let sink = HapticsCueSink(enabled: true) { patterns in
-            captured.append(contentsOf: patterns)
+            captured.withLock { $0.append(contentsOf: patterns) }
         }
         var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0), cues: sink)
 
@@ -23,7 +23,7 @@ final class WorkoutSessionEngineHapticsTests: XCTestCase {
         // We don't assert exact counts; ensure key patterns appear in reasonable order.
         func containsSubsequence(_ subseq: [HapticPattern]) -> Bool {
             var idx = 0
-            for k in captured {
+            for k in captured.value {
                 if k == subseq[idx] { idx += 1; if idx == subseq.count { return true } }
             }
             return false
@@ -41,20 +41,20 @@ final class WorkoutSessionEngineHapticsTests: XCTestCase {
                 .impactLight,         // last3s
                 .notificationSuccess  // completed
             ]),
-            "Haptic patterns order did not contain expected subsequence: \(captured)"
+            "Haptic patterns order did not contain expected subsequence: \(captured.value)"
         )
     }
 
     func test_disabled_sink_produces_no_patterns() throws {
         let plan = Plan(setsCount: 1, workSeconds: 3, restSeconds: 0, name: "Disabled")
-        var captured: [HapticPattern] = []
+        let captured = Locked<[HapticPattern]>([])
         let sink = HapticsCueSink(enabled: false) { patterns in
-            captured.append(contentsOf: patterns)
+            captured.withLock { $0.append(contentsOf: patterns) }
         }
         var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0), cues: sink)
         _ = engine.tick(at: Date(timeIntervalSince1970: 0))
         _ = engine.tick(at: Date(timeIntervalSince1970: 1))
         _ = engine.tick(at: Date(timeIntervalSince1970: 3))
-        XCTAssertTrue(captured.isEmpty)
+        XCTAssertTrue(captured.value.isEmpty)
     }
 }

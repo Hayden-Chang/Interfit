@@ -28,18 +28,29 @@ public final class AudioCueSink: @unchecked Sendable, CueSink {
         public var gain: Float
     }
 
-    public var isEnabled: Bool
+    public var isEnabled: Bool {
+        didSet { updateSessionClaim() }
+    }
     public var playHandler: (@Sendable ([AudioCuePattern]) -> Void)?
     public let options: Options
+    private let sessionManager: AudioSessionManager
+    private var sessionClaim: AudioSessionObservationToken?
     private let engine = AVAudioEngine()
     private let player = AVAudioPlayerNode()
     private let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
     private let amplitude: Float = 0.25
 
-    public init(enabled: Bool = true, options: Options = Options(), playHandler: (@Sendable ([AudioCuePattern]) -> Void)? = nil) {
+    public init(
+        enabled: Bool = true,
+        options: Options = Options(),
+        sessionManager: AudioSessionManager = .shared,
+        playHandler: (@Sendable ([AudioCuePattern]) -> Void)? = nil
+    ) {
         self.isEnabled = enabled
         self.options = options
+        self.sessionManager = sessionManager
         self.playHandler = playHandler
+        updateSessionClaim()
         setupEngine()
     }
 
@@ -95,20 +106,20 @@ public extension AudioCueSink {
 
 private extension AudioCueSink {
     func setupEngine() {
-        #if os(iOS)
-        do {
-            var opts: AVAudioSession.CategoryOptions = []
-            if options.duckOthers { opts.insert(.duckOthers) }
-            if options.mixWithOthers { opts.insert(.mixWithOthers) }
-            try AVAudioSession.sharedInstance().setCategory(.playback, options: opts)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            // Silent failure in M0; future phases will log/degrade
-        }
-        #endif
         engine.attach(player)
         engine.connect(player, to: engine.mainMixerNode, format: format)
         do { try engine.start() } catch { }
+    }
+
+    func updateSessionClaim() {
+        if isEnabled {
+            if sessionClaim == nil {
+                sessionClaim = sessionManager.beginCues(options: options)
+            }
+        } else {
+            sessionClaim?.cancel()
+            sessionClaim = nil
+        }
     }
 
     func play(_ patterns: [AudioCuePattern]) {

@@ -1,0 +1,1514 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.xctest/Contents/MacOS/AudioPackageTests",
+      "packagePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio",
+      "productName" : "AudioPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.Audio-x86_64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioCueSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Shared.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Audio",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Audio.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/Audio-Swift.h",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "audio"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Audio.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioCueSink.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.AudioPackageTests-x86_64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/AudioTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "AudioPackageTests",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/AudioPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/AudioPackageTests-Swift.h",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "audio"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/AudioPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.AudioTests-x86_64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkAcceptanceTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioSessionManagerTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioVersionTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/Locked.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Audio.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Shared.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "AudioTests",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/AudioTests.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "audio"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/AudioTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkAcceptanceTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioSessionManagerTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioVersionTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/Locked.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Shared-x86_64-apple-macosx14.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/sources",
+      "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/AbsoluteTimer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ContentHash.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueCoalescingSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HapticsCueSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HeadphoneDisconnectSafetyPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshotMigrator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanValidation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureFallback.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureRetryPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackIntent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSegmentStartDecision.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSelectionSwitch.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/RecoverableSessionSnapshot.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionOverrides.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionStateMachine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SiriInterruptionPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutPreflight.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSegmentScheduler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSessionEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutStructure.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Shared",
+      "moduleOutputPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Shared.swiftmodule",
+      "objects" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Session.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Shared-Swift.h",
+        "-swift-version",
+        "5",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "shared"
+      ],
+      "outputFileMapPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Session.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Shared.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/AbsoluteTimer.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ContentHash.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueCoalescingSink.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueEvent.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueSink.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HapticsCueSink.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HeadphoneDisconnectSafetyPolicy.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshotMigrator.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanValidation.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanVersion.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureFallback.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureRetryPolicy.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackIntent.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSegmentStartDecision.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSelectionSwitch.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/RecoverableSessionSnapshot.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionOverrides.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionStateMachine.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SiriInterruptionPolicy.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutPreflight.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSegmentScheduler.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSessionEngine.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutStructure.swift"
+      ],
+      "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "Audio" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "Audio",
+      "-package-name",
+      "audio",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioCueSink.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "-target",
+      "x86_64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/Audio-Swift.h",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "audio",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "AudioPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "AudioPackageTests",
+      "-package-name",
+      "audio",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "-target",
+      "x86_64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/AudioPackageTests-Swift.h",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "audio",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "AudioTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "AudioTests",
+      "-package-name",
+      "audio",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkAcceptanceTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioSessionManagerTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioVersionTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/Locked.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "-target",
+      "x86_64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "audio",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "Shared" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "Shared",
+      "-package-name",
+      "shared",
+      "-incremental",
+      "-c",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/AbsoluteTimer.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ContentHash.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueCoalescingSink.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueEvent.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueSink.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HapticsCueSink.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HeadphoneDisconnectSafetyPolicy.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshotMigrator.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanValidation.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanVersion.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureFallback.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureRetryPolicy.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackIntent.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSegmentStartDecision.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSelectionSwitch.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/RecoverableSessionSnapshot.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionOverrides.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionStateMachine.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SiriInterruptionPolicy.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutPreflight.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSegmentScheduler.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSessionEngine.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutStructure.swift",
+      "-I",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
+      "-target",
+      "x86_64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Shared-Swift.h",
+      "-swift-version",
+      "5",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "shared",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "Audio" : [
+      "Shared"
+    ],
+    "AudioPackageTests" : [
+      "AudioTests",
+      "Audio",
+      "Shared"
+    ],
+    "AudioTests" : [
+      "Audio",
+      "Shared"
+    ],
+    "Shared" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "writeCommands" : {
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioCueSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Session.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkAcceptanceTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioSessionManagerTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioVersionTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/Locked.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/AbsoluteTimer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ContentHash.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueCoalescingSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HapticsCueSink.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HeadphoneDisconnectSafetyPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshotMigrator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanValidation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureFallback.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureRetryPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackIntent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSegmentStartDecision.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSelectionSwitch.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/RecoverableSessionSnapshot.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionOverrides.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionStateMachine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SiriInterruptionPolicy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutPreflight.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSegmentScheduler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSessionEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutStructure.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/sources"
+    },
+    "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

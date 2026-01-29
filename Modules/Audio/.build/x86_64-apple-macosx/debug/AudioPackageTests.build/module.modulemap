@@ -1,0 +1,4 @@
+module AudioPackageTests {
+    header "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/AudioPackageTests-Swift.h"
+    requires objc
+}

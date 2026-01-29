@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4FB420732F2116340076B335 /* Audio in Frameworks */ = {isa = PBXBuildFile; productRef = 4FB420A12F22A0000076B335 /* Audio */; };
+		4FB420742F2116340076B335 /* Persistence in Frameworks */ = {isa = PBXBuildFile; productRef = 4FB420B12F2300000076B335 /* Persistence */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FB420732F2116340076B335 /* Audio in Frameworks */,
+				4FB420742F2116340076B335 /* Persistence in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +73,7 @@
 			name = Interfit;
 			packageProductDependencies = (
 				4FB420A12F22A0000076B335 /* Audio */,
+				4FB420B12F2300000076B335 /* Persistence */,
 			);
 			productName = Interfit;
 			productReference = 4FB4202A2F210AC00076B335 /* Interfit.app */;
@@ -102,6 +105,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				4FB420A02F22A0000076B335 /* XCLocalSwiftPackageReference "Modules/Audio" */,
+				4FB420B02F2300000076B335 /* XCLocalSwiftPackageReference "Modules/Persistence" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4FB4202B2F210AC00076B335 /* Products */;
@@ -337,6 +341,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Modules/Audio;
 		};
+		4FB420B02F2300000076B335 /* XCLocalSwiftPackageReference "Modules/Persistence" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/Persistence;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -344,6 +352,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FB420A02F22A0000076B335 /* XCLocalSwiftPackageReference "Modules/Audio" */;
 			productName = Audio;
+		};
+		4FB420B12F2300000076B335 /* Persistence */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FB420B02F2300000076B335 /* XCLocalSwiftPackageReference "Modules/Persistence" */;
+			productName = Persistence;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

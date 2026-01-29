@@ -3,25 +3,6 @@ import Foundation
 import Shared
 @testable import Audio
 
-final class Locked<Value>: @unchecked Sendable {
-    private let lock = NSLock()
-    private var _value: Value
-
-    init(_ value: Value) {
-        self._value = value
-    }
-
-    func withLock<R>(_ body: (inout Value) -> R) -> R {
-        lock.lock()
-        defer { lock.unlock() }
-        return body(&_value)
-    }
-
-    var value: Value {
-        withLock { $0 }
-    }
-}
-
 final class AudioCueSinkTests: XCTestCase {
     func test_mapping_for_key_events() {
         let workStart = CueEventRecord.segmentStart(segmentId: "w#1", kind: .work, setIndex: 1)

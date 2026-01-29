@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistencePackageTests.build/master.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistencePackageTests.derived/runner.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistencePackageTests.build/runner.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistencePackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistencePackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistencePackageTests.build/runner.swiftdeps"
+  }
+}

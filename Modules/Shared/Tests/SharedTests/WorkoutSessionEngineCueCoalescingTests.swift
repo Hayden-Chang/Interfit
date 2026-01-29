@@ -2,7 +2,7 @@ import XCTest
 @testable import Shared
 
 final class WorkoutSessionEngineCueCoalescingTests: XCTestCase {
-    private final class CollectingSink: CueSink {
+    private final class CollectingSink: @unchecked Sendable, CueSink {
         var events: [CueEventRecord] = []
         func emit(_ event: CueEventRecord) { events.append(event) }
     }

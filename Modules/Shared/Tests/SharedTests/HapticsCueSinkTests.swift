@@ -25,14 +25,18 @@ final class HapticsCueSinkTests: XCTestCase {
     }
 
     func test_emit_respects_enabled_flag_and_calls_handler() {
-        var captured: [[HapticPattern]] = []
-        let sinkOn = HapticsCueSink(enabled: true) { captured.append($0) }
-        let sinkOff = HapticsCueSink(enabled: false) { captured.append($0) }
+        let captured = Locked<[[HapticPattern]]>([])
+        let sinkOn = HapticsCueSink(enabled: true) { patterns in
+            captured.withLock { $0.append(patterns) }
+        }
+        let sinkOff = HapticsCueSink(enabled: false) { patterns in
+            captured.withLock { $0.append(patterns) }
+        }
 
         sinkOn.emit(.last3s(segmentId: "w#1"))
         sinkOff.emit(.completed())
 
-        XCTAssertEqual(captured.count, 1)
-        XCTAssertEqual(captured.first, [.impactLight])
+        XCTAssertEqual(captured.value.count, 1)
+        XCTAssertEqual(captured.value.first, [.impactLight])
     }
 }

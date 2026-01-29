@@ -1,7 +1,7 @@
 import XCTest
 @testable import Shared
 
-private final class CollectingCueSink: CueSink {
+private final class CollectingCueSink: @unchecked Sendable, CueSink {
     struct Emitted: Equatable {
         let kind: CueEventKind
         let at: TimeInterval

@@ -1,0 +1,41 @@
+{
+  "": {
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/master.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/BackupBundleTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/BackupBundleTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/BackupBundleTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/BackupBundleTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/BackupBundleTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PersistenceStoreTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PersistenceStoreTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PlanRepositoryTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanRepositoryTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/PlanVersionRepositoryTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanVersionRepositoryTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanVersionRepositoryTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanVersionRepositoryTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/PlanVersionRepositoryTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/RecoverableSessionRepositoryTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/RecoverableSessionRepositoryTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/RecoverableSessionRepositoryTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/RecoverableSessionRepositoryTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/RecoverableSessionRepositoryTests.swiftdeps"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/Tests/PersistenceTests/SessionRepositoryTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Persistence/.build/x86_64-apple-macosx/debug/PersistenceTests.build/SessionRepositoryTests.swiftdeps"
+  }
+}

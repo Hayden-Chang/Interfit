@@ -10,7 +10,10 @@ import SwiftUI
 @main
 struct InterfitApp: App {
     let persistenceController = PersistenceController.shared
-    private let shouldLaunchModulesDemo = ProcessInfo.processInfo.arguments.contains("-modulesDemo")
+    private let arguments = ProcessInfo.processInfo.arguments
+    private var shouldLaunchModulesDemo: Bool { arguments.contains("-modulesDemo") }
+    private var shouldLaunchPlanEditor: Bool { arguments.contains("-planEditor") }
+    private var shouldStartPlanEditorInModeB: Bool { arguments.contains("-planEditorModeB") }
 
     var body: some Scene {
         WindowGroup {
@@ -18,6 +21,10 @@ struct InterfitApp: App {
                 if shouldLaunchModulesDemo {
                     NavigationStack {
                         ModulesDemoView()
+                    }
+                } else if shouldLaunchPlanEditor {
+                    NavigationStack {
+                        PlanEditorView(plan: nil, startInModeB: shouldStartPlanEditorInModeB)
                     }
                 } else {
                     RootTabView()

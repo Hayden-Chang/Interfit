@@ -19,6 +19,15 @@ public struct AbsoluteTimer: Sendable, Equatable {
         self.totalSeconds = max(0, totalSeconds)
     }
 
+    /// Recovery initializer (3.2.2):
+    /// - Restores a paused timer at a known elapsed value.
+    public init(totalSeconds: Int, recoveringElapsedSeconds elapsedSeconds: Int, pausedAt now: Date) {
+        self.totalSeconds = max(0, totalSeconds)
+        self.accumulatedPauseSeconds = 0
+        let startedAt = now.addingTimeInterval(TimeInterval(-max(0, elapsedSeconds)))
+        self.state = .paused(startedAt: startedAt, pausedAt: now)
+    }
+
     public mutating func start(at now: Date) {
         state = .running(startedAt: now)
         accumulatedPauseSeconds = 0
@@ -66,4 +75,3 @@ public struct AbsoluteTimer: Sendable, Equatable {
         max(0, totalSeconds - elapsedSeconds(at: now))
     }
 }
-
