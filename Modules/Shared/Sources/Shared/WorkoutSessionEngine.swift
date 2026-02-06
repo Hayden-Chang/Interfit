@@ -51,6 +51,7 @@ public struct WorkoutSessionEngine: Sendable {
             workSeconds: plan.workSeconds,
             restSeconds: plan.restSeconds,
             name: plan.name,
+            musicStrategy: plan.musicStrategy,
             capturedAt: now
         )
         self.session = Session(
@@ -272,6 +273,25 @@ public struct WorkoutSessionEngine: Sendable {
 
         if safetyPolicy.decide(for: event) == .requireSafetyPause, session.status == .running {
             try? pause(reason: .safety, at: event.occurredAt)
+        }
+    }
+
+    /// Apply Siri silence threshold behavior (3.1.2).
+    public mutating func handleSiriInterruption(durationSeconds: TimeInterval, at now: Date, policy: SiriInterruptionPolicy) {
+        let decision = policy.decide(durationSeconds: durationSeconds)
+        session.events.append(
+            .init(
+                name: "siriInterruption",
+                occurredAt: now,
+                attributes: [
+                    "durationSeconds": String(durationSeconds),
+                    "decision": decision == .pause ? "pause" : "ignore",
+                ]
+            )
+        )
+
+        if decision == .pause, session.status == .running {
+            try? pause(reason: .interruption, at: now)
         }
     }
 }

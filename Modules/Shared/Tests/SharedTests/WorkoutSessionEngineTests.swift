@@ -1,6 +1,16 @@
 import XCTest
 @testable import Shared
 
+private final class CollectingCueSink: @unchecked Sendable, CueSink {
+    var events: [CueEventRecord] = []
+    func emit(_ event: CueEventRecord) { events.append(event) }
+}
+
+private final class CollectingPlaybackIntentSink: @unchecked Sendable, PlaybackIntentSink {
+    var intents: [PlaybackIntent] = []
+    func emit(_ intent: PlaybackIntent) { intents.append(intent) }
+}
+
 final class WorkoutSessionEngineTests: XCTestCase {
     func test_pause_resume_recordsReason_andStateTransitions() throws {
         let plan = Plan(setsCount: 2, workSeconds: 10, restSeconds: 0, name: "Test")
@@ -34,6 +44,34 @@ final class WorkoutSessionEngineTests: XCTestCase {
         XCTAssertEqual(r2, .ended)
         XCTAssertEqual(engine.session.status, .ended)
         XCTAssertEqual(engine.session.events.last?.kind, .ended)
+    }
+
+    func test_tick_afterEnded_doesNotEmitNewEventsOrIntentsOrCues() throws {
+        let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 5, name: "EndTick")
+        let cues = CollectingCueSink()
+        let playback = CollectingPlaybackIntentSink()
+        var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0), cues: cues, playback: playback)
+
+        // Ensure at least one tick happened at a non-zero time.
+        _ = engine.tick(at: Date(timeIntervalSince1970: 1))
+
+        _ = try engine.end(at: Date(timeIntervalSince1970: 2), confirmed: false)
+        _ = try engine.end(at: Date(timeIntervalSince1970: 3), confirmed: true)
+        XCTAssertEqual(engine.session.status, .ended)
+
+        let endedAt = engine.session.endedAt
+        let sessionEventsCount = engine.session.events.count
+        let cueCount = cues.events.count
+        let intentCount = playback.intents.count
+
+        // Tick far in the future should be a no-op for an ended session.
+        let didComplete = engine.tick(at: Date(timeIntervalSince1970: 100))
+        XCTAssertFalse(didComplete)
+        XCTAssertEqual(engine.session.status, .ended)
+        XCTAssertEqual(engine.session.endedAt, endedAt)
+        XCTAssertEqual(engine.session.events.count, sessionEventsCount)
+        XCTAssertEqual(cues.events.count, cueCount)
+        XCTAssertEqual(playback.intents.count, intentCount)
     }
 
     func test_completion_setsCompletedStatus_notEnded() throws {

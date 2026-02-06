@@ -22,14 +22,17 @@ struct DebugMenuView: View {
                     NavigationLink("Modules demo") {
                         ModulesDemoView()
                     }
+                    NavigationLink("Legacy Core Data demo (ContentView)") {
+                        ContentView()
+                    }
                     NavigationLink("Plan editor (Mode A)") {
                         PlanEditorView(plan: nil)
                     }
                     NavigationLink("Plan editor (Mode B)") {
                         PlanEditorView(plan: nil, startInModeB: true)
                     }
-                    NavigationLink("Plans") {
-                        PlansListView()
+                    NavigationLink("Train (Quick Start)") {
+                        QuickStartView()
                     }
                     NavigationLink("History") {
                         SessionHistoryListView()
@@ -44,7 +47,7 @@ struct DebugMenuView: View {
 
                 Section("Data") {
                     Button("Seed demo data") {
-                        run(action: "Seed demo data", label: "Seeding demo data…", destination: .plans) {
+                        run(action: "Seed demo data", label: "Seeding demo data…", destination: .train) {
                             await DemoDataSeeder.seedIfRequested(arguments: ["-seedDemoData"])
                         }
                     }
@@ -131,8 +134,8 @@ struct DebugMenuView: View {
             }
             .navigationDestination(for: Destination.self) { destination in
                 switch destination {
-                case .plans:
-                    PlansListView()
+                case .train:
+                    QuickStartView()
                 case .history:
                     SessionHistoryListView()
                 }
@@ -141,7 +144,7 @@ struct DebugMenuView: View {
     }
 
     private enum Destination: Hashable {
-        case plans
+        case train
         case history
     }
 

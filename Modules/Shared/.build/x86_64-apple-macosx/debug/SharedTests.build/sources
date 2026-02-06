@@ -7,10 +7,13 @@
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/LoggerTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicAvailabilityTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicPlayModeTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionLibraryTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicStrategyFactoryTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicStrategyTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanModeBCalculatorTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanSnapshotMigratorTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanSummaryConversionTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanValidationTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/PlanVersionTests.swift

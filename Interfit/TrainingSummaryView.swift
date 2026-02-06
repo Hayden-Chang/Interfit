@@ -11,8 +11,8 @@ struct TrainingSummaryView: View {
     let outcome: Outcome
     let plan: Plan
     let session: Session?
+    let onTrainAgain: () -> Void
 
-    @Environment(\.dismiss) private var dismiss
     @State private var didSaveToPlans: Bool = false
 
     private let planRepository: any PlanRepository = CoreDataPersistenceStore()
@@ -38,11 +38,11 @@ struct TrainingSummaryView: View {
             Spacer().frame(height: 8)
 
             Button("Train Again") {
-                dismiss()
+                onTrainAgain()
             }
             .buttonStyle(.borderedProminent)
 
-            Button("Save to Plans") {
+            Button("Save as preset") {
                 saveToPlans()
             }
             .buttonStyle(.bordered)
@@ -52,7 +52,7 @@ struct TrainingSummaryView: View {
         .alert("Saved", isPresented: $didSaveToPlans) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("Plan saved to Plans.")
+            Text("Preset saved. You’ll see it in Step 1 · Choose a preset.")
         }
     }
 
@@ -90,6 +90,8 @@ struct TrainingSummaryView: View {
             outcome: .completed,
             plan: Plan(setsCount: 8, workSeconds: 30, restSeconds: 15, name: "HIIT"),
             session: nil
+            ,
+            onTrainAgain: {}
         )
     }
 }

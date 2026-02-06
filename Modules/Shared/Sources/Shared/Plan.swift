@@ -8,6 +8,8 @@ public struct Plan: Sendable, Codable, Equatable, Hashable, Identifiable {
     public var workSeconds: Int
     public var restSeconds: Int
     public var name: String
+    /// Optional music strategy that can drive playback during training.
+    public var musicStrategy: MusicStrategy?
     public var isFavorite: Bool
     public var forkedFromVersionId: UUID?
     public var sourcePostId: UUID?
@@ -20,6 +22,7 @@ public struct Plan: Sendable, Codable, Equatable, Hashable, Identifiable {
         workSeconds: Int,
         restSeconds: Int,
         name: String,
+        musicStrategy: MusicStrategy? = nil,
         isFavorite: Bool = false,
         forkedFromVersionId: UUID? = nil,
         sourcePostId: UUID? = nil,
@@ -31,6 +34,7 @@ public struct Plan: Sendable, Codable, Equatable, Hashable, Identifiable {
         self.workSeconds = workSeconds
         self.restSeconds = restSeconds
         self.name = name
+        self.musicStrategy = musicStrategy
         self.isFavorite = isFavorite
         self.forkedFromVersionId = forkedFromVersionId
         self.sourcePostId = sourcePostId

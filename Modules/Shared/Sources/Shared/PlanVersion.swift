@@ -18,6 +18,8 @@ public struct PlanVersion: Sendable, Codable, Equatable, Identifiable {
     public var workSeconds: Int
     public var restSeconds: Int
     public var name: String
+    /// Optional music strategy for this plan version.
+    public var musicStrategy: MusicStrategy?
 
     public var createdAt: Date
     public var updatedAt: Date
@@ -32,6 +34,7 @@ public struct PlanVersion: Sendable, Codable, Equatable, Identifiable {
         workSeconds: Int,
         restSeconds: Int,
         name: String,
+        musicStrategy: MusicStrategy? = nil,
         createdAt: Date = Date(),
         updatedAt: Date = Date(),
         publishedAt: Date? = nil
@@ -44,6 +47,7 @@ public struct PlanVersion: Sendable, Codable, Equatable, Identifiable {
         self.workSeconds = workSeconds
         self.restSeconds = restSeconds
         self.name = name
+        self.musicStrategy = musicStrategy
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.publishedAt = publishedAt

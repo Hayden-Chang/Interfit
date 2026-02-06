@@ -21,5 +21,13 @@ final class PlanValidationTests: XCTestCase {
         let plan = Plan(setsCount: 10, workSeconds: 90, restSeconds: -1, name: "Bad rest")
         XCTAssertEqual(plan.validate(), [.restSecondsOutOfRange(min: 0, max: 1800, actual: -1)])
     }
-}
 
+    func test_clampedRecommended_clampsParametersIntoBounds() {
+        let plan = Plan(setsCount: 0, workSeconds: 9, restSeconds: -1, name: "Legacy")
+        let clamped = plan.clamped()
+        XCTAssertEqual(clamped.setsCount, 1)
+        XCTAssertEqual(clamped.workSeconds, 10)
+        XCTAssertEqual(clamped.restSeconds, 0)
+        XCTAssertEqual(clamped.validate(), [])
+    }
+}

@@ -43,6 +43,41 @@ final class AudioSessionManagerTests: XCTestCase {
         ])
     }
 
+    func test_beginPlayback_doesNotDeadlock_whenApplyRequestReentersManager() {
+        let applied = Locked<[AudioSessionRequest]>([])
+        let didReenter = Locked(false)
+
+        let managerBox = Locked<AudioSessionManager?>(nil)
+        let manager = AudioSessionManager(
+            notificationCenter: .init(),
+            applyRequest: { request in
+                applied.withLock { $0.append(request) }
+
+                let shouldReenter = didReenter.withLock { value in
+                    if value { return false }
+                    value = true
+                    return true
+                }
+                guard shouldReenter else { return }
+
+                guard let manager = managerBox.value else { return }
+                let token = manager.beginPlayback(mixWithOthers: true)
+                token.cancel()
+            }
+        )
+        managerBox.withLock { $0 = manager }
+
+        let exp = expectation(description: "beginPlayback completes")
+        DispatchQueue.global().async {
+            let token = manager.beginPlayback(mixWithOthers: true)
+            token.cancel()
+            exp.fulfill()
+        }
+        waitForExpectations(timeout: 1.0)
+
+        XCTAssertFalse(applied.value.isEmpty)
+    }
+
     func test_audioCueSink_claimsSessionOnInit_andReclaimsOnReenable() {
         let applied = Locked<[AudioSessionRequest]>([])
         let manager = AudioSessionManager(

@@ -8,6 +8,7 @@ import Network
 struct TrainingView: View {
     let plan: Plan?
     let recoverableSnapshot: RecoverableSessionSnapshot?
+    let onExitToCleanTraining: (() -> Void)?
 
     @State private var engine: WorkoutSessionEngine?
     @State private var now: Date = Date()
@@ -15,10 +16,18 @@ struct TrainingView: View {
 
     @ScaledMetric(relativeTo: .largeTitle) private var countdownFontSize: CGFloat = 72
 
+    private enum SummaryDismissAction: Sendable {
+        case restart
+        case clean
+    }
+
     @State private var isShowingSummary: Bool = false
     @State private var summaryOutcome: TrainingSummaryView.Outcome?
     @State private var summarySession: Session?
+    @State private var summaryPresentedForSessionId: UUID?
+    @State private var summaryDismissAction: SummaryDismissAction = .clean
     @State private var isShowingEndConfirm: Bool = false
+    @State private var didConfirmEndFromAlert: Bool = false
     @State private var didPersistSession: Bool = false
     @State private var isShowingMusicPicker: Bool = false
     @State private var isShowingBackgroundTimingNotice: Bool = false
@@ -26,6 +35,8 @@ struct TrainingView: View {
     @State private var lastRecoverableSnapshotPersistedAt: Date?
     @State private var didTriggerStartPreflight: Bool = false
     @State private var didSimulateHeadphoneDisconnect: Bool = false
+    @State private var siriSecondaryAudioSilenceBeganAt: Date?
+    @State private var ignoreRecoverySnapshot: Bool = false
 
     @AppStorage(BackgroundTimingNoticePolicy.userDefaultsKey) private var didShowBackgroundTimingNotice: Bool = false
 
@@ -35,13 +46,43 @@ struct TrainingView: View {
 
     private let tickTimer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
 
-    init(plan: Plan? = nil, recoverableSnapshot: RecoverableSessionSnapshot? = nil) {
+    init(
+        plan: Plan? = nil,
+        recoverableSnapshot: RecoverableSessionSnapshot? = nil,
+        onExitToCleanTraining: (() -> Void)? = nil
+    ) {
         self.plan = plan
         self.recoverableSnapshot = recoverableSnapshot
+        self.onExitToCleanTraining = onExitToCleanTraining
     }
 
     var body: some View {
         VStack(spacing: 16) {
+            if plan == nil, recoverableSnapshot == nil {
+                Text("No plan selected")
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text("Start a workout from Train.")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                HStack {
+                    NavigationLink("Train") {
+                        QuickStartView()
+                    }
+                    .buttonStyle(.borderedProminent)
+
+                    NavigationLink("Create plan") {
+                        PlanEditorView(plan: nil)
+                    }
+                    .buttonStyle(.bordered)
+                }
+
+                Spacer()
+            }
+
             if let plan {
                 Text(plan.name)
                     .font(.headline)
@@ -89,6 +130,10 @@ struct TrainingView: View {
         .padding()
         .navigationTitle("Training")
         .onAppear { startIfNeeded() }
+        .onChange(of: isShowingSummary) { isPresented in
+            guard !isPresented else { return }
+            handleSummaryDismissal()
+        }
         .onDisappear {
             stopObservingAudioSession()
             nowPlaying.stop()
@@ -103,20 +148,40 @@ struct TrainingView: View {
         .onReceive(NotificationCenter.default.publisher(for: NowPlayingManager.remoteToggleNotification)) { _ in
             handleRemoteToggle()
         }
+        .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.silenceSecondaryAudioHintNotification)) { notification in
+            handleSiriSilenceSecondaryAudioHint(notification)
+        }
         .navigationDestination(isPresented: $isShowingSummary) {
-            if let plan, let summaryOutcome {
-                TrainingSummaryView(outcome: summaryOutcome, plan: plan, session: summarySession)
+            if let summaryOutcome, let plan = summaryPlanForSummary {
+                TrainingSummaryView(
+                    outcome: summaryOutcome,
+                    plan: plan,
+                    session: summarySession,
+                    onTrainAgain: {
+                        summaryDismissAction = .restart
+                        isShowingSummary = false
+                    }
+                )
+            } else {
+                VStack(spacing: 12) {
+                    Text("Summary unavailable")
+                        .font(.title2.bold())
+                    Text("We couldn’t resolve a plan to show the summary.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+                .padding()
             }
         }
         .sheet(isPresented: $isShowingMusicPicker) {
             NavigationStack {
-                MusicPickerView { selection in
+                MusicPickerView(allowedTypes: [.track, .playlist]) { selection in
                     applyMusicOverride(selection)
                 }
             }
         }
         .alert("End workout?", isPresented: $isShowingEndConfirm) {
-            Button("End", role: .destructive) { endWorkout(confirmed: true) }
+            Button("End", role: .destructive) { didConfirmEndFromAlert = true }
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("This will stop the workout and show a summary.")
@@ -126,6 +191,12 @@ struct TrainingView: View {
             Button("Add music") { isShowingMusicPicker = true }
         } message: {
             Text(BackgroundTimingNoticePolicy.message)
+        }
+        .onChange(of: didConfirmEndFromAlert) { confirmed in
+            guard confirmed else { return }
+            didConfirmEndFromAlert = false
+            isShowingEndConfirm = false
+            endWorkout(confirmed: true)
         }
         .toolbar {
             if engine?.session.status == .running || engine?.session.status == .paused {
@@ -146,6 +217,7 @@ struct TrainingView: View {
         ]
         let cues = CueCoalescingSink(MultiCueSink(sinks))
 
+        let strategy = recoverableSnapshot?.session.planSnapshot?.musicStrategy ?? plan?.musicStrategy
         let simulatePlaybackLoadFailure = ProcessInfo.processInfo.arguments.contains("-simulatePlaybackLoadFailure")
         let debugSelection = MusicSelection(
             source: .appleMusic,
@@ -160,13 +232,14 @@ struct TrainingView: View {
                 if simulatePlaybackLoadFailure, kind == .work, setIndex == 1 {
                     return debugSelection
                 }
-                return nil
+                return strategy?.selection(for: kind, setIndex: setIndex)
             },
-            selectionApplier: { _ in
+            selectionApplier: { selection in
                 if simulatePlaybackLoadFailure {
                     struct SimulatedPlaybackLoadError: Error {}
                     throw SimulatedPlaybackLoadError()
                 }
+                try await MusicPlaybackClient.apply(selection: selection)
             },
             failureClassifier: { _ in
                 simulatePlaybackLoadFailure ? .timeout : .unknown
@@ -185,7 +258,8 @@ struct TrainingView: View {
                 engine = eng
             }
         })
-        if let recoverableSnapshot {
+
+        if !ignoreRecoverySnapshot, let recoverableSnapshot {
             engine = try? WorkoutSessionEngine(recovering: recoverableSnapshot, now: Date(), cues: cues, playback: playback)
         } else if let plan {
             engine = try? WorkoutSessionEngine(plan: plan, now: Date(), cues: cues, playback: playback)
@@ -201,6 +275,7 @@ struct TrainingView: View {
     }
 
     private func tickIfNeeded(now: Date) {
+        if isShowingSummary { return }
         guard var eng = engine else { return }
         _ = eng.tick(at: now)
         engine = eng
@@ -208,20 +283,26 @@ struct TrainingView: View {
         nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
         persistRecoverableSnapshotIfNeeded(eng, now: now)
 
-        if !isShowingSummary {
+        if !isShowingSummary, summaryPresentedForSessionId != eng.session.id {
             switch eng.session.status {
             case .completed:
                 persistSessionIfNeeded(eng.session)
                 summaryOutcome = .completed
                 summarySession = eng.session
+                summaryPresentedForSessionId = eng.session.id
+                summaryDismissAction = .clean
                 isShowingSummary = true
                 nowPlaying.stop()
+                stopObservingAudioSession()
             case .ended:
                 persistSessionIfNeeded(eng.session)
                 summaryOutcome = .ended
                 summarySession = eng.session
+                summaryPresentedForSessionId = eng.session.id
+                summaryDismissAction = .clean
                 isShowingSummary = true
                 nowPlaying.stop()
+                stopObservingAudioSession()
             default:
                 break
             }
@@ -252,6 +333,7 @@ struct TrainingView: View {
         guard var eng = engine else { return }
         eng.setMusicSelectionOverride(selection, at: now)
         engine = eng
+        Task { try? await MusicPlaybackClient.apply(selection: selection) }
     }
 
     private func startObservingAudioSession() {
@@ -277,6 +359,32 @@ struct TrainingView: View {
     private func stopObservingAudioSession() {
         audioSessionObservation?.cancel()
         audioSessionObservation = nil
+    }
+
+    private func handleSiriSilenceSecondaryAudioHint(_ notification: Notification) {
+        guard let raw = notification.userInfo?[AVAudioSessionSilenceSecondaryAudioHintTypeKey] as? UInt else { return }
+        guard let hint = AVAudioSession.SilenceSecondaryAudioHintType(rawValue: raw) else { return }
+
+        switch hint {
+        case .begin:
+            siriSecondaryAudioSilenceBeganAt = Date()
+        case .end:
+            let endedAt = Date()
+            let beganAt = siriSecondaryAudioSilenceBeganAt ?? endedAt
+            siriSecondaryAudioSilenceBeganAt = nil
+            let duration = max(0, endedAt.timeIntervalSince(beganAt))
+
+            Task { @MainActor in
+                guard var eng = engine else { return }
+                eng.handleSiriInterruption(durationSeconds: duration, at: endedAt, policy: SiriInterruptionSettingsStore.policy)
+                engine = eng
+                now = endedAt
+                nowPlaying.update(planName: plan?.name, progress: eng.progress(at: endedAt), sessionStatus: eng.session.status)
+                persistRecoverableSnapshotIfNeeded(eng, now: endedAt, force: true)
+            }
+        @unknown default:
+            break
+        }
     }
 
     private var formattedCountdown: String {
@@ -345,16 +453,73 @@ struct TrainingView: View {
         case .ended:
             persistSessionIfNeeded(eng.session)
             summaryOutcome = .ended
+            summarySession = eng.session
+            summaryPresentedForSessionId = eng.session.id
+            summaryDismissAction = .clean
             isShowingSummary = true
             nowPlaying.stop()
+            stopObservingAudioSession()
         case .alreadyEnded:
             break
         case .alreadyCompleted:
             persistSessionIfNeeded(eng.session)
             summaryOutcome = .completed
+            summarySession = eng.session
+            summaryPresentedForSessionId = eng.session.id
+            summaryDismissAction = .clean
             isShowingSummary = true
             nowPlaying.stop()
+            stopObservingAudioSession()
         }
+    }
+
+    private func handleSummaryDismissal() {
+        let action = summaryDismissAction
+        summaryDismissAction = .clean
+
+        switch action {
+        case .restart:
+            restartWorkout()
+        case .clean:
+            if let onExitToCleanTraining {
+                onExitToCleanTraining()
+            }
+        }
+    }
+
+    private func restartWorkout() {
+        stopObservingAudioSession()
+        nowPlaying.stop()
+
+        engine = nil
+        now = Date()
+        isShowingSummary = false
+        summaryOutcome = nil
+        summarySession = nil
+        didPersistSession = false
+        isShowingEndConfirm = false
+        didConfirmEndFromAlert = false
+        isShowingMusicPicker = false
+        lastRecoverableSnapshotPersistedAt = nil
+        didTriggerStartPreflight = false
+        siriSecondaryAudioSilenceBeganAt = nil
+        ignoreRecoverySnapshot = true
+
+        startIfNeeded()
+    }
+
+    private var summaryPlanForSummary: Plan? {
+        if let plan { return plan }
+
+        if let snapshot = recoverableSnapshot?.session.planSnapshot {
+            return Plan.from(snapshot: snapshot)
+        }
+
+        if let session = summarySession ?? engine?.session {
+            return Plan.fallbackFrom(session: session)
+        }
+
+        return nil
     }
 
     private func handleRemotePlay() {

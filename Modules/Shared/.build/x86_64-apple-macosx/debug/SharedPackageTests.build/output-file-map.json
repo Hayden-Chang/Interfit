@@ -6,6 +6,7 @@
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedPackageTests.build/runner.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedPackageTests.build/runner.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedPackageTests.build/runner~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedPackageTests.build/runner.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedPackageTests.build/runner.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedPackageTests.build/runner.dia"
   }
 }

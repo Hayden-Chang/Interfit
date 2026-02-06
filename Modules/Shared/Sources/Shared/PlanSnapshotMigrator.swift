@@ -46,6 +46,10 @@ public enum PlanSnapshotMigrator {
                 current = migrateV0ToV1(current)
                 version = 1
                 didMigrate = true
+            case 1:
+                current = migrateV1ToV2(current)
+                version = 2
+                didMigrate = true
             default:
                 var bumped = current
                 bumped.configVersion = currentVersion
@@ -61,6 +65,12 @@ public enum PlanSnapshotMigrator {
     private static func migrateV0ToV1(_ snapshot: PlanSnapshot) -> PlanSnapshot {
         var migrated = snapshot
         migrated.configVersion = 1
+        return migrated
+    }
+
+    private static func migrateV1ToV2(_ snapshot: PlanSnapshot) -> PlanSnapshot {
+        var migrated = snapshot
+        migrated.configVersion = 2
         return migrated
     }
 }

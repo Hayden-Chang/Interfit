@@ -4,7 +4,7 @@ import Foundation
 ///
 /// - Global: default selection used when cycle is unavailable.
 /// - Cycle: per-segment-kind sequences; setIndex `i` picks `i % n` (1-based input).
-public struct MusicStrategy: Sendable, Codable, Equatable {
+public struct MusicStrategy: Sendable, Codable, Equatable, Hashable {
     public var global: MusicSelection?
     public var workCycle: [MusicSelection]
     public var restCycle: [MusicSelection]
@@ -34,4 +34,3 @@ public struct MusicStrategy: Sendable, Codable, Equatable {
         return global
     }
 }
-

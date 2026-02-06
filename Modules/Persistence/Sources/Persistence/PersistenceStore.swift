@@ -343,6 +343,7 @@ extension InMemoryPersistenceStore: PlanRepository {
             workSeconds: existing.workSeconds,
             restSeconds: existing.restSeconds,
             name: nameOverride ?? (existing.name + " Copy"),
+            musicStrategy: existing.musicStrategy,
             isFavorite: existing.isFavorite,
             createdAt: Date(),
             updatedAt: Date()
@@ -354,7 +355,12 @@ extension InMemoryPersistenceStore: PlanRepository {
 
 extension CoreDataPersistenceStore: PlanRepository {
     public func fetchAllPlans() async -> [Plan] {
-        loadPlans().sorted { $0.updatedAt > $1.updatedAt }
+        let plans = loadPlans()
+        let clamped = plans.map { $0.clamped() }
+        if clamped != plans {
+            savePlans(clamped)
+        }
+        return clamped.sorted { $0.updatedAt > $1.updatedAt }
     }
 
     public func fetchRecentPlans(limit: Int) async -> [Plan] {
@@ -385,6 +391,7 @@ extension CoreDataPersistenceStore: PlanRepository {
             workSeconds: existing.workSeconds,
             restSeconds: existing.restSeconds,
             name: nameOverride ?? (existing.name + " Copy"),
+            musicStrategy: existing.musicStrategy,
             isFavorite: existing.isFavorite,
             createdAt: Date(),
             updatedAt: Date()

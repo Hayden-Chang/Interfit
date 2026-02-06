@@ -104,18 +104,25 @@ public final class AudioSessionManager: @unchecked Sendable {
 
     public func begin(request: AudioSessionRequest) -> AudioSessionObservationToken {
         let id = UUID()
+        var requestToApply: AudioSessionRequest?
         stateLock.lock()
         activeRequests[id] = request
-        applyIfNeededLocked()
+        requestToApply = mergedRequestToApplyLocked()
         stateLock.unlock()
+        if let requestToApply { applyRequest(requestToApply) }
 
         return AudioSessionObservationToken(cancel: { [weak self] in
             guard let self else { return }
+            var requestToApply: AudioSessionRequest?
             self.stateLock.lock()
             self.activeRequests.removeValue(forKey: id)
-            if self.activeRequests.isEmpty { self.appliedRequest = nil }
-            else { self.applyIfNeededLocked() }
+            if self.activeRequests.isEmpty {
+                self.appliedRequest = nil
+            } else {
+                requestToApply = self.mergedRequestToApplyLocked()
+            }
             self.stateLock.unlock()
+            if let requestToApply { self.applyRequest(requestToApply) }
         })
     }
 
@@ -167,12 +174,12 @@ public final class AudioSessionManager: @unchecked Sendable {
         #endif
     }
 
-    private func applyIfNeededLocked() {
-        guard !activeRequests.isEmpty else { return }
+    private func mergedRequestToApplyLocked() -> AudioSessionRequest? {
+        guard !activeRequests.isEmpty else { return nil }
         let combined = activeRequests.values.reduce(AudioSessionRequest.none) { $0.merged(with: $1) }
-        guard combined != appliedRequest else { return }
+        guard combined != appliedRequest else { return nil }
         appliedRequest = combined
-        applyRequest(combined)
+        return combined
     }
 
     public static func defaultApplyRequest(_ request: AudioSessionRequest) {

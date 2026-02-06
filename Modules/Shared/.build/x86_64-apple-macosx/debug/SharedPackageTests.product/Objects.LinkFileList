@@ -12,7 +12,10 @@
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.swift.o
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swift.o
@@ -44,10 +47,13 @@
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/LoggerTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicAvailabilityTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicPlayModeTests.swift.o
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicSelectionLibraryTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicSelectionTests.swift.o
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicStrategyFactoryTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicStrategyTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/PlanModeBCalculatorTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/PlanSnapshotMigratorTests.swift.o
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/PlanSummaryConversionTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/PlanTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/PlanValidationTests.swift.o
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/PlanVersionTests.swift.o

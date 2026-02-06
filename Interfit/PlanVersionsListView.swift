@@ -113,7 +113,7 @@ struct PlanVersionsListView: View {
             )
             await planRepository.upsertPlan(newPlan)
             await MainActor.run {
-                applyMessage = "已复制到 Plans：\(newPlan.name)"
+                applyMessage = "已复制到预设列表：\(newPlan.name)"
                 selectedPlan = newPlan
                 isShowingPlanEditor = true
             }

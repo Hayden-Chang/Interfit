@@ -41,6 +41,22 @@ struct PlanEditorView: View {
         }
     }
 
+    private enum MusicMode: String, CaseIterable, Identifiable {
+        case off
+        case simple
+        case perSet
+
+        var id: Self { self }
+
+        var title: String {
+            switch self {
+            case .off: "Off"
+            case .simple: "Simple"
+            case .perSet: "Per-set"
+            }
+        }
+    }
+
     let plan: Plan?
 
     @State private var planId: UUID
@@ -55,6 +71,12 @@ struct PlanEditorView: View {
     @State private var modeBTotalSeconds: Int
     @State private var modeBWorkPart: Int
     @State private var modeBRestPart: Int
+
+    @State private var musicMode: MusicMode
+    @State private var musicSimpleWork: MusicSelection?
+    @State private var musicSimpleRest: MusicSelection?
+    @State private var musicPerSetWork: [MusicSelection?]
+    @State private var musicPerSetRest: MusicSelection?
 
     @State private var isSaving: Bool = false
     @State private var isPublishing: Bool = false
@@ -93,6 +115,39 @@ struct PlanEditorView: View {
         let initialRatio = Self.normalizedRatio(workSeconds: initialWork, restSeconds: initialRest, maxPart: 20)
         _modeBWorkPart = State(initialValue: initialRatio.workPart)
         _modeBRestPart = State(initialValue: initialRatio.restPart)
+
+        let initialStrategy = plan?.musicStrategy
+        let defaultPerSet = Array(repeating: nil as MusicSelection?, count: max(0, initialSets))
+
+        if let initialStrategy, initialStrategy.workCycle.count == initialSets, initialStrategy.restCycle.count == 1 {
+            _musicMode = State(initialValue: .perSet)
+            _musicPerSetWork = State(initialValue: initialStrategy.workCycle.map { Optional($0) })
+            _musicPerSetRest = State(initialValue: initialStrategy.restCycle.first)
+            _musicSimpleWork = State(initialValue: nil)
+            _musicSimpleRest = State(initialValue: nil)
+        } else if let initialStrategy, initialStrategy.workCycle.count <= 1, initialStrategy.restCycle.count <= 1 {
+            _musicMode = State(initialValue: .simple)
+            _musicSimpleWork = State(initialValue: initialStrategy.workCycle.first)
+            _musicSimpleRest = State(initialValue: initialStrategy.restCycle.first)
+            _musicPerSetWork = State(initialValue: defaultPerSet)
+            _musicPerSetRest = State(initialValue: nil)
+        } else if initialStrategy != nil {
+            _musicMode = State(initialValue: .perSet)
+            var perSet = defaultPerSet
+            for (idx, sel) in (initialStrategy?.workCycle ?? []).enumerated() {
+                if idx < perSet.count { perSet[idx] = sel }
+            }
+            _musicPerSetWork = State(initialValue: perSet)
+            _musicPerSetRest = State(initialValue: initialStrategy?.restCycle.first)
+            _musicSimpleWork = State(initialValue: nil)
+            _musicSimpleRest = State(initialValue: nil)
+        } else {
+            _musicMode = State(initialValue: .off)
+            _musicSimpleWork = State(initialValue: nil)
+            _musicSimpleRest = State(initialValue: nil)
+            _musicPerSetWork = State(initialValue: defaultPerSet)
+            _musicPerSetRest = State(initialValue: nil)
+        }
     }
 
     private var draftPlan: Plan {
@@ -103,6 +158,7 @@ struct PlanEditorView: View {
             workSeconds: workSeconds,
             restSeconds: restSeconds,
             name: trimmedName.isEmpty ? "Untitled" : trimmedName,
+            musicStrategy: computedMusicStrategy,
             isFavorite: plan?.isFavorite ?? false,
             forkedFromVersionId: plan?.forkedFromVersionId,
             sourcePostId: plan?.sourcePostId,
@@ -112,13 +168,48 @@ struct PlanEditorView: View {
     }
 
     private var validationMessages: [String] {
-        PlanValidationAdapter.validationMessages(for: draftPlan)
+        PlanValidationAdapter.validationMessages(for: draftPlan) + musicValidationMessages
     }
 
     private var canSave: Bool {
         !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && PlanValidationAdapter.canStart(plan: draftPlan)
+            && musicValidationMessages.isEmpty
             && !isSaving
+    }
+
+    private var computedMusicStrategy: MusicStrategy? {
+        switch musicMode {
+        case .off:
+            return nil
+        case .simple:
+            return MusicStrategyFactory.simple(work: musicSimpleWork, rest: musicSimpleRest)
+        case .perSet:
+            let filled = musicPerSetWork.compactMap { $0 }
+            if filled.count != setsCount {
+                return MusicStrategyFactory.perSet(workCycle: [], rest: musicPerSetRest)
+            }
+            return MusicStrategyFactory.perSet(workCycle: filled, rest: musicPerSetRest)
+        }
+    }
+
+    private var musicValidationMessages: [String] {
+        switch musicMode {
+        case .off:
+            return []
+        case .simple:
+            var messages: [String] = []
+            if musicSimpleWork == nil { messages.append("Pick a Work track (Music · Simple).") }
+            if musicSimpleRest == nil { messages.append("Pick a Rest track (Music · Simple).") }
+            return messages
+        case .perSet:
+            var messages: [String] = []
+            if musicPerSetRest == nil { messages.append("Pick a Rest track (Music · Per-set).") }
+            if musicPerSetWork.count != setsCount || musicPerSetWork.contains(where: { $0 == nil }) {
+                messages.append("Pick a Work track for every set (Music · Per-set).")
+            }
+            return messages
+        }
     }
 
     private var modeBInput: PlanModeBInput {
@@ -148,6 +239,7 @@ struct PlanEditorView: View {
         Form {
             planSection
             timingSection
+            musicSection
             sourceSection
             validationSection
             saveSection
@@ -155,6 +247,9 @@ struct PlanEditorView: View {
 
         }
         .navigationTitle(plan == nil ? "Create Plan" : "Edit Plan")
+        .onChange(of: setsCount) { newValue in
+            syncPerSetMusicArray(setsCount: newValue)
+        }
         .task(id: planId) {
             await loadPublishedVersions()
         }
@@ -330,6 +425,46 @@ struct PlanEditorView: View {
         }
     }
 
+    private var musicSection: some View {
+        Section("Music") {
+            Picker("Mode", selection: $musicMode) {
+                ForEach(MusicMode.allCases) { mode in
+                    Text(mode.title).tag(mode)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            switch musicMode {
+            case .off:
+                Text("No music will be played automatically during training.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            case .simple:
+                musicPickerRow(title: "Work", currentSelection: musicSimpleWork) { selection in
+                    musicSimpleWork = selection
+                }
+
+                musicPickerRow(title: "Rest", currentSelection: musicSimpleRest) { selection in
+                    musicSimpleRest = selection
+                }
+            case .perSet:
+                musicPickerRow(title: "Rest", currentSelection: musicPerSetRest) { selection in
+                    musicPerSetRest = selection
+                }
+
+                ForEach(0..<max(0, setsCount), id: \.self) { idx in
+                    musicPickerRow(title: "Work · Set \(idx + 1)", currentSelection: musicPerSetWork[safe: idx] ?? nil) { selection in
+                        setPerSetWorkSelection(selection, index: idx)
+                    }
+                }
+            }
+
+            Text("Choose music while creating the plan. Training will follow this strategy automatically.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+    }
+
     @ViewBuilder
     private var sourceSection: some View {
         if let forkedFromVersionId = plan?.forkedFromVersionId {
@@ -421,6 +556,7 @@ struct PlanEditorView: View {
                 workSeconds: snapshot.workSeconds,
                 restSeconds: snapshot.restSeconds,
                 name: snapshot.name,
+                musicStrategy: snapshot.musicStrategy,
                 publishedAt: Date()
             )
             do {
@@ -434,6 +570,39 @@ struct PlanEditorView: View {
                     isPublishing = false
                     publishErrorMessage = String(describing: error)
                 }
+            }
+        }
+    }
+
+    private func syncPerSetMusicArray(setsCount: Int) {
+        guard setsCount >= 0 else { return }
+        if musicPerSetWork.count == setsCount { return }
+        if musicPerSetWork.count < setsCount {
+            musicPerSetWork.append(contentsOf: Array(repeating: nil, count: setsCount - musicPerSetWork.count))
+        } else {
+            musicPerSetWork = Array(musicPerSetWork.prefix(setsCount))
+        }
+    }
+
+    private func setPerSetWorkSelection(_ selection: MusicSelection, index: Int) {
+        syncPerSetMusicArray(setsCount: setsCount)
+        guard index >= 0, index < musicPerSetWork.count else { return }
+        musicPerSetWork[index] = selection
+    }
+
+    private func musicPickerRow(
+        title: String,
+        currentSelection: MusicSelection?,
+        onPick: @escaping (MusicSelection) -> Void
+    ) -> some View {
+        NavigationLink {
+            MusicPickerView(allowedTypes: [.track, .playlist]) { selection in
+                onPick(selection)
+            }
+        } label: {
+            LabeledContent(title) {
+                Text(currentSelection?.displayTitle ?? "Select")
+                    .foregroundStyle(currentSelection == nil ? .secondary : .primary)
             }
         }
     }
@@ -480,5 +649,12 @@ struct PlanEditorView: View {
 #Preview {
     NavigationStack {
         PlanEditorView(plan: nil)
+    }
+}
+
+private extension Array {
+    subscript(safe index: Int) -> Element? {
+        guard index >= 0, index < count else { return nil }
+        return self[index]
     }
 }

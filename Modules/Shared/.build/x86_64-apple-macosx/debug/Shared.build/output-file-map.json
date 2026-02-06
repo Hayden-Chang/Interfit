@@ -6,216 +6,273 @@
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/AbsoluteTimer.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ContentHash.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ContentHash.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueCoalescingSink.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueCoalescingSink.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueEvent.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueEvent.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/CueSink.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueSink~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/CueSink.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/DegradeReason.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/DegradeReason.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ErrorReason.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/ErrorReason.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HapticsCueSink.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HapticsCueSink.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/HeadphoneDisconnectSafetyPolicy.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/HeadphoneDisconnectSafetyPolicy.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.dia"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.dia"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategyFactory.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.dia"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan+Summary.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Plan.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshotMigrator.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshotMigrator.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanValidation.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanValidation.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanVersion.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlanVersion.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureFallback.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureFallback.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackFailureRetryPolicy.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackFailureRetryPolicy.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackIntent.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackIntent.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSegmentStartDecision.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSegmentStartDecision.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlaybackSelectionSwitch.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/PlaybackSelectionSwitch.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/RecoverableSessionSnapshot.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/RecoverableSessionSnapshot.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Session.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Session.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Session.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Session~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Session.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Session.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Session.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionOverrides.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionOverrides.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SessionStateMachine.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SessionStateMachine.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SharedVersion.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SharedVersion.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/SiriInterruptionPolicy.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/SiriInterruptionPolicy.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutPreflight.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutPreflight.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSegmentScheduler.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSegmentScheduler.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutSessionEngine.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutSessionEngine.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/WorkoutStructure.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/WorkoutStructure.dia"
   }
 }

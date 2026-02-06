@@ -47,4 +47,15 @@ public extension Plan {
 
         return issues
     }
+
+    /// Returns a copy of the plan with parameters clamped into the provided bounds.
+    ///
+    /// - Note: This is intended as a lightweight migration/safety net for legacy or corrupted persisted data.
+    func clamped(bounds: PlanParameterBounds = .recommended) -> Plan {
+        var copy = self
+        copy.setsCount = min(max(copy.setsCount, bounds.setsCount.lowerBound), bounds.setsCount.upperBound)
+        copy.workSeconds = min(max(copy.workSeconds, bounds.workSeconds.lowerBound), bounds.workSeconds.upperBound)
+        copy.restSeconds = min(max(copy.restSeconds, bounds.restSeconds.lowerBound), bounds.restSeconds.upperBound)
+        return copy
+    }
 }

@@ -2,7 +2,7 @@ import Foundation
 
 /// Immutable plan snapshot captured at Session start (M1).
 public struct PlanSnapshot: Sendable, Codable, Equatable {
-    public static let currentConfigVersion: Int = 1
+    public static let currentConfigVersion: Int = 2
 
     /// Configuration schema version for migration (M1+).
     public var configVersion: Int
@@ -13,6 +13,7 @@ public struct PlanSnapshot: Sendable, Codable, Equatable {
     public var workSeconds: Int
     public var restSeconds: Int
     public var name: String
+    public var musicStrategy: MusicStrategy?
 
     public var capturedAt: Date
 
@@ -23,6 +24,7 @@ public struct PlanSnapshot: Sendable, Codable, Equatable {
         workSeconds: Int,
         restSeconds: Int,
         name: String,
+        musicStrategy: MusicStrategy? = nil,
         capturedAt: Date = Date(),
         configVersion: Int = PlanSnapshot.currentConfigVersion
     ) {
@@ -33,6 +35,7 @@ public struct PlanSnapshot: Sendable, Codable, Equatable {
         self.workSeconds = workSeconds
         self.restSeconds = restSeconds
         self.name = name
+        self.musicStrategy = musicStrategy
         self.capturedAt = capturedAt
     }
 }
@@ -55,6 +58,7 @@ extension PlanSnapshot {
         case workSeconds
         case restSeconds
         case name
+        case musicStrategy
         case capturedAt
     }
 
@@ -67,6 +71,7 @@ extension PlanSnapshot {
             workSeconds: try container.decode(Int.self, forKey: .workSeconds),
             restSeconds: try container.decode(Int.self, forKey: .restSeconds),
             name: try container.decode(String.self, forKey: .name),
+            musicStrategy: try container.decodeIfPresent(MusicStrategy.self, forKey: .musicStrategy),
             capturedAt: try container.decode(Date.self, forKey: .capturedAt),
             configVersion: try container.decodeIfPresent(Int.self, forKey: .configVersion) ?? 0
         )
@@ -82,6 +87,7 @@ extension PlanSnapshot {
         try container.encode(workSeconds, forKey: .workSeconds)
         try container.encode(restSeconds, forKey: .restSeconds)
         try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(musicStrategy, forKey: .musicStrategy)
         try container.encode(capturedAt, forKey: .capturedAt)
     }
 }
