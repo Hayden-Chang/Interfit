@@ -58,6 +58,13 @@
     "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicAvailabilityTests.swiftdeps",
     "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicAvailabilityTests.dia"
   },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicItemResolverTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.dia"
+  },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicPlayModeTests.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicPlayModeTests.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicPlayModeTests.swift.o",
@@ -232,6 +239,13 @@
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSegmentSchedulerTests~partial.swiftmodule",
     "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSegmentSchedulerTests.swiftdeps",
     "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSegmentSchedulerTests.dia"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCountdownTests.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueCoalescingTests.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCueCoalescingTests.d",

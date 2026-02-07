@@ -9,6 +9,9 @@ private actor PlaybackCoordinatorState {
     private var lastDecision: PlaybackSegmentStartAction?
     private var lastFailureOutcome: PlaybackFailureOutcome?
     private var isPausedByTimer: Bool = false
+    private var isPlaybackDisabledForSession: Bool = false
+    private var lastSegmentKind: WorkoutSegmentKind?
+    private var lastSegmentSetIndex: Int?
 
     private let selectionProvider: @Sendable (WorkoutSegmentKind, Int) -> MusicSelection?
     private let selectionApplier: @Sendable (MusicSelection) async throws -> Void
@@ -57,7 +60,19 @@ private actor PlaybackCoordinatorState {
         case .resumed:
             guard isPausedByTimer else { return }
             isPausedByTimer = false
-            Task { await resumePlayback() }
+            if currentSelection != nil {
+                Task { await resumePlayback() }
+            }
+            if !isPlaybackDisabledForSession,
+               currentSelection == nil,
+               let kind = lastSegmentKind,
+               let setIndex = lastSegmentSetIndex,
+               let selection = selectionProvider(kind, setIndex)
+            {
+                pendingSelectionExternalId = selection.externalId
+                applyTask?.cancel()
+                applyTask = Task { await applySelectionWithRetry(selection) }
+            }
         case .stop:
             isPausedByTimer = false
             applyTask?.cancel()
@@ -65,6 +80,10 @@ private actor PlaybackCoordinatorState {
             Task { await stopPlayback() }
         case let .segmentChanged(_, _, to, kind, setIndex):
             lastSegmentStableId = to
+            lastSegmentKind = kind
+            lastSegmentSetIndex = setIndex
+            if isPlaybackDisabledForSession { return }
+
             let nextSelection = selectionProvider(kind, setIndex)
             let decision = PlaybackSegmentStartDecision.decide(current: currentSelection, next: nextSelection)
             lastDecision = decision
@@ -142,6 +161,9 @@ private actor PlaybackCoordinatorState {
                     if pendingSelectionExternalId == selection.externalId {
                         lastFailureOutcome = outcome
                         pendingSelectionExternalId = nil
+                        if kind == .permission || kind == .restriction {
+                            isPlaybackDisabledForSession = true
+                        }
                         switch outcome.action {
                         case .continueCurrent:
                             break

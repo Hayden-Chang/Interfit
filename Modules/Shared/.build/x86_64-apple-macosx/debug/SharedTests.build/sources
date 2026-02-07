@@ -6,6 +6,7 @@
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/InterruptionEventTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/LoggerTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicAvailabilityTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicItemResolverTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicPlayModeTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionLibraryTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionTests.swift
@@ -31,6 +32,7 @@
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/TestLocked.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutPreflightRunnerTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSegmentSchedulerTests.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCountdownTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueCoalescingTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueTests.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineHapticsTests.swift

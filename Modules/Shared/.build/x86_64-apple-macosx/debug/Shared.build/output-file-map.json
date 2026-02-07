@@ -86,6 +86,13 @@
     "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swiftdeps",
     "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.dia"
   },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.dia"
+  },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o",

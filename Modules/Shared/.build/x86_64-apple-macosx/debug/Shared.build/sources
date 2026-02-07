@@ -10,6 +10,7 @@
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift
+/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift
 /Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift

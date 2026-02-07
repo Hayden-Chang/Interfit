@@ -14,10 +14,12 @@ final class MusicPlaybackClient {
         case authorizationRestricted
         case notSubscribed
         case itemNotFound
+        case developerTokenConfiguration
     }
 
     private var lastSelection: MusicSelection?
     private var savedTrackProgress: [String: TimeInterval] = [:]
+    private var isCatalogAccessDisabled = false
 
     private init() {}
 
@@ -44,7 +46,7 @@ final class MusicPlaybackClient {
     nonisolated static func classify(_ error: Swift.Error) -> PlaybackFailureKind {
         if let e = error as? Error {
             switch e {
-            case .authorizationDenied:
+            case .authorizationDenied, .developerTokenConfiguration:
                 return .permission
             case .authorizationRestricted:
                 return .restriction
@@ -56,6 +58,12 @@ final class MusicPlaybackClient {
         }
 
         let lower = String(describing: error).lowercased()
+        if lower.contains("client not found") || lower.contains("40402") {
+            return .permission
+        }
+        if lower.contains("developertokenrequestfailed") || lower.contains("token service") {
+            return .permission
+        }
         if lower.contains("not authorized") || lower.contains("permission") || lower.contains("denied") {
             return .permission
         }
@@ -72,28 +80,31 @@ final class MusicPlaybackClient {
     }
 
     func apply(selection: MusicSelection) async throws {
-        guard selection.source == .appleMusic else {
+        guard selection.source == .appleMusic || selection.source == .localLibrary else {
             throw Error.unsupportedSource
         }
 
-        try await ensureAuthorizedAndSubscribed()
-
         let player = SystemMusicPlayer.shared
+        let isSameSelectionAsLast = lastSelection?.isEquivalent(to: selection) == true
 
-        if let previous = lastSelection,
-           previous.type == .track,
-           previous.externalId != selection.externalId
-        {
-            savedTrackProgress[previous.externalId] = max(0, player.playbackTime)
-        }
+        if !isSameSelectionAsLast {
+            try await ensureAuthorizedAndSubscribed()
 
-        switch selection.type {
-        case .track:
-            try await queueTrack(selection, player: player)
-        case .album:
-            try await queueAlbum(selection, player: player)
-        case .playlist:
-            try await queuePlaylist(selection, player: player)
+            if let previous = lastSelection,
+               previous.type == .track,
+               previous.externalId != selection.externalId
+            {
+                savedTrackProgress[previous.externalId] = max(0, player.playbackTime)
+            }
+
+            switch selection.type {
+            case .track:
+                try await queueTrack(selection, player: player)
+            case .album:
+                try await queueAlbum(selection, player: player)
+            case .playlist:
+                try await queuePlaylist(selection, player: player)
+            }
         }
 
         try await applyDirective(selection.playMode.directiveOnSegmentStart)
@@ -152,21 +163,42 @@ final class MusicPlaybackClient {
             throw Error.authorizationDenied
         }
 
-        let subscription = try await MusicSubscription.current
-        guard subscription.canPlayCatalogContent else {
-            throw Error.notSubscribed
-        }
+        // Do not call `MusicSubscription.current` here.
+        // In some provisioning states it may trigger developer-token bootstrap and
+        // produce repeated -8200/40402 logs even for local-library playback paths.
     }
 
     private func queueTrack(_ selection: MusicSelection, player: SystemMusicPlayer) async throws {
         let id = MusicItemID(selection.externalId)
-        let request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-        guard let song = response.items.first else {
+        var song: Song?
+
+        if let librarySong = try? await fetchLibrarySong(id: id) {
+            song = librarySong
+        }
+
+        // Only try catalog if source is appleMusic
+        if song == nil && selection.source == .appleMusic {
+            if isCatalogAccessDisabled {
+                throw Error.developerTokenConfiguration
+            }
+            do {
+                let request = MusicCatalogResourceRequest<Song>(matching: \.id, equalTo: id)
+                let response = try await request.response()
+                song = response.items.first
+            } catch {
+                if isDeveloperTokenConfigurationError(error) {
+                    isCatalogAccessDisabled = true
+                    throw Error.developerTokenConfiguration
+                }
+                throw error
+            }
+        }
+
+        guard let song else {
             throw Error.itemNotFound
         }
-        player.queue = [song]
 
+        player.queue = [song]
         player.state.repeatMode = .one
 
         if selection.playMode == .continue, let saved = savedTrackProgress[selection.externalId], saved > 0 {
@@ -180,11 +212,34 @@ final class MusicPlaybackClient {
 
     private func queueAlbum(_ selection: MusicSelection, player: SystemMusicPlayer) async throws {
         let id = MusicItemID(selection.externalId)
-        let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-        guard let album = response.items.first else {
+        var album: Album?
+
+        if let libraryAlbum = try? await fetchLibraryAlbum(id: id) {
+            album = libraryAlbum
+        }
+
+        // Only try catalog if source is appleMusic
+        if album == nil && selection.source == .appleMusic {
+            if isCatalogAccessDisabled {
+                throw Error.developerTokenConfiguration
+            }
+            do {
+                let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
+                let response = try await request.response()
+                album = response.items.first
+            } catch {
+                if isDeveloperTokenConfigurationError(error) {
+                    isCatalogAccessDisabled = true
+                    throw Error.developerTokenConfiguration
+                }
+                throw error
+            }
+        }
+
+        guard let album else {
             throw Error.itemNotFound
         }
+
         player.queue = [album]
         player.state.repeatMode = .all
 
@@ -202,11 +257,34 @@ final class MusicPlaybackClient {
 
     private func queuePlaylist(_ selection: MusicSelection, player: SystemMusicPlayer) async throws {
         let id = MusicItemID(selection.externalId)
-        let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
-        let response = try await request.response()
-        guard let playlist = response.items.first else {
+        var playlist: Playlist?
+
+        if let libraryPlaylist = try? await fetchLibraryPlaylist(id: id) {
+            playlist = libraryPlaylist
+        }
+
+        // Only try catalog if source is appleMusic
+        if playlist == nil && selection.source == .appleMusic {
+            if isCatalogAccessDisabled {
+                throw Error.developerTokenConfiguration
+            }
+            do {
+                let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
+                let response = try await request.response()
+                playlist = response.items.first
+            } catch {
+                if isDeveloperTokenConfigurationError(error) {
+                    isCatalogAccessDisabled = true
+                    throw Error.developerTokenConfiguration
+                }
+                throw error
+            }
+        }
+
+        guard let playlist else {
             throw Error.itemNotFound
         }
+
         player.queue = [playlist]
         player.state.repeatMode = .all
 
@@ -220,6 +298,38 @@ final class MusicPlaybackClient {
         case .continue:
             player.state.shuffleMode = .off
         }
+    }
+
+    private func fetchLibrarySong(id: MusicItemID) async throws -> Song? {
+        var request = MusicLibraryRequest<Song>()
+        request.filter(matching: \.id, equalTo: id)
+        request.limit = 1
+        let response = try await request.response()
+        return response.items.first
+    }
+
+    private func fetchLibraryAlbum(id: MusicItemID) async throws -> Album? {
+        var request = MusicLibraryRequest<Album>()
+        request.filter(matching: \.id, equalTo: id)
+        request.limit = 1
+        let response = try await request.response()
+        return response.items.first
+    }
+
+    private func fetchLibraryPlaylist(id: MusicItemID) async throws -> Playlist? {
+        var request = MusicLibraryRequest<Playlist>()
+        request.filter(matching: \.id, equalTo: id)
+        request.limit = 1
+        let response = try await request.response()
+        return response.items.first
+    }
+
+    private func isDeveloperTokenConfigurationError(_ error: Swift.Error) -> Bool {
+        let lower = String(describing: error).lowercased()
+        return lower.contains("developertokenrequestfailed")
+            || lower.contains("client not found")
+            || lower.contains("40402")
+            || lower.contains("developer token")
     }
 }
 

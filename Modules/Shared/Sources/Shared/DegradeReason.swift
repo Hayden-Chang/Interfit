@@ -39,7 +39,7 @@ public extension DegradeReason {
     var message: String {
         switch self {
         case .fallbackDueToPermission:
-            "You can keep training with cues. You can enable access later in Settings."
+            "Apple Music isn't available for this app now. Keep training with cues. If logs show client not found (40402), register this Bundle ID for MusicKit in Apple Developer, or enable access in Settings."
         case .fallbackDueToRestriction:
             "This device/account restricts access. Training continues with cues."
         case .fallbackDueToResource:

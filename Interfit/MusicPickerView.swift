@@ -413,7 +413,7 @@ struct MusicPickerView: View {
 
             let selections: [MusicSelection] = response.items.map { playlist in
                 MusicSelection(
-                    source: .appleMusic,
+                    source: .localLibrary,
                     type: .playlist,
                     externalId: playlist.id.rawValue,
                     displayTitle: playlist.name,
@@ -488,7 +488,7 @@ struct MusicPickerView: View {
                     guard allowedTypes.contains(.track) else { continue }
                     selections.append(
                         MusicSelection(
-                            source: .appleMusic,
+                            source: .localLibrary,
                             type: .track,
                             externalId: song.id.rawValue,
                             displayTitle: song.title,

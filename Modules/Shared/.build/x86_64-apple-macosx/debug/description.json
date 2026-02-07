@@ -76,6 +76,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift"
         },
         {
@@ -207,6 +211,7 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swift.o",
@@ -342,6 +347,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o"
         },
         {
@@ -467,6 +476,7 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift",
@@ -638,6 +648,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicItemResolverTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicPlayModeTests.swift"
         },
         {
@@ -738,6 +752,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCountdownTests.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueCoalescingTests.swift"
         },
         {
@@ -789,6 +807,7 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/InterruptionEventTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/LoggerTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicAvailabilityTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicPlayModeTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicSelectionLibraryTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicSelectionTests.swift.o",
@@ -814,6 +833,7 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/TestLocked.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutPreflightRunnerTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSegmentSchedulerTests.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCueCoalescingTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCueTests.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineHapticsTests.swift.o",
@@ -909,6 +929,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicAvailabilityTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.swift.o"
         },
         {
           "kind" : "file",
@@ -1012,6 +1036,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCueCoalescingTests.swift.o"
         },
         {
@@ -1053,6 +1081,7 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/InterruptionEventTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/LoggerTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicAvailabilityTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicItemResolverTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicPlayModeTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionLibraryTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionTests.swift",
@@ -1078,6 +1107,7 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/TestLocked.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutPreflightRunnerTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSegmentSchedulerTests.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCountdownTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueCoalescingTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueTests.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineHapticsTests.swift",
@@ -1113,6 +1143,7 @@
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift",
@@ -1279,6 +1310,7 @@
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/InterruptionEventTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/LoggerTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicAvailabilityTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicItemResolverTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicPlayModeTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionLibraryTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicSelectionTests.swift",
@@ -1304,6 +1336,7 @@
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/TestLocked.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutPreflightRunnerTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSegmentSchedulerTests.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCountdownTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueCoalescingTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCueTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineHapticsTests.swift",
@@ -1457,6 +1490,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift"
         },
         {
           "kind" : "file",
@@ -1640,6 +1677,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o"
         },
         {
@@ -1784,6 +1825,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicItemResolverTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/MusicPlayModeTests.swift.o"
         },
         {
@@ -1884,6 +1929,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCountdownTests.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/.build/x86_64-apple-macosx/debug/SharedTests.build/WorkoutSessionEngineCueCoalescingTests.swift.o"
         },
         {
@@ -1951,6 +2000,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicAvailabilityTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/MusicItemResolverTests.swift"
         },
         {
           "kind" : "file",
@@ -2051,6 +2104,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSegmentSchedulerTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Tests/SharedTests/WorkoutSessionEngineCountdownTests.swift"
         },
         {
           "kind" : "file",
