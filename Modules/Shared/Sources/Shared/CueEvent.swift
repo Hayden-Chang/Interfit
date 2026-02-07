@@ -58,11 +58,14 @@ public extension CueEventRecord {
         )
     }
 
-    static func last3s(occurredAt: Date = Date(), segmentId: String) -> Self {
+    static func last3s(occurredAt: Date = Date(), segmentId: String, remainingSeconds: Int = 3) -> Self {
         .init(
             name: CueEventKind.last3s.rawValue,
             occurredAt: occurredAt,
-            attributes: ["segment": segmentId]
+            attributes: [
+                "segment": segmentId,
+                "remaining": String(remainingSeconds)
+            ]
         )
     }
 

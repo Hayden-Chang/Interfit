@@ -23,6 +23,11 @@ final class CueEventTests: XCTestCase {
         let l3 = CueEventRecord.last3s(occurredAt: t0, segmentId: "work#1")
         XCTAssertEqual(l3.kind, .last3s)
         XCTAssertEqual(l3.attributes["segment"], "work#1")
+        XCTAssertEqual(l3.attributes["remaining"], "3")
+
+        let l2 = CueEventRecord.last3s(occurredAt: t0, segmentId: "work#1", remainingSeconds: 2)
+        XCTAssertEqual(l2.kind, .last3s)
+        XCTAssertEqual(l2.attributes["remaining"], "2")
 
         XCTAssertEqual(CueEventRecord.paused(occurredAt: t0).kind, .paused)
         XCTAssertEqual(CueEventRecord.resumed(occurredAt: t0).kind, .resumed)

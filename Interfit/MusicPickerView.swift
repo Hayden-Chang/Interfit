@@ -16,18 +16,26 @@ struct MusicPickerView: View {
 
     @State private var query: String = ""
     @State private var recents: [MusicSelection] = MusicRecentsStore.load()
+    @State private var pendingSelection: MusicSelection?
+    @State private var previewErrorMessage: String?
 
-#if canImport(MusicKit)
+    #if canImport(MusicKit)
     @State private var authStatus: MusicAuthorization.Status = MusicAuthorization.currentStatus
     @State private var isRequestingAuth: Bool = false
     @State private var isSearching: Bool = false
     @State private var searchResults: [MusicSelection] = []
     @State private var searchError: String?
     @State private var searchTask: Task<Void, Never>?
+
     @State private var myPlaylists: [MusicSelection] = []
     @State private var isLoadingMyPlaylists: Bool = false
     @State private var myPlaylistsError: String?
-#endif
+
+    @State private var expandedPlaylistExternalId: String?
+    @State private var playlistTracksByPlaylistId: [String: [MusicSelection]] = [:]
+    @State private var loadingPlaylistExternalId: String?
+    @State private var playlistTracksErrorByPlaylistId: [String: String] = [:]
+    #endif
 
     init(
         allowedTypes: Set<MusicSelectionType> = [.track, .album, .playlist],
@@ -65,7 +73,13 @@ struct MusicPickerView: View {
         #endif
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Done") { dismiss() }
+                Button("Done") {
+                    guard let pendingSelection else {
+                        dismiss()
+                        return
+                    }
+                    commitSelectionAndDismiss(pendingSelection)
+                }
             }
         }
     }
@@ -130,7 +144,14 @@ struct MusicPickerView: View {
     private var pickerSections: some View {
         Group {
             Section("Search") {
-                TextField("Search", text: $query)
+                TextField("搜索歌曲或歌手", text: $query)
+
+                if let previewErrorMessage {
+                    Text(previewErrorMessage)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
                 #if canImport(MusicKit)
                 if isSearching {
                     HStack(spacing: 8) {
@@ -147,16 +168,7 @@ struct MusicPickerView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(searchResults, id: \.externalId) { selection in
-                        Button {
-                            pick(selection)
-                        } label: {
-                            VStack(alignment: .leading) {
-                                Text(selection.displayTitle)
-                                Text("\(selection.source.rawValue) • \(selection.type.rawValue)")
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
+                        selectableMusicRow(selection, showMetadata: true)
                     }
                 }
                 #else
@@ -174,23 +186,18 @@ struct MusicPickerView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(filteredRecents, id: \.externalId) { selection in
-                        Button {
-                            pick(selection)
-                        } label: {
-                            Text(selection.displayTitle)
-                        }
+                        selectableMusicRow(selection, showMetadata: false)
                     }
                 }
             }
 
-            Section("My Playlists") {
+            Section("My playlists") {
                 #if canImport(MusicKit)
                 if !allowedTypes.contains(.playlist) {
                     Text("Playlists are not available for this selection.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
-                } else
-                if isLoadingMyPlaylists {
+                } else if isLoadingMyPlaylists {
                     HStack(spacing: 8) {
                         ProgressView()
                         Text("Loading…")
@@ -204,8 +211,8 @@ struct MusicPickerView: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 } else {
-                    ForEach(myPlaylists, id: \.externalId) { selection in
-                        Button { pick(selection) } label: { Text(selection.displayTitle) }
+                    ForEach(myPlaylists, id: \.externalId) { playlist in
+                        playlistRow(playlist)
                     }
                 }
 
@@ -223,7 +230,108 @@ struct MusicPickerView: View {
         }
     }
 
-    private func pick(_ selection: MusicSelection) {
+    private func selectableMusicRow(_ selection: MusicSelection, showMetadata: Bool) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(selection.displayTitle)
+                if showMetadata {
+                    Text("\(selection.source.rawValue) • \(selection.type.rawValue)")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Spacer()
+
+            Button("Play") {
+                previewSelection(selection)
+            }
+            .buttonStyle(.bordered)
+
+            Button(isPendingSelection(selection) ? "Selected" : "Select") {
+                pendingSelection = selection
+            }
+            .buttonStyle(.borderedProminent)
+        }
+    }
+
+    #if canImport(MusicKit)
+    private func playlistRow(_ playlist: MusicSelection) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 10) {
+                Button {
+                    togglePlaylistExpanded(playlist)
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: expandedPlaylistExternalId == playlist.externalId ? "chevron.down" : "chevron.right")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                        Text(playlist.displayTitle)
+                    }
+                }
+                .buttonStyle(.plain)
+
+                Spacer()
+
+                Button("Play") {
+                    previewSelection(playlist)
+                }
+                .buttonStyle(.bordered)
+
+                Button(isPendingSelection(playlist) ? "Selected" : "Select") {
+                    pendingSelection = playlist
+                }
+                .buttonStyle(.borderedProminent)
+            }
+
+            if expandedPlaylistExternalId == playlist.externalId {
+                if loadingPlaylistExternalId == playlist.externalId {
+                    HStack(spacing: 8) {
+                        ProgressView()
+                        Text("Loading tracks…")
+                    }
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                } else if let error = playlistTracksErrorByPlaylistId[playlist.externalId] {
+                    Text(error)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                } else if let tracks = playlistTracksByPlaylistId[playlist.externalId], !tracks.isEmpty {
+                    ForEach(tracks, id: \.externalId) { track in
+                        selectableMusicRow(track, showMetadata: false)
+                            .padding(.leading, 20)
+                    }
+                } else {
+                    Text("No playable tracks found.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+    #endif
+
+    private func isPendingSelection(_ selection: MusicSelection) -> Bool {
+        guard let pendingSelection else { return false }
+        return pendingSelection.isEquivalent(to: selection)
+    }
+
+    private func previewSelection(_ selection: MusicSelection) {
+        Task {
+            do {
+                try await MusicPlaybackClient.apply(selection: selection)
+                await MainActor.run {
+                    previewErrorMessage = nil
+                }
+            } catch {
+                await MainActor.run {
+                    previewErrorMessage = "Couldn’t play this right now. Try another item or check Apple Music availability."
+                }
+            }
+        }
+    }
+
+    private func commitSelectionAndDismiss(_ selection: MusicSelection) {
         recents = MusicRecentsStore.record(selection: selection, current: recents)
         onPick?(selection)
         dismiss()
@@ -259,10 +367,12 @@ struct MusicPickerView: View {
         searchTask = Task {
             try? await Task.sleep(nanoseconds: 300_000_000)
             guard !Task.isCancelled else { return }
+
             await MainActor.run {
                 isSearching = true
                 searchError = nil
             }
+
             do {
                 let results = try await MusicSearchClient.search(term: term, allowedTypes: allowedTypes, limit: 25)
                 await MainActor.run {
@@ -289,6 +399,7 @@ struct MusicPickerView: View {
 
     private func reloadMyPlaylists() async {
         guard !isLoadingMyPlaylists else { return }
+
         await MainActor.run {
             isLoadingMyPlaylists = true
             myPlaylistsError = nil
@@ -318,6 +429,88 @@ struct MusicPickerView: View {
             await MainActor.run {
                 myPlaylists = []
                 myPlaylistsError = "Couldn’t load playlists. You can still train with cues only."
+            }
+        }
+    }
+
+    private func togglePlaylistExpanded(_ playlist: MusicSelection) {
+        if expandedPlaylistExternalId == playlist.externalId {
+            expandedPlaylistExternalId = nil
+            return
+        }
+
+        expandedPlaylistExternalId = playlist.externalId
+        if playlistTracksByPlaylistId[playlist.externalId] != nil { return }
+
+        Task {
+            await loadTracksForPlaylist(playlistExternalId: playlist.externalId)
+        }
+    }
+
+    private func loadTracksForPlaylist(playlistExternalId: String) async {
+        guard loadingPlaylistExternalId != playlistExternalId else { return }
+
+        await MainActor.run {
+            loadingPlaylistExternalId = playlistExternalId
+            playlistTracksErrorByPlaylistId[playlistExternalId] = nil
+        }
+        defer {
+            Task { @MainActor in
+                if loadingPlaylistExternalId == playlistExternalId {
+                    loadingPlaylistExternalId = nil
+                }
+            }
+        }
+
+        do {
+            var request = MusicLibraryRequest<Playlist>()
+            request.filter(matching: \.id, equalTo: MusicItemID(playlistExternalId))
+            request.limit = 1
+            let response = try await request.response()
+
+            guard let playlist = response.items.first else {
+                await MainActor.run {
+                    playlistTracksByPlaylistId[playlistExternalId] = []
+                    playlistTracksErrorByPlaylistId[playlistExternalId] = "Playlist not found in library."
+                }
+                return
+            }
+
+            let expanded = try await playlist.with([.tracks])
+            let tracks = expanded.tracks ?? []
+
+            var selections: [MusicSelection] = []
+            selections.reserveCapacity(tracks.count)
+
+            for item in tracks {
+                switch item {
+                case .song(let song):
+                    guard allowedTypes.contains(.track) else { continue }
+                    selections.append(
+                        MusicSelection(
+                            source: .appleMusic,
+                            type: .track,
+                            externalId: song.id.rawValue,
+                            displayTitle: song.title,
+                            artworkUrl: song.artwork?.url(width: 256, height: 256),
+                            playMode: .continue
+                        )
+                    )
+                default:
+                    continue
+                }
+            }
+
+            let deduped = Array(Dictionary(grouping: selections, by: \.externalId).compactMap { $0.value.first })
+
+            await MainActor.run {
+                playlistTracksByPlaylistId[playlistExternalId] = deduped
+                playlistTracksErrorByPlaylistId[playlistExternalId] = nil
+            }
+        } catch {
+            await MainActor.run {
+                playlistTracksByPlaylistId[playlistExternalId] = []
+                playlistTracksErrorByPlaylistId[playlistExternalId] = "Couldn’t load tracks for this playlist."
             }
         }
     }

@@ -32,7 +32,7 @@ public struct WorkoutSessionEngine: Sendable {
 
     private var cueSink: CueSink
     private var playbackSink: PlaybackIntentSink
-    private var last3sFiredForSegmentStableId: String?
+    private var firedCountdownCueKeys: Set<String>
 
     public init(
         plan: Plan,
@@ -67,7 +67,7 @@ public struct WorkoutSessionEngine: Sendable {
         )
         self.cueSink = cues
         self.playbackSink = playback
-        self.last3sFiredForSegmentStableId = nil
+        self.firedCountdownCueKeys = []
 
         try start(at: now)
     }
@@ -106,7 +106,7 @@ public struct WorkoutSessionEngine: Sendable {
         self.session.events.append(.init(name: "recovered", occurredAt: now))
         self.cueSink = cues
         self.playbackSink = playback
-        self.last3sFiredForSegmentStableId = nil
+        self.firedCountdownCueKeys = []
         self.pendingEndConfirmation = false
     }
 
@@ -124,6 +124,10 @@ public struct WorkoutSessionEngine: Sendable {
     /// - Returns: `true` if this tick caused the session to become completed.
     @discardableResult
     public mutating func tick(at now: Date) -> Bool {
+        if session.status == .ended || session.status == .completed {
+            return false
+        }
+
         let elapsed = timer.elapsedSeconds(at: now)
         let progress = structure.progress(atElapsedSeconds: elapsed)
 
@@ -160,16 +164,20 @@ public struct WorkoutSessionEngine: Sendable {
                     break
                 }
             }
-            // Reset last3s marker for new segment
-            last3sFiredForSegmentStableId = nil
+            // Reset countdown markers for new segment
+            firedCountdownCueKeys.removeAll(keepingCapacity: true)
         }
 
-        // last3s cue: when remaining seconds in current segment becomes 3
+        // Countdown cue: emit at 3/2/1 seconds remaining.
         if let seg = progress.currentSegment {
             let segId = "\(seg.kind.rawValue)#\(seg.setIndex)"
-            if seg.durationSeconds >= 3, progress.currentSegmentRemainingSeconds == 3, last3sFiredForSegmentStableId != segId {
-                cueSink.emit(.last3s(occurredAt: now, segmentId: segId))
-                last3sFiredForSegmentStableId = segId
+            let remaining = progress.currentSegmentRemainingSeconds
+            if seg.durationSeconds >= 3, (1 ... 3).contains(remaining) {
+                let key = "\(segId)#\(remaining)"
+                if !firedCountdownCueKeys.contains(key) {
+                    cueSink.emit(.last3s(occurredAt: now, segmentId: segId, remainingSeconds: remaining))
+                    firedCountdownCueKeys.insert(key)
+                }
             }
         }
 
@@ -181,6 +189,7 @@ public struct WorkoutSessionEngine: Sendable {
             session.endedAt = now
             session.events.append(.completed(occurredAt: now))
             cueSink.emit(.completed(occurredAt: now))
+            playbackSink.emit(.stop(occurredAt: now))
             pendingEndConfirmation = false
             return true
         }
@@ -205,6 +214,7 @@ public struct WorkoutSessionEngine: Sendable {
         session.status = .paused
         session.events.append(.paused(occurredAt: now, reason: reason.rawValue))
         cueSink.emit(.paused(occurredAt: now))
+        playbackSink.emit(.paused(occurredAt: now))
     }
 
     public mutating func resume(at now: Date) throws {
@@ -213,6 +223,7 @@ public struct WorkoutSessionEngine: Sendable {
         session.status = .running
         session.events.append(.resumed(occurredAt: now))
         cueSink.emit(.resumed(occurredAt: now))
+        playbackSink.emit(.resumed(occurredAt: now))
     }
 
     /// "End" anti-mistap guard:
@@ -236,6 +247,7 @@ public struct WorkoutSessionEngine: Sendable {
         session.status = .ended
         session.endedAt = now
         session.events.append(.ended(occurredAt: now))
+        playbackSink.emit(.stop(occurredAt: now))
         return .ended
     }
 

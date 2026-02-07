@@ -37,6 +37,7 @@ struct TrainingView: View {
     @State private var didSimulateHeadphoneDisconnect: Bool = false
     @State private var siriSecondaryAudioSilenceBeganAt: Date?
     @State private var ignoreRecoverySnapshot: Bool = false
+    @State private var degradeBanner: DegradeReason?
 
     @AppStorage(BackgroundTimingNoticePolicy.userDefaultsKey) private var didShowBackgroundTimingNotice: Bool = false
 
@@ -135,8 +136,7 @@ struct TrainingView: View {
             handleSummaryDismissal()
         }
         .onDisappear {
-            stopObservingAudioSession()
-            nowPlaying.stop()
+            cleanupSessionSideEffects()
         }
         .onReceive(tickTimer) { now in tickIfNeeded(now: now) }
         .onReceive(NotificationCenter.default.publisher(for: NowPlayingManager.remotePlayNotification)) { _ in
@@ -192,6 +192,25 @@ struct TrainingView: View {
         } message: {
             Text(BackgroundTimingNoticePolicy.message)
         }
+        .alert(
+            "Music unavailable",
+            isPresented: Binding(
+                get: { degradeBanner != nil },
+                set: { isPresented in
+                    if !isPresented {
+                        degradeBanner = nil
+                    }
+                }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            if let degradeBanner {
+                Text("\(degradeBanner.message)\n\nTry: subscribe/authorize Apple Music, pick another song, or check network.")
+            } else {
+                Text("Training will continue with timer and cues only.")
+            }
+        }
         .onChange(of: didConfirmEndFromAlert) { confirmed in
             guard confirmed else { return }
             didConfirmEndFromAlert = false
@@ -211,8 +230,11 @@ struct TrainingView: View {
 
     private func startIfNeeded() {
         guard engine == nil else { return }
+        degradeBanner = nil
+
         let sinks: [CueSink] = [
             AudioCueSink(enabled: true),
+            SpeechCueSink(enabled: true),
             HapticsCueSink(enabled: true),
         ]
         let cues = CueCoalescingSink(MultiCueSink(sinks))
@@ -241,8 +263,20 @@ struct TrainingView: View {
                 }
                 try await MusicPlaybackClient.apply(selection: selection)
             },
-            failureClassifier: { _ in
-                simulatePlaybackLoadFailure ? .timeout : .unknown
+            selectionDirectiveApplier: { directive in
+                try await MusicPlaybackClient.applyDirective(directive)
+            },
+            pausePlayback: {
+                await MusicPlaybackClient.pause()
+            },
+            resumePlayback: {
+                await MusicPlaybackClient.resume()
+            },
+            stopPlayback: {
+                await MusicPlaybackClient.stop()
+            },
+            failureClassifier: { error in
+                simulatePlaybackLoadFailure ? .timeout : MusicPlaybackClient.classify(error)
             },
             onFallback: { kind, outcome in
             Task { @MainActor in
@@ -256,6 +290,7 @@ struct TrainingView: View {
                     ]
                 )
                 engine = eng
+                degradeBanner = outcome.degradeReason
             }
         })
 
@@ -270,6 +305,9 @@ struct TrainingView: View {
         triggerStartPreflightIfNeeded()
         nowPlaying.start()
         nowPlaying.update(planName: plan?.name, progress: engine?.progress(at: now), sessionStatus: engine?.session.status ?? .idle)
+        Task { @MainActor in
+            IdleTimerClient.setDisabled(true)
+        }
         showBackgroundTimingNoticeIfNeeded()
         simulateHeadphoneDisconnectIfRequested()
     }
@@ -292,8 +330,7 @@ struct TrainingView: View {
                 summaryPresentedForSessionId = eng.session.id
                 summaryDismissAction = .clean
                 isShowingSummary = true
-                nowPlaying.stop()
-                stopObservingAudioSession()
+                cleanupSessionSideEffects()
             case .ended:
                 persistSessionIfNeeded(eng.session)
                 summaryOutcome = .ended
@@ -301,8 +338,7 @@ struct TrainingView: View {
                 summaryPresentedForSessionId = eng.session.id
                 summaryDismissAction = .clean
                 isShowingSummary = true
-                nowPlaying.stop()
-                stopObservingAudioSession()
+                cleanupSessionSideEffects()
             default:
                 break
             }
@@ -333,7 +369,26 @@ struct TrainingView: View {
         guard var eng = engine else { return }
         eng.setMusicSelectionOverride(selection, at: now)
         engine = eng
-        Task { try? await MusicPlaybackClient.apply(selection: selection) }
+        Task {
+            do {
+                try await MusicPlaybackClient.apply(selection: selection)
+            } catch {
+                let kind = MusicPlaybackClient.classify(error)
+                let outcome = PlaybackFailureOutcome(action: .cuesOnly, degradeReason: kind.degradeReason)
+                await MainActor.run {
+                    eng.recordDegrade(
+                        outcome.degradeReason,
+                        attributes: [
+                            "source": "override",
+                            "kind": kind.rawValue,
+                            "action": String(describing: outcome.action),
+                        ]
+                    )
+                    engine = eng
+                    degradeBanner = outcome.degradeReason
+                }
+            }
+        }
     }
 
     private func startObservingAudioSession() {
@@ -457,8 +512,7 @@ struct TrainingView: View {
             summaryPresentedForSessionId = eng.session.id
             summaryDismissAction = .clean
             isShowingSummary = true
-            nowPlaying.stop()
-            stopObservingAudioSession()
+            cleanupSessionSideEffects()
         case .alreadyEnded:
             break
         case .alreadyCompleted:
@@ -468,8 +522,7 @@ struct TrainingView: View {
             summaryPresentedForSessionId = eng.session.id
             summaryDismissAction = .clean
             isShowingSummary = true
-            nowPlaying.stop()
-            stopObservingAudioSession()
+            cleanupSessionSideEffects()
         }
     }
 
@@ -488,8 +541,7 @@ struct TrainingView: View {
     }
 
     private func restartWorkout() {
-        stopObservingAudioSession()
-        nowPlaying.stop()
+        cleanupSessionSideEffects()
 
         engine = nil
         now = Date()
@@ -506,6 +558,15 @@ struct TrainingView: View {
         ignoreRecoverySnapshot = true
 
         startIfNeeded()
+    }
+
+    private func cleanupSessionSideEffects() {
+        stopObservingAudioSession()
+        nowPlaying.stop()
+        Task { @MainActor in
+            await MusicPlaybackClient.stop()
+            IdleTimerClient.setDisabled(false)
+        }
     }
 
     private var summaryPlanForSummary: Plan? {

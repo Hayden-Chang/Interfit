@@ -5,6 +5,9 @@ import Foundation
 /// The engine only emits **intent**; concrete playback implementations live outside `Shared`.
 public enum PlaybackIntent: Sendable, Equatable {
     case segmentChanged(occurredAt: Date, from: String?, to: String, kind: WorkoutSegmentKind, setIndex: Int)
+    case paused(occurredAt: Date)
+    case resumed(occurredAt: Date)
+    case stop(occurredAt: Date)
 }
 
 public protocol PlaybackIntentSink: Sendable {
