@@ -201,7 +201,8 @@ final class MusicPlaybackClient {
         player.queue = [song]
         player.state.repeatMode = .one
 
-        if selection.playMode == .continue, let saved = savedTrackProgress[selection.externalId], saved > 0 {
+        // Restore saved progress for this track
+        if let saved = savedTrackProgress[selection.externalId], saved > 0 {
             player.playbackTime = saved
         } else {
             player.playbackTime = 0
