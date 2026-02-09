@@ -136,7 +136,9 @@ struct TrainingView: View {
             handleSummaryDismissal()
         }
         .onDisappear {
-            cleanupSessionSideEffects()
+            if engine == nil {
+                cleanupSessionSideEffects()
+            }
         }
         .onReceive(tickTimer) { now in tickIfNeeded(now: now) }
         .onReceive(NotificationCenter.default.publisher(for: NowPlayingManager.remotePlayNotification)) { _ in

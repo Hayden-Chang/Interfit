@@ -5,6 +5,7 @@ import Shared
 public final class SpeechCueSink: @unchecked Sendable, CueSink {
     public var isEnabled: Bool
     private let synthesizer = AVSpeechSynthesizer()
+    private var audioPlayer: AVAudioPlayer?
     private let voiceIdentifier: String?
 
     public init(enabled: Bool = true, voiceIdentifier: String? = nil) {
@@ -16,40 +17,42 @@ public final class SpeechCueSink: @unchecked Sendable, CueSink {
         guard isEnabled else { return }
         guard let kind = event.kind else { return }
 
-        let phrase: String?
         switch kind {
         case .segmentStart:
             let segKind = event.attributes["kind"]
             if segKind == WorkoutSegmentKind.work.rawValue {
-                phrase = "Work"
+                let setIndex = event.attributes["set"] ?? "1"
+                playMP3(name: "set_\(setIndex)_start", subdirectory: "work_mp3")
             } else if segKind == WorkoutSegmentKind.rest.rawValue {
-                phrase = "Rest"
-            } else {
-                phrase = nil
+                playMP3(name: "time_to_rest", subdirectory: "rest_mp3")
             }
-        case .last3s:
-            let remaining = Int(event.attributes["remaining"] ?? "")
-            switch remaining {
-            case 3:
-                phrase = "3"
-            case 2:
-                phrase = "2"
-            case 1:
-                phrase = "1"
-            default:
-                phrase = "3"
-            }
-        case .paused:
-            phrase = "Paused"
-        case .resumed:
-            phrase = "Resume"
         case .completed:
-            phrase = "Done"
-        case .workToRest, .restToWork:
-            phrase = nil
+            speak("Done")
+        case .last3s, .paused, .resumed, .workToRest, .restToWork:
+            break
         }
+    }
 
-        guard let phrase else { return }
+    private func playMP3(name: String, subdirectory: String) {
+        let url = Bundle.main.url(forResource: name, withExtension: "mp3", subdirectory: subdirectory)
+                  ?? Bundle.main.url(forResource: name, withExtension: "mp3")
+        guard let url else {
+            print("[SpeechCueSink] MP3 not found: \(name) (subdirectory: \(subdirectory))")
+            return
+        }
+        Task { @MainActor in
+            do {
+                let player = try AVAudioPlayer(contentsOf: url)
+                player.prepareToPlay()
+                self.audioPlayer = player
+                player.play()
+            } catch {
+                print("[SpeechCueSink] AVAudioPlayer error: \(error)")
+            }
+        }
+    }
+
+    private func speak(_ phrase: String) {
         Task { @MainActor in
             let utterance = AVSpeechUtterance(string: phrase)
             utterance.rate = AVSpeechUtteranceDefaultSpeechRate

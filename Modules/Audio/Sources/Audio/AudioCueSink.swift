@@ -78,11 +78,11 @@ public final class AudioCueSink: @unchecked Sendable, CueSink {
         case .restToWork:
             return [.beepSuccess]
         case .last3s:
-            return [.beepShort]
+            return []
         case .paused:
-            return [.beepWarning]
+            return []
         case .resumed:
-            return [.beepShort]
+            return []
         case .completed:
             return [.beepSuccess]
         }

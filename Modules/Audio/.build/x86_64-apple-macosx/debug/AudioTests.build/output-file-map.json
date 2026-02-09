@@ -6,30 +6,35 @@
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkAcceptanceTests.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioCueSinkTests.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioSessionManagerTests.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioSessionManagerTests.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioVersionTests.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/AudioVersionTests.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/Locked.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/Locked.dia"
   }
 }

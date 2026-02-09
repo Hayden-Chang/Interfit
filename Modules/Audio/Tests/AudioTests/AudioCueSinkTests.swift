@@ -11,9 +11,9 @@ final class AudioCueSinkTests: XCTestCase {
         XCTAssertEqual(AudioCueSink.map(restStart), [.beepShort])
         XCTAssertEqual(AudioCueSink.map(.workToRest(from: "w#1", to: "r#1")), [.beepWarning])
         XCTAssertEqual(AudioCueSink.map(.restToWork(from: "r#1", to: "w#2")), [.beepSuccess])
-        XCTAssertEqual(AudioCueSink.map(.last3s(segmentId: "w#1")), [.beepShort])
-        XCTAssertEqual(AudioCueSink.map(.paused()), [.beepWarning])
-        XCTAssertEqual(AudioCueSink.map(.resumed()), [.beepShort])
+        XCTAssertEqual(AudioCueSink.map(.last3s(segmentId: "w#1")), [])
+        XCTAssertEqual(AudioCueSink.map(.paused()), [])
+        XCTAssertEqual(AudioCueSink.map(.resumed()), [])
         XCTAssertEqual(AudioCueSink.map(.completed()), [.beepSuccess])
     }
 
@@ -22,10 +22,10 @@ final class AudioCueSinkTests: XCTestCase {
         let sinkOn = AudioCueSink(enabled: true) { patterns in captured.withLock { $0.append(patterns) } }
         let sinkOff = AudioCueSink(enabled: false) { patterns in captured.withLock { $0.append(patterns) } }
 
-        sinkOn.emit(CueEventRecord.last3s(segmentId: "w#1"))
+        sinkOn.emit(CueEventRecord.completed())
         sinkOff.emit(CueEventRecord.completed())
 
         XCTAssertEqual(captured.value.count, 1)
-        XCTAssertEqual(captured.value.first, [.beepShort])
+        XCTAssertEqual(captured.value.first, [.beepSuccess])
     }
 }

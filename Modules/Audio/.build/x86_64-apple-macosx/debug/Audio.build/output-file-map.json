@@ -6,18 +6,28 @@
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.dia"
   },
   "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift": {
     "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.d",
     "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o",
     "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion~partial.swiftmodule",
-    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swiftdeps"
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.dia"
+  },
+  "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/SpeechCueSink.swift": {
+    "dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.d",
+    "object": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.swift.o",
+    "swiftmodule": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink~partial.swiftmodule",
+    "swift-dependencies": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.swiftdeps",
+    "diagnostics": "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.dia"
   }
 }

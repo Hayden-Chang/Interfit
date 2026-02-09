@@ -21,7 +21,7 @@
 
   ],
   "swiftCommands" : {
-    "C.Audio-x86_64-apple-macosx14.0-debug.module" : {
+    "C.Audio-x86_64-apple-macosx26.0-debug.module" : {
       "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
       "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources",
       "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
@@ -37,6 +37,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/SpeechCueSink.swift"
         },
         {
           "kind" : "file",
@@ -57,12 +61,15 @@
       "objects" : [
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioCueSink.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioSessionManager.swift.o",
-        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o"
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.swift.o"
       ],
       "otherArguments" : [
         "-target",
         "x86_64-apple-macosx14.0",
+        "-incremental",
         "-enable-batch-mode",
+        "-serialize-diagnostics",
         "-index-store-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
         "-Onone",
@@ -70,19 +77,24 @@
         "-j8",
         "-DSWIFT_PACKAGE",
         "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
         "-module-cache-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
         "-parseable-output",
         "-parse-as-library",
         "-emit-objc-header",
         "-emit-objc-header-path",
-        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/Audio-Swift.h",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/include/Audio-Swift.h",
         "-swift-version",
         "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
         "-sdk",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-F",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-I",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
         "-L",
@@ -91,11 +103,15 @@
         "-Xcc",
         "-isysroot",
         "-Xcc",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-Xcc",
         "-F",
         "-Xcc",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-Xcc",
         "-fPIC",
         "-Xcc",
@@ -119,6 +135,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules/Audio.swiftmodule"
         }
       ],
@@ -126,12 +146,13 @@
       "sources" : [
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioCueSink.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift",
-        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift"
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/SpeechCueSink.swift"
       ],
       "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build",
       "wholeModuleOptimization" : false
     },
-    "C.AudioPackageTests-x86_64-apple-macosx14.0-debug.module" : {
+    "C.AudioPackageTests-x86_64-apple-macosx26.0-debug.module" : {
       "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
       "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/sources",
       "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
@@ -162,25 +183,34 @@
       "otherArguments" : [
         "-target",
         "x86_64-apple-macosx14.0",
+        "-incremental",
         "-enable-batch-mode",
+        "-serialize-diagnostics",
         "-index-store-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
         "-j8",
         "-DSWIFT_PACKAGE",
         "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
         "-module-cache-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
         "-parseable-output",
         "-parse-as-library",
         "-emit-objc-header",
         "-emit-objc-header-path",
-        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/AudioPackageTests-Swift.h",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/include/AudioPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
         "-sdk",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-F",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-I",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
         "-L",
@@ -189,11 +219,15 @@
         "-Xcc",
         "-isysroot",
         "-Xcc",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-Xcc",
         "-F",
         "-Xcc",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-Xcc",
         "-fPIC",
         "-Xcc",
@@ -219,7 +253,7 @@
       "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build",
       "wholeModuleOptimization" : false
     },
-    "C.AudioTests-x86_64-apple-macosx14.0-debug.module" : {
+    "C.AudioTests-x86_64-apple-macosx26.0-debug.module" : {
       "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
       "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build/sources",
       "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
@@ -274,24 +308,33 @@
       "otherArguments" : [
         "-target",
         "x86_64-apple-macosx14.0",
+        "-incremental",
         "-enable-batch-mode",
+        "-serialize-diagnostics",
         "-index-store-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
         "-Onone",
         "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
         "-j8",
         "-DSWIFT_PACKAGE",
         "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
         "-module-cache-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
         "-parseable-output",
         "-parse-as-library",
         "-swift-version",
         "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
         "-sdk",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-F",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-I",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
         "-L",
@@ -300,11 +343,15 @@
         "-Xcc",
         "-isysroot",
         "-Xcc",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-Xcc",
         "-F",
         "-Xcc",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-Xcc",
         "-fPIC",
         "-Xcc",
@@ -350,7 +397,7 @@
       "tempsPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioTests.build",
       "wholeModuleOptimization" : false
     },
-    "C.Shared-x86_64-apple-macosx14.0-debug.module" : {
+    "C.Shared-x86_64-apple-macosx26.0-debug.module" : {
       "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
       "fileList" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/sources",
       "importPath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
@@ -405,6 +452,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift"
         },
         {
@@ -413,7 +464,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategyFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan+Summary.swift"
         },
         {
           "kind" : "file",
@@ -524,9 +587,13 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/InterruptionEvent.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Logger.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicAvailability.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelection.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.swift.o",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanModeBCalculator.swift.o",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/PlanSnapshot.swift.o",
@@ -552,7 +619,9 @@
       "otherArguments" : [
         "-target",
         "x86_64-apple-macosx14.0",
+        "-incremental",
         "-enable-batch-mode",
+        "-serialize-diagnostics",
         "-index-store-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
         "-Onone",
@@ -560,19 +629,24 @@
         "-j8",
         "-DSWIFT_PACKAGE",
         "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
         "-module-cache-path",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
         "-parseable-output",
         "-parse-as-library",
         "-emit-objc-header",
         "-emit-objc-header-path",
-        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Shared-Swift.h",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/include/Shared-Swift.h",
         "-swift-version",
         "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
         "-sdk",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-F",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-I",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
         "-L",
@@ -581,11 +655,15 @@
         "-Xcc",
         "-isysroot",
         "-Xcc",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
         "-Xcc",
         "-F",
         "-Xcc",
         "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
         "-Xcc",
         "-fPIC",
         "-Xcc",
@@ -645,6 +723,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o"
         },
         {
@@ -653,7 +735,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.swift.o"
         },
         {
           "kind" : "file",
@@ -758,9 +852,13 @@
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategyFactory.swift",
+        "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan+Summary.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift",
         "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift",
@@ -797,16 +895,18 @@
       "Audio",
       "-package-name",
       "audio",
-      "-incremental",
       "-c",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioCueSink.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioSessionManager.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/SpeechCueSink.swift",
       "-I",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
       "-target",
       "x86_64-apple-macosx14.0",
+      "-incremental",
       "-enable-batch-mode",
+      "-serialize-diagnostics",
       "-index-store-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
       "-Onone",
@@ -814,19 +914,24 @@
       "-j8",
       "-DSWIFT_PACKAGE",
       "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
       "-module-cache-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
       "-parseable-output",
       "-parse-as-library",
       "-emit-objc-header",
       "-emit-objc-header-path",
-      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/Audio-Swift.h",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/include/Audio-Swift.h",
       "-swift-version",
       "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
       "-sdk",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-F",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-I",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
       "-L",
@@ -835,11 +940,15 @@
       "-Xcc",
       "-isysroot",
       "-Xcc",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-Xcc",
       "-F",
       "-Xcc",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-Xcc",
       "-fPIC",
       "-Xcc",
@@ -855,32 +964,40 @@
       "AudioPackageTests",
       "-package-name",
       "audio",
-      "-incremental",
       "-c",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.derived/runner.swift",
       "-I",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
       "-target",
       "x86_64-apple-macosx14.0",
+      "-incremental",
       "-enable-batch-mode",
+      "-serialize-diagnostics",
       "-index-store-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
       "-j8",
       "-DSWIFT_PACKAGE",
       "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
       "-module-cache-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
       "-parseable-output",
       "-parse-as-library",
       "-emit-objc-header",
       "-emit-objc-header-path",
-      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/AudioPackageTests-Swift.h",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/AudioPackageTests.build/include/AudioPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
       "-sdk",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-F",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-I",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
       "-L",
@@ -889,11 +1006,15 @@
       "-Xcc",
       "-isysroot",
       "-Xcc",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-Xcc",
       "-F",
       "-Xcc",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-Xcc",
       "-fPIC",
       "-Xcc",
@@ -909,7 +1030,6 @@
       "AudioTests",
       "-package-name",
       "audio",
-      "-incremental",
       "-c",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkAcceptanceTests.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Tests/AudioTests/AudioCueSinkTests.swift",
@@ -920,24 +1040,33 @@
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
       "-target",
       "x86_64-apple-macosx14.0",
+      "-incremental",
       "-enable-batch-mode",
+      "-serialize-diagnostics",
       "-index-store-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
       "-Onone",
       "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
       "-j8",
       "-DSWIFT_PACKAGE",
       "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
       "-module-cache-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
       "-parseable-output",
       "-parse-as-library",
       "-swift-version",
       "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
       "-sdk",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-F",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-I",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
       "-L",
@@ -946,11 +1075,15 @@
       "-Xcc",
       "-isysroot",
       "-Xcc",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-Xcc",
       "-F",
       "-Xcc",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-Xcc",
       "-fPIC",
       "-Xcc",
@@ -966,7 +1099,6 @@
       "Shared",
       "-package-name",
       "shared",
-      "-incremental",
       "-c",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/AbsoluteTimer.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/ContentHash.swift",
@@ -980,9 +1112,13 @@
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/InterruptionEvent.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Logger.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicAvailability.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelection.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategyFactory.swift",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan+Summary.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanModeBCalculator.swift",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/PlanSnapshot.swift",
@@ -1008,7 +1144,9 @@
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Modules",
       "-target",
       "x86_64-apple-macosx14.0",
+      "-incremental",
       "-enable-batch-mode",
+      "-serialize-diagnostics",
       "-index-store-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/index/store",
       "-Onone",
@@ -1016,19 +1154,24 @@
       "-j8",
       "-DSWIFT_PACKAGE",
       "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
       "-module-cache-path",
       "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/ModuleCache",
       "-parseable-output",
       "-parse-as-library",
       "-emit-objc-header",
       "-emit-objc-header-path",
-      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Shared-Swift.h",
+      "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/include/Shared-Swift.h",
       "-swift-version",
       "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
       "-sdk",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-F",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-I",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
       "-L",
@@ -1037,11 +1180,15 @@
       "-Xcc",
       "-isysroot",
       "-Xcc",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
       "-Xcc",
       "-F",
       "-Xcc",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
       "-Xcc",
       "-fPIC",
       "-Xcc",
@@ -1085,6 +1232,11 @@
       ]
     }
   },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
   "writeCommands" : {
     "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources" : {
       "alwaysOutOfDate" : false,
@@ -1104,6 +1256,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/AudioVersion.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/Sources/Audio/SpeechCueSink.swift"
         }
       ],
       "outputFilePath" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/sources"
@@ -1140,6 +1296,10 @@
         {
           "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/AudioVersion.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Audio.build/SpeechCueSink.swift.o"
         },
         {
           "kind" : "file",
@@ -1215,6 +1375,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicItemResolver.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicPlaybackDirective.swift.o"
         },
         {
@@ -1223,7 +1387,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicSelectionLibrary.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategy.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/MusicStrategyFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Audio/.build/x86_64-apple-macosx/debug/Shared.build/Plan+Summary.swift.o"
         },
         {
           "kind" : "file",
@@ -1399,6 +1575,10 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicItemResolver.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicPlaybackDirective.swift"
         },
         {
@@ -1407,7 +1587,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicSelectionLibrary.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategy.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/MusicStrategyFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/pc/projects/git_repo/run_self/inter_fit/Interfit/Modules/Shared/Sources/Shared/Plan+Summary.swift"
         },
         {
           "kind" : "file",
