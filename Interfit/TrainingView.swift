@@ -4,6 +4,7 @@ import Persistence
 import Audio
 import AVFoundation
 import Network
+import UserNotifications
 
 struct TrainingView: View {
     let plan: Plan?
@@ -141,6 +142,14 @@ struct TrainingView: View {
             }
         }
         .onReceive(tickTimer) { now in tickIfNeeded(now: now) }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+            guard let eng = engine, eng.session.status == .running else { return }
+            let elapsed = eng.progress(at: Date()).elapsedSeconds
+            SegmentCueNotificationScheduler.schedule(structure: eng.structure, currentElapsed: elapsed)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            SegmentCueNotificationScheduler.cancelAll()
+        }
         .onReceive(NotificationCenter.default.publisher(for: NowPlayingManager.remotePlayNotification)) { _ in
             handleRemotePlay()
         }
@@ -312,6 +321,7 @@ struct TrainingView: View {
         }
         showBackgroundTimingNoticeIfNeeded()
         simulateHeadphoneDisconnectIfRequested()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.sound]) { _, _ in }
     }
 
     private func tickIfNeeded(now: Date) {
@@ -485,6 +495,7 @@ struct TrainingView: View {
         switch eng.session.status {
         case .running:
             try? eng.pause(reason: .user, at: now)
+            SegmentCueNotificationScheduler.cancelAll()
         case .paused:
             try? eng.resume(at: now)
         default:
@@ -565,6 +576,7 @@ struct TrainingView: View {
     private func cleanupSessionSideEffects() {
         stopObservingAudioSession()
         nowPlaying.stop()
+        SegmentCueNotificationScheduler.cancelAll()
         Task { @MainActor in
             await MusicPlaybackClient.stop()
             IdleTimerClient.setDisabled(false)
