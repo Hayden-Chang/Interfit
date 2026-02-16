@@ -63,6 +63,18 @@ struct PlanEditorView: View {
         case seconds
     }
 
+    private enum DurationEditorTarget {
+        case work
+        case rest
+
+        var title: String {
+            switch self {
+            case .work: "Work"
+            case .rest: "Rest"
+            }
+        }
+    }
+
     let plan: Plan?
 
     @State private var planId: UUID
@@ -89,7 +101,7 @@ struct PlanEditorView: View {
     @State private var publishedVersions: [PlanVersion] = []
     @State private var publishErrorMessage: String?
     @State private var saveErrorMessage: String?
-    @State private var expandedDurationInputKeys: Set<String> = []
+    @State private var activeDurationEditor: DurationEditorTarget?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -244,16 +256,24 @@ struct PlanEditorView: View {
     }
 
     var body: some View {
-        Form {
-            planSection
-            timingSection
-            musicSection
-            sourceSection
-            validationSection
-            saveSection
-            publishSection
+        ZStack {
+            Form {
+                planSection
+                timingSection
+                musicSection
+                sourceSection
+                validationSection
+                saveSection
+                publishSection
 
+            }
+            if let target = activeDurationEditor {
+                durationEditorOverlay(for: target)
+                    .transition(.opacity)
+                    .zIndex(1)
+            }
         }
+        .animation(.easeInOut(duration: 0.2), value: activeDurationEditor != nil)
         .navigationTitle(plan == nil ? "Create Plan" : "Edit Plan")
         .onChange(of: setsCount) { newValue in
             syncPerSetMusicArray(setsCount: newValue)
@@ -309,13 +329,13 @@ struct PlanEditorView: View {
     private var modeAFields: some View {
         Group {
             durationInputs(
-                key: "modeA.work",
+                editorTarget: .work,
                 title: "Work",
                 seconds: $workSeconds,
                 range: PlanValidationAdapter.workSecondsRange
             )
             durationInputs(
-                key: "modeA.rest",
+                editorTarget: .rest,
                 title: "Rest",
                 seconds: $restSeconds,
                 range: PlanValidationAdapter.restSecondsRange
@@ -447,13 +467,13 @@ struct PlanEditorView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
             durationInputs(
-                key: "modeB.work",
+                editorTarget: .work,
                 title: "Work",
                 seconds: $workSeconds,
                 range: PlanValidationAdapter.workSecondsRange
             )
             durationInputs(
-                key: "modeB.rest",
+                editorTarget: .rest,
                 title: "Rest",
                 seconds: $restSeconds,
                 range: PlanValidationAdapter.restSecondsRange
@@ -462,30 +482,52 @@ struct PlanEditorView: View {
     }
 
     private func durationInputs(
-        key: String,
+        editorTarget: DurationEditorTarget,
         title: String,
         seconds: Binding<Int>,
         range: ClosedRange<Int>
     ) -> some View {
-        let isExpanded = expandedDurationInputKeys.contains(key)
-        return VStack(alignment: .leading, spacing: 8) {
-            LabeledContent(title) {
-                Button {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        toggleDurationInputs(key: key)
-                    }
-                } label: {
-                    HStack(spacing: 4) {
-                        Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
-                            .monospacedDigit()
-                        Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                            .font(.caption2)
-                    }
-                    .foregroundStyle(.secondary)
+        return LabeledContent(title) {
+            Button {
+                activeDurationEditor = editorTarget
+            } label: {
+                HStack(spacing: 4) {
+                    Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
+                        .monospacedDigit()
+                    Image(systemName: "chevron.right")
+                        .font(.caption2)
                 }
-                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
             }
-            if isExpanded {
+            .buttonStyle(.plain)
+        }
+    }
+
+    private func durationEditorOverlay(for target: DurationEditorTarget) -> some View {
+        let seconds = durationSecondsBinding(for: target)
+        let range = durationRange(for: target)
+        return ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    activeDurationEditor = nil
+                }
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text("\(target.title) Duration")
+                        .font(.headline)
+                    Spacer()
+                    Button("Done") {
+                        activeDurationEditor = nil
+                    }
+                    .buttonStyle(.bordered)
+                }
+
+                Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+
                 HStack(spacing: 0) {
                     durationWheelColumn(
                         title: "小时",
@@ -504,16 +546,25 @@ struct PlanEditorView: View {
                     )
                 }
                 .frame(height: 150)
-                .transition(.opacity.combined(with: .move(edge: .top)))
             }
+            .padding(16)
+            .frame(maxWidth: 420)
+            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .padding(.horizontal, 20)
         }
     }
 
-    private func toggleDurationInputs(key: String) {
-        if expandedDurationInputKeys.contains(key) {
-            expandedDurationInputKeys.remove(key)
-        } else {
-            expandedDurationInputKeys.insert(key)
+    private func durationSecondsBinding(for target: DurationEditorTarget) -> Binding<Int> {
+        switch target {
+        case .work: $workSeconds
+        case .rest: $restSeconds
+        }
+    }
+
+    private func durationRange(for target: DurationEditorTarget) -> ClosedRange<Int> {
+        switch target {
+        case .work: PlanValidationAdapter.workSecondsRange
+        case .rest: PlanValidationAdapter.restSecondsRange
         }
     }
 
