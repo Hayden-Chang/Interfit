@@ -5,6 +5,8 @@ import Shared
 enum SegmentCueNotificationScheduler {
 
     private static let identifierPrefix = "segmentCue-"
+    private static let maxSets = 99
+    private static let maxNumberedSetVoice = 20
 
     /// Schedule notifications for all future segment boundaries.
     /// - Parameters:
@@ -12,7 +14,9 @@ enum SegmentCueNotificationScheduler {
     ///   - currentElapsed: engine's current elapsed seconds
     static func schedule(structure: WorkoutStructure, currentElapsed: Int) {
         let center = UNUserNotificationCenter.current()
-        cancelAll()
+
+        // Cancel synchronously by known IDs (avoids async race condition)
+        center.removePendingNotificationRequests(withIdentifiers: allPossibleIdentifiers())
 
         var requests: [UNNotificationRequest] = []
         var boundaryElapsed = 0
@@ -22,7 +26,7 @@ enum SegmentCueNotificationScheduler {
             if boundaryElapsed > currentElapsed {
                 let delay = TimeInterval(boundaryElapsed - currentElapsed)
                 let content = UNMutableNotificationContent()
-                content.sound = UNNotificationSound(named: UNNotificationSoundName("work_mp3/set_\(setIndex)_start.mp3"))
+                content.sound = workStartSound(for: setIndex)
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: delay, repeats: false)
                 let id = "\(identifierPrefix)work-\(setIndex)"
                 requests.append(UNNotificationRequest(identifier: id, content: content, trigger: trigger))
@@ -34,7 +38,7 @@ enum SegmentCueNotificationScheduler {
                 if boundaryElapsed > currentElapsed {
                     let delay = TimeInterval(boundaryElapsed - currentElapsed)
                     let content = UNMutableNotificationContent()
-                    content.sound = UNNotificationSound(named: UNNotificationSoundName("rest_mp3/time_to_rest.mp3"))
+                    content.sound = restStartSound()
                     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: delay, repeats: false)
                     let id = "\(identifierPrefix)rest-\(setIndex)"
                     requests.append(UNNotificationRequest(identifier: id, content: content, trigger: trigger))
@@ -44,17 +48,44 @@ enum SegmentCueNotificationScheduler {
         }
 
         for request in requests {
-            center.add(request) { _ in }
+            center.add(request) { error in
+                guard let error else { return }
+                #if DEBUG
+                print("[SegmentCueNotificationScheduler] Failed to add \(request.identifier): \(error)")
+                #endif
+            }
         }
     }
 
     static func cancelAll() {
         let center = UNUserNotificationCenter.current()
-        center.getPendingNotificationRequests { requests in
-            let ids = requests.filter { $0.identifier.hasPrefix(identifierPrefix) }.map(\.identifier)
-            if !ids.isEmpty {
-                center.removePendingNotificationRequests(withIdentifiers: ids)
-            }
+        center.removePendingNotificationRequests(withIdentifiers: allPossibleIdentifiers())
+    }
+
+    private static func allPossibleIdentifiers() -> [String] {
+        var ids: [String] = []
+        for setIndex in 1...maxSets {
+            ids.append("\(identifierPrefix)work-\(setIndex)")
+            ids.append("\(identifierPrefix)rest-\(setIndex)")
         }
+        return ids
+    }
+
+    private static func workStartSound(for setIndex: Int) -> UNNotificationSound {
+        guard setIndex <= maxNumberedSetVoice else {
+            return .default
+        }
+        return sound(named: "set_\(setIndex)_start.caf")
+    }
+
+    private static func restStartSound() -> UNNotificationSound {
+        sound(named: "time_to_rest.caf")
+    }
+
+    private static func sound(named filename: String) -> UNNotificationSound {
+        if Bundle.main.url(forResource: filename, withExtension: nil) != nil {
+            return UNNotificationSound(named: UNNotificationSoundName(filename))
+        }
+        return .default
     }
 }
