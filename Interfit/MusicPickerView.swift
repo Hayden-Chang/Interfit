@@ -17,6 +17,8 @@ struct MusicPickerView: View {
     @State private var query: String = ""
     @State private var recents: [MusicSelection] = MusicRecentsStore.load()
     @State private var pendingSelection: MusicSelection?
+    @State private var activePreviewSelection: MusicSelection?
+    @State private var isPreviewPlaying: Bool = false
     @State private var previewErrorMessage: String?
 
     #if canImport(MusicKit)
@@ -190,8 +192,8 @@ struct MusicPickerView: View {
 
             Spacer()
 
-            Button("Play") {
-                previewSelection(selection)
+            Button(previewButtonTitle(for: selection)) {
+                togglePreview(for: selection)
             }
             .buttonStyle(.bordered)
 
@@ -207,17 +209,49 @@ struct MusicPickerView: View {
         return pendingSelection.isEquivalent(to: selection)
     }
 
+    private func isPreviewing(_ selection: MusicSelection) -> Bool {
+        guard let activePreviewSelection, isPreviewPlaying else { return false }
+        return activePreviewSelection.isEquivalent(to: selection)
+    }
+
+    private func previewButtonTitle(for selection: MusicSelection) -> String {
+        isPreviewing(selection) ? "Stop" : "Play"
+    }
+
+    private func togglePreview(for selection: MusicSelection) {
+        if isPreviewing(selection) {
+            stopPreview()
+        } else {
+            previewSelection(selection)
+        }
+    }
+
     private func previewSelection(_ selection: MusicSelection) {
         Task {
             do {
                 try await MusicPlaybackClient.apply(selection: selection)
                 await MainActor.run {
+                    activePreviewSelection = selection
+                    isPreviewPlaying = true
                     previewErrorMessage = nil
                 }
             } catch {
                 await MainActor.run {
+                    activePreviewSelection = nil
+                    isPreviewPlaying = false
                     previewErrorMessage = "Couldn’t play this right now. Try another item or check Apple Music availability."
                 }
+            }
+        }
+    }
+
+    private func stopPreview() {
+        Task {
+            await MusicPlaybackClient.stop()
+            await MainActor.run {
+                activePreviewSelection = nil
+                isPreviewPlaying = false
+                previewErrorMessage = nil
             }
         }
     }
