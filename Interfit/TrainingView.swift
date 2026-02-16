@@ -81,11 +81,24 @@ struct TrainingView: View {
                     .font(.title.bold())
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text(formattedCountdown)
-                    .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
-                    .monospacedDigit()
-                    .minimumScaleFactor(0.5)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                if shouldShowCircularCountdown {
+                    VStack(spacing: 12) {
+                        Text(formattedCountdown)
+                            .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
+                            .monospacedDigit()
+                            .minimumScaleFactor(0.5)
+                            .frame(maxWidth: .infinity, alignment: .center)
+
+                        circularCountdown
+                            .frame(maxWidth: .infinity)
+                    }
+                } else {
+                    Text(formattedCountdown)
+                        .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
+                        .monospacedDigit()
+                        .minimumScaleFactor(0.5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
 
                 Text(setProgressText)
                     .font(.headline)
@@ -100,13 +113,6 @@ struct TrainingView: View {
                 }
 
                 Spacer()
-
-                if let status = engine?.session.status, status == .running || status == .paused {
-                    Button(status == .running ? "Pause" : "Resume") {
-                        togglePauseResume()
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
             }
         }
         .padding()
@@ -431,6 +437,71 @@ struct TrainingView: View {
         return lastInterruption?.attributes["reason"] == "oldDeviceUnavailable"
     }
 
+    private var shouldShowCircularCountdown: Bool {
+        guard let status = engine?.session.status else { return false }
+        guard status == .running || status == .paused else { return false }
+        return progress?.currentSegment != nil
+    }
+
+    private var circularCountdownProgress: CGFloat {
+        guard let progress, let segment = progress.currentSegment else { return 0 }
+        guard segment.durationSeconds > 0 else { return 0 }
+        let ratio = Double(progress.currentSegmentRemainingSeconds) / Double(segment.durationSeconds)
+        return CGFloat(min(max(ratio, 0), 1))
+    }
+
+    private var circularCountdownTint: Color {
+        guard let kind = progress?.currentSegment?.kind else { return .accentColor }
+        switch kind {
+        case .work:
+            return .orange
+        case .rest:
+            return .mint
+        }
+    }
+
+    private var pauseResumeTitle: String {
+        guard let status = engine?.session.status else { return "Pause" }
+        return status == .running ? "Pause" : "Resume"
+    }
+
+    private var pauseResumeSystemImage: String {
+        guard let status = engine?.session.status else { return "pause.fill" }
+        return status == .running ? "pause.fill" : "play.fill"
+    }
+
+    private var circularCountdown: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.secondary.opacity(0.18), lineWidth: 14)
+
+            Circle()
+                .trim(from: 0, to: circularCountdownProgress)
+                .stroke(
+                    circularCountdownTint,
+                    style: StrokeStyle(lineWidth: 14, lineCap: .round)
+                )
+                .rotationEffect(.degrees(-90))
+                .animation(.linear(duration: 1.0), value: progress?.currentSegmentRemainingSeconds ?? 0)
+
+            Button {
+                togglePauseResume()
+            } label: {
+                VStack(spacing: 6) {
+                    Image(systemName: pauseResumeSystemImage)
+                        .font(.system(size: 38, weight: .bold))
+                    Text(pauseResumeTitle)
+                        .font(.headline)
+                }
+                .frame(width: 164, height: 164)
+                .contentShape(Circle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(pauseResumeTitle)
+        }
+        .frame(width: 248, height: 248)
+    }
+
     private func togglePauseResume() {
         guard var eng = engine else { return }
         let now = Date()
@@ -548,7 +619,6 @@ struct TrainingView: View {
         summaryPresentedForSessionId = nil
         isShowingEndConfirm = false
         didConfirmEndFromAlert = false
-        isShowingMusicPicker = false
     }
 
     private func cleanupSessionSideEffects(onMusicStopped: (() -> Void)? = nil) {
