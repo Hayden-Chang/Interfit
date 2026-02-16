@@ -82,6 +82,7 @@ struct PlanEditorView: View {
     @State private var isPublishing: Bool = false
     @State private var publishedVersions: [PlanVersion] = []
     @State private var publishErrorMessage: String?
+    @State private var saveErrorMessage: String?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -250,8 +251,16 @@ struct PlanEditorView: View {
         .onChange(of: setsCount) { newValue in
             syncPerSetMusicArray(setsCount: newValue)
         }
+        .onChange(of: name) { _ in
+            saveErrorMessage = nil
+        }
         .task(id: planId) {
             await loadPublishedVersions()
+        }
+        .alert("Save failed", isPresented: Binding(get: { saveErrorMessage != nil }, set: { if !$0 { saveErrorMessage = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(saveErrorMessage ?? "")
         }
         .alert("Publish failed", isPresented: Binding(get: { publishErrorMessage != nil }, set: { if !$0 { publishErrorMessage = nil } })) {
             Button("OK", role: .cancel) {}
@@ -526,8 +535,15 @@ struct PlanEditorView: View {
     private func save() {
         guard canSave else { return }
         isSaving = true
+        saveErrorMessage = nil
         let toSave = draftPlan
         Task {
+            if !(await ensurePlanNameIsCreatable(toSave)) {
+                await MainActor.run {
+                    isSaving = false
+                }
+                return
+            }
             await planRepository.upsertPlan(toSave)
             await MainActor.run {
                 isSaving = false
@@ -543,8 +559,15 @@ struct PlanEditorView: View {
     private func publish() {
         guard canSave else { return }
         isPublishing = true
+        saveErrorMessage = nil
         let snapshot = draftPlan
         Task {
+            if !(await ensurePlanNameIsCreatable(snapshot)) {
+                await MainActor.run {
+                    isPublishing = false
+                }
+                return
+            }
             await planRepository.upsertPlan(snapshot)
             let existing = await versionRepository.fetchPlanVersions(planId: snapshot.id)
             let nextVersionNumber = (existing.map(\.versionNumber).max() ?? 0) + 1
@@ -572,6 +595,24 @@ struct PlanEditorView: View {
                 }
             }
         }
+    }
+
+    private func ensurePlanNameIsCreatable(_ candidate: Plan) async -> Bool {
+        // This rule is only for creating a new plan.
+        guard plan == nil else { return true }
+
+        let allPlans = await planRepository.fetchAllPlans()
+        let normalizedCandidate = Self.normalizedPlanName(candidate.name)
+        let hasDuplicate = allPlans.contains { existing in
+            existing.id != candidate.id
+                && Self.normalizedPlanName(existing.name) == normalizedCandidate
+        }
+        guard hasDuplicate else { return true }
+
+        await MainActor.run {
+            saveErrorMessage = "计划名称已存在，请换一个名称。"
+        }
+        return false
     }
 
     private func syncPerSetMusicArray(setsCount: Int) {
@@ -643,6 +684,10 @@ struct PlanEditorView: View {
         let s = total % 60
         if h > 0 { return String(format: "%d:%02d:%02d", h, m, s) }
         return String(format: "%d:%02d", m, s)
+    }
+
+    private static func normalizedPlanName(_ raw: String) -> String {
+        raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
     }
 }
 
