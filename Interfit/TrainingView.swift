@@ -59,66 +59,55 @@ struct TrainingView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            if plan == nil, recoverableSnapshot == nil {
-                Text("No plan selected")
+            if engine == nil, plan == nil, recoverableSnapshot == nil {
+                Text("No active training")
                     .font(.title.bold())
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Start a workout from Train.")
+                Text("Start a workout from Train tab.")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack {
-                    NavigationLink("Train") {
-                        QuickStartView()
-                    }
-                    .buttonStyle(.borderedProminent)
+                Spacer()
+            } else {
+                if let plan {
+                    Text(plan.name)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
 
-                    NavigationLink("Create plan") {
-                        PlanEditorView(plan: nil)
-                    }
-                    .buttonStyle(.bordered)
+                Text(segmentTitle)
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text(formattedCountdown)
+                    .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .minimumScaleFactor(0.5)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text(setProgressText)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                if isSafetyPausedByHeadphoneDisconnect {
+                    Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
                 Spacer()
+
+                if let status = engine?.session.status, status == .running || status == .paused {
+                    Button(status == .running ? "Pause" : "Resume") {
+                        togglePauseResume()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
             }
-
-            if let plan {
-                Text(plan.name)
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
-            }
-
-            Text(segmentTitle)
-                .font(.title.bold())
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text(formattedCountdown)
-                .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
-                .monospacedDigit()
-                .minimumScaleFactor(0.5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text(setProgressText)
-                .font(.headline)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            if isSafetyPausedByHeadphoneDisconnect {
-                Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-
-            Spacer()
-
-            Button(primaryButtonTitle) {
-                togglePauseResume()
-            }
-            .buttonStyle(.borderedProminent)
-            .disabled(engine == nil || engine?.session.status == .completed || engine?.session.status == .ended)
         }
         .padding()
         .navigationTitle("Training")
@@ -134,12 +123,16 @@ struct TrainingView: View {
         }
         .onReceive(tickTimer) { now in tickIfNeeded(now: now) }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-            guard let eng = engine, eng.session.status == .running else { return }
-            let elapsed = eng.progress(at: Date()).elapsedSeconds
-            SegmentCueNotificationScheduler.schedule(structure: eng.structure, currentElapsed: elapsed)
+            scheduleBackgroundSegmentCuesIfNeeded()
+            refreshBackgroundAudioKeepAlive()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+            scheduleBackgroundSegmentCuesIfNeeded()
+            refreshBackgroundAudioKeepAlive()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
             SegmentCueNotificationScheduler.cancelAll()
+            refreshBackgroundAudioKeepAlive()
         }
         .onReceive(NotificationCenter.default.publisher(for: NowPlayingManager.remotePlayNotification)) { _ in
             handleRemotePlay()
@@ -304,7 +297,8 @@ struct TrainingView: View {
         }
         showBackgroundTimingNoticeIfNeeded()
         simulateHeadphoneDisconnectIfRequested()
-        UNUserNotificationCenter.current().requestAuthorization(options: [.sound]) { _, _ in }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+        refreshBackgroundAudioKeepAlive()
     }
 
     private func tickIfNeeded(now: Date) {
@@ -421,16 +415,6 @@ struct TrainingView: View {
         return "\(progress.totalSets) / \(progress.totalSets) sets"
     }
 
-    private var primaryButtonTitle: String {
-        guard let engine else { return "Start" }
-        switch engine.session.status {
-        case .running: return "Pause"
-        case .paused: return "Resume"
-        case .idle: return "Start"
-        case .completed, .ended: return "Done"
-        }
-    }
-
     private var isSafetyPausedByHeadphoneDisconnect: Bool {
         guard let engine else { return false }
         guard engine.session.status == .paused else { return false }
@@ -458,6 +442,7 @@ struct TrainingView: View {
         self.now = now
         nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
         persistRecoverableSnapshotIfNeeded(eng, now: now, force: true)
+        refreshBackgroundAudioKeepAlive()
     }
 
     private func endWorkout(confirmed: Bool) {
@@ -467,6 +452,7 @@ struct TrainingView: View {
         engine = eng
         self.now = now
         nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
+        refreshBackgroundAudioKeepAlive()
 
         switch result {
         case .requiresConfirmation:
@@ -529,6 +515,7 @@ struct TrainingView: View {
         stopObservingAudioSession()
         nowPlaying.stop()
         SegmentCueNotificationScheduler.cancelAll()
+        BackgroundAudioKeepAlive.shared.stop()
         Task { @MainActor in
             await MusicPlaybackClient.stop()
             IdleTimerClient.setDisabled(false)
@@ -558,6 +545,7 @@ struct TrainingView: View {
             self.now = now
             nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
             persistRecoverableSnapshotIfNeeded(eng, now: now, force: true)
+            refreshBackgroundAudioKeepAlive()
         }
     }
 
@@ -570,6 +558,7 @@ struct TrainingView: View {
             self.now = now
             nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
             persistRecoverableSnapshotIfNeeded(eng, now: now, force: true)
+            refreshBackgroundAudioKeepAlive()
         }
     }
 
@@ -593,6 +582,27 @@ struct TrainingView: View {
         guard shouldShow else { return }
         didShowBackgroundTimingNotice = true
         isShowingBackgroundTimingNotice = true
+    }
+
+    private func scheduleBackgroundSegmentCuesIfNeeded(referenceDate: Date = Date()) {
+        guard let eng = engine, eng.session.status == .running else { return }
+        let elapsed = eng.progress(at: referenceDate).elapsedSeconds
+        SegmentCueNotificationScheduler.schedule(structure: eng.structure, currentElapsed: elapsed)
+    }
+
+    private func refreshBackgroundAudioKeepAlive() {
+        guard let eng = engine else {
+            BackgroundAudioKeepAlive.shared.stop()
+            return
+        }
+
+        let appState = UIApplication.shared.applicationState
+        let shouldKeepAlive = (eng.session.status == .running) && (appState != .active)
+        if shouldKeepAlive {
+            BackgroundAudioKeepAlive.shared.start()
+        } else {
+            BackgroundAudioKeepAlive.shared.stop()
+        }
     }
 
     private func simulateHeadphoneDisconnectIfRequested() {

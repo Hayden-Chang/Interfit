@@ -57,6 +57,12 @@ struct PlanEditorView: View {
         }
     }
 
+    private enum DurationComponent {
+        case hours
+        case minutes
+        case seconds
+    }
+
     let plan: Plan?
 
     @State private var planId: UUID
@@ -82,6 +88,7 @@ struct PlanEditorView: View {
     @State private var isPublishing: Bool = false
     @State private var publishedVersions: [PlanVersion] = []
     @State private var publishErrorMessage: String?
+    @State private var saveErrorMessage: String?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -250,8 +257,16 @@ struct PlanEditorView: View {
         .onChange(of: setsCount) { newValue in
             syncPerSetMusicArray(setsCount: newValue)
         }
+        .onChange(of: name) { _ in
+            saveErrorMessage = nil
+        }
         .task(id: planId) {
             await loadPublishedVersions()
+        }
+        .alert("Save failed", isPresented: Binding(get: { saveErrorMessage != nil }, set: { if !$0 { saveErrorMessage = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(saveErrorMessage ?? "")
         }
         .alert("Publish failed", isPresented: Binding(get: { publishErrorMessage != nil }, set: { if !$0 { publishErrorMessage = nil } })) {
             Button("OK", role: .cancel) {}
@@ -292,8 +307,8 @@ struct PlanEditorView: View {
 
     private var modeAFields: some View {
         Group {
-            Stepper("Work: \(workSeconds)s", value: $workSeconds, in: PlanValidationAdapter.workSecondsRange, step: 5)
-            Stepper("Rest: \(restSeconds)s", value: $restSeconds, in: PlanValidationAdapter.restSecondsRange, step: 5)
+            durationInputs(title: "Work", seconds: $workSeconds, range: PlanValidationAdapter.workSecondsRange)
+            durationInputs(title: "Rest", seconds: $restSeconds, range: PlanValidationAdapter.restSecondsRange)
         }
     }
 
@@ -420,8 +435,94 @@ struct PlanEditorView: View {
             Text("Fine tune")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-            Stepper("Work: \(workSeconds)s", value: $workSeconds, in: PlanValidationAdapter.workSecondsRange, step: 5)
-            Stepper("Rest: \(restSeconds)s", value: $restSeconds, in: PlanValidationAdapter.restSecondsRange, step: 5)
+            durationInputs(title: "Work", seconds: $workSeconds, range: PlanValidationAdapter.workSecondsRange)
+            durationInputs(title: "Rest", seconds: $restSeconds, range: PlanValidationAdapter.restSecondsRange)
+        }
+    }
+
+    private func durationInputs(
+        title: String,
+        seconds: Binding<Int>,
+        range: ClosedRange<Int>
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            LabeledContent(title) {
+                Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+            }
+            HStack(spacing: 0) {
+                durationWheelColumn(
+                    title: "小时",
+                    selection: durationComponentBinding(seconds: seconds, range: range, component: .hours),
+                    values: 0 ... max(0, range.upperBound / 3600)
+                )
+                durationWheelColumn(
+                    title: "分钟",
+                    selection: durationComponentBinding(seconds: seconds, range: range, component: .minutes),
+                    values: 0 ... 59
+                )
+                durationWheelColumn(
+                    title: "秒",
+                    selection: durationComponentBinding(seconds: seconds, range: range, component: .seconds),
+                    values: 0 ... 59
+                )
+            }
+            .frame(height: 150)
+        }
+    }
+
+    private func durationWheelColumn(
+        title: String,
+        selection: Binding<Int>,
+        values: ClosedRange<Int>
+    ) -> some View {
+        Picker(title, selection: selection) {
+            ForEach(Array(values), id: \.self) { value in
+                Text("\(value) \(title)").tag(value)
+            }
+        }
+        .pickerStyle(.wheel)
+        .frame(maxWidth: .infinity)
+        .clipped()
+    }
+
+    private func durationComponentBinding(
+        seconds: Binding<Int>,
+        range: ClosedRange<Int>,
+        component: DurationComponent
+    ) -> Binding<Int> {
+        Binding(
+            get: {
+                let clamped = Self.clamp(seconds.wrappedValue, to: range)
+                return durationComponentValue(clamped, component: component)
+            },
+            set: { newValue in
+                let clamped = Self.clamp(seconds.wrappedValue, to: range)
+                var parts = Self.durationComponents(seconds: clamped)
+                switch component {
+                case .hours:
+                    parts.hours = min(max(0, newValue), max(0, range.upperBound / 3600))
+                case .minutes:
+                    parts.minutes = min(max(0, newValue), 59)
+                case .seconds:
+                    parts.seconds = min(max(0, newValue), 59)
+                }
+                let candidate = (parts.hours * 3600) + (parts.minutes * 60) + parts.seconds
+                seconds.wrappedValue = Self.clamp(candidate, to: range)
+            }
+        )
+    }
+
+    private func durationComponentValue(_ totalSeconds: Int, component: DurationComponent) -> Int {
+        let parts = Self.durationComponents(seconds: totalSeconds)
+        switch component {
+        case .hours:
+            return parts.hours
+        case .minutes:
+            return parts.minutes
+        case .seconds:
+            return parts.seconds
         }
     }
 
@@ -526,8 +627,15 @@ struct PlanEditorView: View {
     private func save() {
         guard canSave else { return }
         isSaving = true
+        saveErrorMessage = nil
         let toSave = draftPlan
         Task {
+            if !(await ensurePlanNameIsCreatable(toSave)) {
+                await MainActor.run {
+                    isSaving = false
+                }
+                return
+            }
             await planRepository.upsertPlan(toSave)
             await MainActor.run {
                 isSaving = false
@@ -543,8 +651,15 @@ struct PlanEditorView: View {
     private func publish() {
         guard canSave else { return }
         isPublishing = true
+        saveErrorMessage = nil
         let snapshot = draftPlan
         Task {
+            if !(await ensurePlanNameIsCreatable(snapshot)) {
+                await MainActor.run {
+                    isPublishing = false
+                }
+                return
+            }
             await planRepository.upsertPlan(snapshot)
             let existing = await versionRepository.fetchPlanVersions(planId: snapshot.id)
             let nextVersionNumber = (existing.map(\.versionNumber).max() ?? 0) + 1
@@ -572,6 +687,24 @@ struct PlanEditorView: View {
                 }
             }
         }
+    }
+
+    private func ensurePlanNameIsCreatable(_ candidate: Plan) async -> Bool {
+        // This rule is only for creating a new plan.
+        guard plan == nil else { return true }
+
+        let allPlans = await planRepository.fetchAllPlans()
+        let normalizedCandidate = Self.normalizedPlanName(candidate.name)
+        let hasDuplicate = allPlans.contains { existing in
+            existing.id != candidate.id
+                && Self.normalizedPlanName(existing.name) == normalizedCandidate
+        }
+        guard hasDuplicate else { return true }
+
+        await MainActor.run {
+            saveErrorMessage = "计划名称已存在，请换一个名称。"
+        }
+        return false
     }
 
     private func syncPerSetMusicArray(setsCount: Int) {
@@ -636,6 +769,20 @@ struct PlanEditorView: View {
         return (min(maxPart, a), min(maxPart, b))
     }
 
+    private static func clamp(_ value: Int, to range: ClosedRange<Int>) -> Int {
+        min(max(value, range.lowerBound), range.upperBound)
+    }
+
+    private static func durationComponents(seconds: Int) -> (hours: Int, minutes: Int, seconds: Int) {
+        let total = max(0, seconds)
+        return (total / 3600, (total % 3600) / 60, total % 60)
+    }
+
+    private static func formatDurationHMS(seconds: Int) -> String {
+        let parts = durationComponents(seconds: seconds)
+        return String(format: "%02d:%02d:%02d", parts.hours, parts.minutes, parts.seconds)
+    }
+
     private static func formatDuration(seconds: Int) -> String {
         let total = max(0, seconds)
         let h = total / 3600
@@ -643,6 +790,10 @@ struct PlanEditorView: View {
         let s = total % 60
         if h > 0 { return String(format: "%d:%02d:%02d", h, m, s) }
         return String(format: "%d:%02d", m, s)
+    }
+
+    private static func normalizedPlanName(_ raw: String) -> String {
+        raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
     }
 }
 

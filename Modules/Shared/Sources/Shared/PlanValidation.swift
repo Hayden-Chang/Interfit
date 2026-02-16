@@ -26,8 +26,8 @@ public extension PlanParameterBounds {
     /// Recommended bounds from `design_all_phases_integrated.md` 5.3.3.
     static let recommended = PlanParameterBounds(
         setsCount: 1 ... 99,
-        workSeconds: 10 ... 1800,
-        restSeconds: 0 ... 1800
+        workSeconds: 10 ... 36000,
+        restSeconds: 0 ... 36000
     )
 }
 

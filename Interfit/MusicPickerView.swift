@@ -26,15 +26,6 @@ struct MusicPickerView: View {
     @State private var searchResults: [MusicSelection] = []
     @State private var searchError: String?
     @State private var searchTask: Task<Void, Never>?
-
-    @State private var myPlaylists: [MusicSelection] = []
-    @State private var isLoadingMyPlaylists: Bool = false
-    @State private var myPlaylistsError: String?
-
-    @State private var expandedPlaylistExternalId: String?
-    @State private var playlistTracksByPlaylistId: [String: [MusicSelection]] = [:]
-    @State private var loadingPlaylistExternalId: String?
-    @State private var playlistTracksErrorByPlaylistId: [String: String] = [:]
     #endif
 
     init(
@@ -64,13 +55,6 @@ struct MusicPickerView: View {
             searchTask = nil
             #endif
         }
-        #if canImport(MusicKit)
-        .task(id: authStatus) {
-            guard authStatus == .authorized else { return }
-            guard allowedTypes.contains(.playlist) else { return }
-            await loadMyPlaylistsIfNeeded()
-        }
-        #endif
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Done") {
@@ -190,43 +174,6 @@ struct MusicPickerView: View {
                     }
                 }
             }
-
-            Section("My playlists") {
-                #if canImport(MusicKit)
-                if !allowedTypes.contains(.playlist) {
-                    Text("Playlists are not available for this selection.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                } else if isLoadingMyPlaylists {
-                    HStack(spacing: 8) {
-                        ProgressView()
-                        Text("Loading…")
-                    }
-                } else if let myPlaylistsError {
-                    Text(myPlaylistsError)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                } else if myPlaylists.isEmpty {
-                    Text("No playlists found.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(myPlaylists, id: \.externalId) { playlist in
-                        playlistRow(playlist)
-                    }
-                }
-
-                if allowedTypes.contains(.playlist) {
-                    Button("Reload") {
-                        Task { await reloadMyPlaylists() }
-                    }
-                }
-                #else
-                Text("My Playlists are unavailable on this platform.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                #endif
-            }
         }
     }
 
@@ -254,62 +201,6 @@ struct MusicPickerView: View {
             .buttonStyle(.borderedProminent)
         }
     }
-
-    #if canImport(MusicKit)
-    private func playlistRow(_ playlist: MusicSelection) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 10) {
-                Button {
-                    togglePlaylistExpanded(playlist)
-                } label: {
-                    HStack(spacing: 6) {
-                        Image(systemName: expandedPlaylistExternalId == playlist.externalId ? "chevron.down" : "chevron.right")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                        Text(playlist.displayTitle)
-                    }
-                }
-                .buttonStyle(.plain)
-
-                Spacer()
-
-                Button("Play") {
-                    previewSelection(playlist)
-                }
-                .buttonStyle(.bordered)
-
-                Button(isPendingSelection(playlist) ? "Selected" : "Select") {
-                    pendingSelection = playlist
-                }
-                .buttonStyle(.borderedProminent)
-            }
-
-            if expandedPlaylistExternalId == playlist.externalId {
-                if loadingPlaylistExternalId == playlist.externalId {
-                    HStack(spacing: 8) {
-                        ProgressView()
-                        Text("Loading tracks…")
-                    }
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                } else if let error = playlistTracksErrorByPlaylistId[playlist.externalId] {
-                    Text(error)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                } else if let tracks = playlistTracksByPlaylistId[playlist.externalId], !tracks.isEmpty {
-                    ForEach(tracks, id: \.externalId) { track in
-                        selectableMusicRow(track, showMetadata: false)
-                            .padding(.leading, 20)
-                    }
-                } else {
-                    Text("No playable tracks found.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
-            }
-        }
-    }
-    #endif
 
     private func isPendingSelection(_ selection: MusicSelection) -> Bool {
         guard let pendingSelection else { return false }
@@ -390,131 +281,6 @@ struct MusicPickerView: View {
         }
         #endif
     }
-
-    #if canImport(MusicKit)
-    private func loadMyPlaylistsIfNeeded() async {
-        guard myPlaylists.isEmpty else { return }
-        await reloadMyPlaylists()
-    }
-
-    private func reloadMyPlaylists() async {
-        guard !isLoadingMyPlaylists else { return }
-
-        await MainActor.run {
-            isLoadingMyPlaylists = true
-            myPlaylistsError = nil
-        }
-        defer { Task { @MainActor in isLoadingMyPlaylists = false } }
-
-        do {
-            var request = MusicLibraryRequest<Playlist>()
-            request.limit = 100
-            let response = try await request.response()
-
-            let selections: [MusicSelection] = response.items.map { playlist in
-                MusicSelection(
-                    source: .localLibrary,
-                    type: .playlist,
-                    externalId: playlist.id.rawValue,
-                    displayTitle: playlist.name,
-                    playMode: .continue
-                )
-            }
-
-            let normalized = MusicSelectionLibrary.normalizedPlaylists(from: selections, maxCount: 100)
-            await MainActor.run {
-                myPlaylists = normalized
-            }
-        } catch {
-            await MainActor.run {
-                myPlaylists = []
-                myPlaylistsError = "Couldn’t load playlists. You can still train with cues only."
-            }
-        }
-    }
-
-    private func togglePlaylistExpanded(_ playlist: MusicSelection) {
-        if expandedPlaylistExternalId == playlist.externalId {
-            expandedPlaylistExternalId = nil
-            return
-        }
-
-        expandedPlaylistExternalId = playlist.externalId
-        if playlistTracksByPlaylistId[playlist.externalId] != nil { return }
-
-        Task {
-            await loadTracksForPlaylist(playlistExternalId: playlist.externalId)
-        }
-    }
-
-    private func loadTracksForPlaylist(playlistExternalId: String) async {
-        guard loadingPlaylistExternalId != playlistExternalId else { return }
-
-        await MainActor.run {
-            loadingPlaylistExternalId = playlistExternalId
-            playlistTracksErrorByPlaylistId[playlistExternalId] = nil
-        }
-        defer {
-            Task { @MainActor in
-                if loadingPlaylistExternalId == playlistExternalId {
-                    loadingPlaylistExternalId = nil
-                }
-            }
-        }
-
-        do {
-            var request = MusicLibraryRequest<Playlist>()
-            request.filter(matching: \.id, equalTo: MusicItemID(playlistExternalId))
-            request.limit = 1
-            let response = try await request.response()
-
-            guard let playlist = response.items.first else {
-                await MainActor.run {
-                    playlistTracksByPlaylistId[playlistExternalId] = []
-                    playlistTracksErrorByPlaylistId[playlistExternalId] = "Playlist not found in library."
-                }
-                return
-            }
-
-            let expanded = try await playlist.with([.tracks])
-            let tracks = expanded.tracks ?? []
-
-            var selections: [MusicSelection] = []
-            selections.reserveCapacity(tracks.count)
-
-            for item in tracks {
-                switch item {
-                case .song(let song):
-                    guard allowedTypes.contains(.track) else { continue }
-                    selections.append(
-                        MusicSelection(
-                            source: .localLibrary,
-                            type: .track,
-                            externalId: song.id.rawValue,
-                            displayTitle: song.title,
-                            artworkUrl: song.artwork?.url(width: 256, height: 256),
-                            playMode: .continue
-                        )
-                    )
-                default:
-                    continue
-                }
-            }
-
-            let deduped = Array(Dictionary(grouping: selections, by: \.externalId).compactMap { $0.value.first })
-
-            await MainActor.run {
-                playlistTracksByPlaylistId[playlistExternalId] = deduped
-                playlistTracksErrorByPlaylistId[playlistExternalId] = nil
-            }
-        } catch {
-            await MainActor.run {
-                playlistTracksByPlaylistId[playlistExternalId] = []
-                playlistTracksErrorByPlaylistId[playlistExternalId] = "Couldn’t load tracks for this playlist."
-            }
-        }
-    }
-    #endif
 
     private func openSettings() {
         #if os(iOS)
