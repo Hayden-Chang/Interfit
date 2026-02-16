@@ -3,8 +3,8 @@ import Shared
 
 enum PlanValidationAdapter {
     static let setsCountRange: ClosedRange<Int> = 1 ... 99
-    static let workSecondsRange: ClosedRange<Int> = 10 ... 1800
-    static let restSecondsRange: ClosedRange<Int> = 0 ... 1800
+    static let workSecondsRange: ClosedRange<Int> = 10 ... 36000
+    static let restSecondsRange: ClosedRange<Int> = 0 ... 36000
 
     static func validationMessages(for plan: Plan) -> [String] {
         var messages: [String] = []
@@ -26,4 +26,3 @@ enum PlanValidationAdapter {
         validationMessages(for: plan).isEmpty
     }
 }
-
