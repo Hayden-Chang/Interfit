@@ -6,7 +6,6 @@ struct RootTabView: View {
     private enum Tab: Hashable {
         case train
         case training
-        case community
         case me
     }
 
@@ -44,14 +43,6 @@ struct RootTabView: View {
                 Label("Training", systemImage: "stopwatch")
             }
             .tag(Tab.training)
-
-            NavigationStack {
-                CommunityFeedView()
-            }
-            .tabItem {
-                Label("Community", systemImage: "globe")
-            }
-            .tag(Tab.community)
 
             NavigationStack {
                 List {
