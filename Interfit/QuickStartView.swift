@@ -8,6 +8,7 @@ struct QuickStartView: View {
     @StateObject private var viewModel: QuickStartViewModel
 
     @State private var selectedPlanId: UUID?
+    @State private var pendingDeletePlan: Plan?
 
     private enum PlanEditorTarget: Identifiable {
         case create
@@ -71,11 +72,17 @@ struct QuickStartView: View {
                             .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
-                        .swipeActions(edge: .trailing) {
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button("Edit") {
                                 planEditorTarget = .edit(plan)
                             }
                             .tint(.blue)
+
+                            if viewModel.canDelete(plan: plan) {
+                                Button("Delete", role: .destructive) {
+                                    pendingDeletePlan = plan
+                                }
+                            }
                         }
                     }
                 }
@@ -146,8 +153,41 @@ struct QuickStartView: View {
                 }
             }
         }
+        .alert(
+            "Delete plan?",
+            isPresented: Binding(
+                get: { pendingDeletePlan != nil },
+                set: { isPresented in
+                    if !isPresented { pendingDeletePlan = nil }
+                }
+            )
+        ) {
+            Button("Delete", role: .destructive) {
+                guard let pendingDeletePlan else { return }
+                delete(plan: pendingDeletePlan)
+                self.pendingDeletePlan = nil
+            }
+            Button("Cancel", role: .cancel) {
+                pendingDeletePlan = nil
+            }
+        } message: {
+            if let pendingDeletePlan {
+                Text("Delete \"\(pendingDeletePlan.name)\"? This action cannot be undone.")
+            } else {
+                Text("This action cannot be undone.")
+            }
+        }
         .task {
             _ = await viewModel.reloadUserPlans()
+        }
+    }
+
+    private func delete(plan: Plan) {
+        Task {
+            let wasSelected = selectedPlanId == plan.id
+            let didDelete = await viewModel.deletePlan(id: plan.id)
+            guard didDelete, wasSelected else { return }
+            selectedPlanId = viewModel.availablePlans.first?.id
         }
     }
 }
@@ -161,6 +201,7 @@ struct QuickStartView: View {
 @MainActor
 final class QuickStartViewModel: ObservableObject {
     @Published private(set) var userPlans: [Plan] = []
+    @AppStorage("interfit.quickstart.hiddenBuiltinPlanIds") private var hiddenBuiltinPlanIdsRaw: String = ""
 
     private let builtinPlans: [Plan] = BuiltinPlanTemplates.quickStart
     private let repository: any PlanRepository
@@ -171,11 +212,14 @@ final class QuickStartViewModel: ObservableObject {
 
     var availablePlans: [Plan] {
         let userById = Dictionary(uniqueKeysWithValues: userPlans.map { ($0.id, $0) })
+        let hiddenBuiltinPlanIds = hiddenBuiltinIds
         var merged: [Plan] = []
         merged.reserveCapacity(builtinPlans.count + userPlans.count)
 
         for plan in builtinPlans {
-            if userById[plan.id] == nil { merged.append(plan) }
+            if userById[plan.id] == nil, !hiddenBuiltinPlanIds.contains(plan.id) {
+                merged.append(plan)
+            }
         }
         merged.append(contentsOf: userPlans)
         return merged
@@ -185,5 +229,40 @@ final class QuickStartViewModel: ObservableObject {
     func reloadUserPlans() async -> UUID? {
         userPlans = await repository.fetchAllPlans()
         return userPlans.first?.id
+    }
+
+    func canDelete(plan: Plan) -> Bool {
+        availablePlans.contains(where: { $0.id == plan.id })
+    }
+
+    @discardableResult
+    func deletePlan(id: UUID) async -> Bool {
+        if userPlans.contains(where: { $0.id == id }) {
+            await repository.deletePlan(id: id)
+            userPlans = await repository.fetchAllPlans()
+            return true
+        }
+
+        guard builtinPlans.contains(where: { $0.id == id }) else { return false }
+        var hidden = hiddenBuiltinIds
+        let inserted = hidden.insert(id).inserted
+        hiddenBuiltinIds = hidden
+        return inserted
+    }
+
+    private var hiddenBuiltinIds: Set<UUID> {
+        get {
+            Set(
+                hiddenBuiltinPlanIdsRaw
+                    .split(separator: ",")
+                    .compactMap { UUID(uuidString: String($0)) }
+            )
+        }
+        set {
+            hiddenBuiltinPlanIdsRaw = newValue
+                .map(\.uuidString)
+                .sorted()
+                .joined(separator: ",")
+        }
     }
 }
