@@ -30,7 +30,6 @@ struct TrainingView: View {
     @State private var isShowingEndConfirm: Bool = false
     @State private var didConfirmEndFromAlert: Bool = false
     @State private var didPersistSession: Bool = false
-    @State private var isShowingMusicPicker: Bool = false
     @State private var isShowingBackgroundTimingNotice: Bool = false
     @State private var audioSessionObservation: AudioSessionObservationToken?
     @State private var lastRecoverableSnapshotPersistedAt: Date?
@@ -108,14 +107,6 @@ struct TrainingView: View {
                     }
                     .buttonStyle(.borderedProminent)
                 }
-
-                if isRestSegment {
-                    Button("Add music") {
-                        isShowingMusicPicker = true
-                    }
-                    .buttonStyle(.bordered)
-                    .disabled(engine == nil || engine?.session.status != .running)
-                }
             }
         }
         .padding()
@@ -177,13 +168,6 @@ struct TrainingView: View {
                 .padding()
             }
         }
-        .sheet(isPresented: $isShowingMusicPicker) {
-            NavigationStack {
-                MusicPickerView(allowedTypes: [.track, .playlist]) { selection in
-                    applyMusicOverride(selection)
-                }
-            }
-        }
         .alert("End workout?", isPresented: $isShowingEndConfirm) {
             Button("End", role: .destructive) { didConfirmEndFromAlert = true }
             Button("Cancel", role: .cancel) {}
@@ -192,7 +176,6 @@ struct TrainingView: View {
         }
         .alert(BackgroundTimingNoticePolicy.title, isPresented: $isShowingBackgroundTimingNotice) {
             Button("Continue", role: .cancel) {}
-            Button("Add music") { isShowingMusicPicker = true }
         } message: {
             Text(BackgroundTimingNoticePolicy.message)
         }
@@ -367,36 +350,6 @@ struct TrainingView: View {
         }
     }
 
-    private var isRestSegment: Bool {
-        progress?.currentSegment?.kind == .rest
-    }
-
-    private func applyMusicOverride(_ selection: MusicSelection) {
-        guard var eng = engine else { return }
-        eng.setMusicSelectionOverride(selection, at: now)
-        engine = eng
-        Task {
-            do {
-                try await MusicPlaybackClient.apply(selection: selection)
-            } catch {
-                let kind = MusicPlaybackClient.classify(error)
-                let outcome = PlaybackFailureOutcome(action: .cuesOnly, degradeReason: kind.degradeReason)
-                await MainActor.run {
-                    eng.recordDegrade(
-                        outcome.degradeReason,
-                        attributes: [
-                            "source": "override",
-                            "kind": kind.rawValue,
-                            "action": String(describing: outcome.action),
-                        ]
-                    )
-                    engine = eng
-                    degradeBanner = outcome.degradeReason
-                }
-            }
-        }
-    }
-
     private func startObservingAudioSession() {
         guard audioSessionObservation == nil else { return }
         audioSessionObservation = AudioSessionManager.shared.startObserving { event in
@@ -550,7 +503,6 @@ struct TrainingView: View {
         didPersistSession = false
         isShowingEndConfirm = false
         didConfirmEndFromAlert = false
-        isShowingMusicPicker = false
         lastRecoverableSnapshotPersistedAt = nil
         didTriggerStartPreflight = false
         siriSecondaryAudioSilenceBeganAt = nil
