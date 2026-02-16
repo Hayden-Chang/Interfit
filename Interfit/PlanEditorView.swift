@@ -42,9 +42,9 @@ struct PlanEditorView: View {
     }
 
     private enum MusicMode: String, CaseIterable, Identifiable {
-        case off
         case simple
         case perSet
+        case off
 
         var id: Self { self }
 
