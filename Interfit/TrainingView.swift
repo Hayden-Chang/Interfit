@@ -548,7 +548,6 @@ struct TrainingView: View {
         summaryPresentedForSessionId = nil
         isShowingEndConfirm = false
         didConfirmEndFromAlert = false
-        isShowingMusicPicker = false
     }
 
     private func cleanupSessionSideEffects(onMusicStopped: (() -> Void)? = nil) {

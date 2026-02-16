@@ -160,10 +160,10 @@ struct RootTabView: View {
         selectedTab = .training
     }
 
-    private func shouldConfirmReplacingCurrentTraining(with nextPlan: Plan) -> Bool {
-        guard let currentPlan = trainingPlan else { return false }
+    private func shouldConfirmReplacingCurrentTraining(with _: Plan) -> Bool {
+        guard trainingPlan != nil else { return false }
         guard !isCurrentTrainingTerminalState else { return false }
-        return currentPlan.id != nextPlan.id
+        return true
     }
 
     private func confirmReplaceTrainingAndStartPendingPlan() {
