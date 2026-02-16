@@ -60,73 +60,62 @@ struct TrainingView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            if plan == nil, recoverableSnapshot == nil {
-                Text("No plan selected")
+            if engine == nil, plan == nil, recoverableSnapshot == nil {
+                Text("No active training")
                     .font(.title.bold())
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Start a workout from Train.")
+                Text("Start a workout from Train tab.")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                HStack {
-                    NavigationLink("Train") {
-                        QuickStartView()
-                    }
-                    .buttonStyle(.borderedProminent)
+                Spacer()
+            } else {
+                if let plan {
+                    Text(plan.name)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
 
-                    NavigationLink("Create plan") {
-                        PlanEditorView(plan: nil)
-                    }
-                    .buttonStyle(.bordered)
+                Text(segmentTitle)
+                    .font(.title.bold())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text(formattedCountdown)
+                    .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .minimumScaleFactor(0.5)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text(setProgressText)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                if isSafetyPausedByHeadphoneDisconnect {
+                    Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
                 Spacer()
-            }
 
-            if let plan {
-                Text(plan.name)
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
-            }
-
-            Text(segmentTitle)
-                .font(.title.bold())
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text(formattedCountdown)
-                .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
-                .monospacedDigit()
-                .minimumScaleFactor(0.5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Text(setProgressText)
-                .font(.headline)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            if isSafetyPausedByHeadphoneDisconnect {
-                Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-
-            Spacer()
-
-            Button(primaryButtonTitle) {
-                togglePauseResume()
-            }
-            .buttonStyle(.borderedProminent)
-            .disabled(engine == nil || engine?.session.status == .completed || engine?.session.status == .ended)
-
-            if isRestSegment {
-                Button("Add music") {
-                    isShowingMusicPicker = true
+                if let status = engine?.session.status, status == .running || status == .paused {
+                    Button(status == .running ? "Pause" : "Resume") {
+                        togglePauseResume()
+                    }
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.bordered)
-                .disabled(engine == nil || engine?.session.status != .running)
+
+                if isRestSegment {
+                    Button("Add music") {
+                        isShowingMusicPicker = true
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(engine == nil || engine?.session.status != .running)
+                }
             }
         }
         .padding()
@@ -466,16 +455,6 @@ struct TrainingView: View {
             return "\(seg.setIndex) / \(progress.totalSets) sets"
         }
         return "\(progress.totalSets) / \(progress.totalSets) sets"
-    }
-
-    private var primaryButtonTitle: String {
-        guard let engine else { return "Start" }
-        switch engine.session.status {
-        case .running: return "Pause"
-        case .paused: return "Resume"
-        case .idle: return "Start"
-        case .completed, .ended: return "Done"
-        }
     }
 
     private var isSafetyPausedByHeadphoneDisconnect: Bool {
