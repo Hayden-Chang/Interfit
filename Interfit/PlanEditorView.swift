@@ -57,6 +57,12 @@ struct PlanEditorView: View {
         }
     }
 
+    private enum DurationComponent {
+        case hours
+        case minutes
+        case seconds
+    }
+
     let plan: Plan?
 
     @State private var planId: UUID
@@ -301,8 +307,8 @@ struct PlanEditorView: View {
 
     private var modeAFields: some View {
         Group {
-            Stepper("Work: \(workSeconds)s", value: $workSeconds, in: PlanValidationAdapter.workSecondsRange, step: 5)
-            Stepper("Rest: \(restSeconds)s", value: $restSeconds, in: PlanValidationAdapter.restSecondsRange, step: 5)
+            durationInputs(title: "Work", seconds: $workSeconds, range: PlanValidationAdapter.workSecondsRange)
+            durationInputs(title: "Rest", seconds: $restSeconds, range: PlanValidationAdapter.restSecondsRange)
         }
     }
 
@@ -429,8 +435,94 @@ struct PlanEditorView: View {
             Text("Fine tune")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-            Stepper("Work: \(workSeconds)s", value: $workSeconds, in: PlanValidationAdapter.workSecondsRange, step: 5)
-            Stepper("Rest: \(restSeconds)s", value: $restSeconds, in: PlanValidationAdapter.restSecondsRange, step: 5)
+            durationInputs(title: "Work", seconds: $workSeconds, range: PlanValidationAdapter.workSecondsRange)
+            durationInputs(title: "Rest", seconds: $restSeconds, range: PlanValidationAdapter.restSecondsRange)
+        }
+    }
+
+    private func durationInputs(
+        title: String,
+        seconds: Binding<Int>,
+        range: ClosedRange<Int>
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            LabeledContent(title) {
+                Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+            }
+            HStack(spacing: 0) {
+                durationWheelColumn(
+                    title: "小时",
+                    selection: durationComponentBinding(seconds: seconds, range: range, component: .hours),
+                    values: 0 ... max(0, range.upperBound / 3600)
+                )
+                durationWheelColumn(
+                    title: "分钟",
+                    selection: durationComponentBinding(seconds: seconds, range: range, component: .minutes),
+                    values: 0 ... 59
+                )
+                durationWheelColumn(
+                    title: "秒",
+                    selection: durationComponentBinding(seconds: seconds, range: range, component: .seconds),
+                    values: 0 ... 59
+                )
+            }
+            .frame(height: 150)
+        }
+    }
+
+    private func durationWheelColumn(
+        title: String,
+        selection: Binding<Int>,
+        values: ClosedRange<Int>
+    ) -> some View {
+        Picker(title, selection: selection) {
+            ForEach(Array(values), id: \.self) { value in
+                Text("\(value) \(title)").tag(value)
+            }
+        }
+        .pickerStyle(.wheel)
+        .frame(maxWidth: .infinity)
+        .clipped()
+    }
+
+    private func durationComponentBinding(
+        seconds: Binding<Int>,
+        range: ClosedRange<Int>,
+        component: DurationComponent
+    ) -> Binding<Int> {
+        Binding(
+            get: {
+                let clamped = Self.clamp(seconds.wrappedValue, to: range)
+                return durationComponentValue(clamped, component: component)
+            },
+            set: { newValue in
+                let clamped = Self.clamp(seconds.wrappedValue, to: range)
+                var parts = Self.durationComponents(seconds: clamped)
+                switch component {
+                case .hours:
+                    parts.hours = min(max(0, newValue), max(0, range.upperBound / 3600))
+                case .minutes:
+                    parts.minutes = min(max(0, newValue), 59)
+                case .seconds:
+                    parts.seconds = min(max(0, newValue), 59)
+                }
+                let candidate = (parts.hours * 3600) + (parts.minutes * 60) + parts.seconds
+                seconds.wrappedValue = Self.clamp(candidate, to: range)
+            }
+        )
+    }
+
+    private func durationComponentValue(_ totalSeconds: Int, component: DurationComponent) -> Int {
+        let parts = Self.durationComponents(seconds: totalSeconds)
+        switch component {
+        case .hours:
+            return parts.hours
+        case .minutes:
+            return parts.minutes
+        case .seconds:
+            return parts.seconds
         }
     }
 
@@ -675,6 +767,20 @@ struct PlanEditorView: View {
         a = max(1, a / max(1, div))
         b = max(1, b / max(1, div))
         return (min(maxPart, a), min(maxPart, b))
+    }
+
+    private static func clamp(_ value: Int, to range: ClosedRange<Int>) -> Int {
+        min(max(value, range.lowerBound), range.upperBound)
+    }
+
+    private static func durationComponents(seconds: Int) -> (hours: Int, minutes: Int, seconds: Int) {
+        let total = max(0, seconds)
+        return (total / 3600, (total % 3600) / 60, total % 60)
+    }
+
+    private static func formatDurationHMS(seconds: Int) -> String {
+        let parts = durationComponents(seconds: seconds)
+        return String(format: "%02d:%02d:%02d", parts.hours, parts.minutes, parts.seconds)
     }
 
     private static func formatDuration(seconds: Int) -> String {
