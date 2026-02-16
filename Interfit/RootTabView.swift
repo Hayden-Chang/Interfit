@@ -16,6 +16,10 @@ struct RootTabView: View {
     @State private var recoveredTrainingPlan: Plan?
     @State private var selectedTab: Tab = .train
     @State private var trainingPlan: Plan?
+    @State private var pendingPlanToStart: Plan?
+    @State private var isShowingReplaceTrainingConfirm: Bool = false
+    @State private var isCurrentTrainingTerminalState: Bool = false
+    @State private var trainingNavigationResetToken: UUID = UUID()
 
     @AppStorage("interfit.analytics.optIn") private var isAnalyticsOptIn: Bool = true
 
@@ -36,10 +40,12 @@ struct RootTabView: View {
                     plan: trainingPlan,
                     onExitToCleanTraining: {
                         trainingPlan = nil
+                        isCurrentTrainingTerminalState = false
                     }
                 )
                     .id(trainingRoute)
             }
+            .id(trainingNavigationResetToken)
             .tabItem {
                 Label("Training", systemImage: "stopwatch")
             }
@@ -110,6 +116,12 @@ struct RootTabView: View {
             await AnalyticsEventRecorder.shared.recordAppOpen()
             await checkForRecoverableSessionSnapshot()
         }
+        .onReceive(NotificationCenter.default.publisher(for: .interfitCurrentTrainingDidTerminateForReplacement)) { _ in
+            startPendingPlanAfterTermination()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .interfitCurrentTrainingDidReachTerminalState)) { _ in
+            isCurrentTrainingTerminalState = true
+        }
         .sheet(item: $pendingRecovery) { pending in
             RecoveryDecisionView(
                 snapshot: pending.snapshot,
@@ -125,6 +137,16 @@ struct RootTabView: View {
                 }
             }
         }
+        .alert("End current training?", isPresented: $isShowingReplaceTrainingConfirm) {
+            Button("End and Start New", role: .destructive) {
+                confirmReplaceTrainingAndStartPendingPlan()
+            }
+            Button("Cancel", role: .cancel) {
+                pendingPlanToStart = nil
+            }
+        } message: {
+            Text("A training session is currently active. End it and stop music before starting the new plan?")
+        }
     }
 
     private var trainingRoute: AnyHashable {
@@ -135,8 +157,36 @@ struct RootTabView: View {
     }
 
     private func startTrainingFromTrainTab(plan: Plan) {
+        if shouldConfirmReplacingCurrentTraining(with: plan) {
+            pendingPlanToStart = plan
+            isShowingReplaceTrainingConfirm = true
+            return
+        }
+
+        isCurrentTrainingTerminalState = false
+        trainingNavigationResetToken = UUID()
         trainingPlan = plan
         selectedTab = .training
+    }
+
+    private func shouldConfirmReplacingCurrentTraining(with nextPlan: Plan) -> Bool {
+        guard let currentPlan = trainingPlan else { return false }
+        guard !isCurrentTrainingTerminalState else { return false }
+        return currentPlan.id != nextPlan.id
+    }
+
+    private func confirmReplaceTrainingAndStartPendingPlan() {
+        guard pendingPlanToStart != nil else { return }
+        NotificationCenter.default.post(name: .interfitTerminateCurrentTrainingForReplacement, object: nil)
+    }
+
+    private func startPendingPlanAfterTermination() {
+        guard let pendingPlanToStart else { return }
+        isCurrentTrainingTerminalState = false
+        trainingNavigationResetToken = UUID()
+        trainingPlan = pendingPlanToStart
+        selectedTab = .training
+        self.pendingPlanToStart = nil
     }
 
     private func checkForRecoverableSessionSnapshot() async {

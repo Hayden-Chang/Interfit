@@ -162,6 +162,9 @@ struct TrainingView: View {
         .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.silenceSecondaryAudioHintNotification)) { notification in
             handleSiriSilenceSecondaryAudioHint(notification)
         }
+        .onReceive(NotificationCenter.default.publisher(for: .interfitTerminateCurrentTrainingForReplacement)) { _ in
+            terminateWorkoutForPlanReplacement()
+        }
         .navigationDestination(isPresented: $isShowingSummary) {
             if let summaryOutcome, let plan = summaryPlanForSummary {
                 TrainingSummaryView(
@@ -337,6 +340,7 @@ struct TrainingView: View {
             switch eng.session.status {
             case .completed:
                 persistSessionIfNeeded(eng.session)
+                markCurrentTrainingAsTerminal()
                 summaryOutcome = .completed
                 summarySession = eng.session
                 summaryPresentedForSessionId = eng.session.id
@@ -345,6 +349,7 @@ struct TrainingView: View {
                 cleanupSessionSideEffects()
             case .ended:
                 persistSessionIfNeeded(eng.session)
+                markCurrentTrainingAsTerminal()
                 summaryOutcome = .ended
                 summarySession = eng.session
                 summaryPresentedForSessionId = eng.session.id
@@ -520,6 +525,7 @@ struct TrainingView: View {
             isShowingEndConfirm = true
         case .ended:
             persistSessionIfNeeded(eng.session)
+            markCurrentTrainingAsTerminal()
             summaryOutcome = .ended
             summarySession = eng.session
             summaryPresentedForSessionId = eng.session.id
@@ -530,6 +536,7 @@ struct TrainingView: View {
             break
         case .alreadyCompleted:
             persistSessionIfNeeded(eng.session)
+            markCurrentTrainingAsTerminal()
             summaryOutcome = .completed
             summarySession = eng.session
             summaryPresentedForSessionId = eng.session.id
@@ -573,14 +580,52 @@ struct TrainingView: View {
         startIfNeeded()
     }
 
-    private func cleanupSessionSideEffects() {
+    private func terminateWorkoutForPlanReplacement() {
+        guard var eng = engine else {
+            cleanupSessionSideEffects {
+                NotificationCenter.default.post(name: .interfitCurrentTrainingDidTerminateForReplacement, object: nil)
+            }
+            return
+        }
+
+        let now = Date()
+        switch eng.session.status {
+        case .running, .paused, .idle:
+            _ = try? eng.end(at: now, confirmed: true)
+        case .completed, .ended:
+            break
+        }
+
+        engine = eng
+        self.now = now
+        nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
+        persistSessionIfNeeded(eng.session)
+        cleanupSessionSideEffects {
+            NotificationCenter.default.post(name: .interfitCurrentTrainingDidTerminateForReplacement, object: nil)
+        }
+
+        isShowingSummary = false
+        summaryOutcome = nil
+        summarySession = nil
+        summaryPresentedForSessionId = nil
+        isShowingEndConfirm = false
+        didConfirmEndFromAlert = false
+        isShowingMusicPicker = false
+    }
+
+    private func cleanupSessionSideEffects(onMusicStopped: (() -> Void)? = nil) {
         stopObservingAudioSession()
         nowPlaying.stop()
         SegmentCueNotificationScheduler.cancelAll()
         Task { @MainActor in
             await MusicPlaybackClient.stop()
             IdleTimerClient.setDisabled(false)
+            onMusicStopped?()
         }
+    }
+
+    private func markCurrentTrainingAsTerminal() {
+        NotificationCenter.default.post(name: .interfitCurrentTrainingDidReachTerminalState, object: nil)
     }
 
     private var summaryPlanForSummary: Plan? {
