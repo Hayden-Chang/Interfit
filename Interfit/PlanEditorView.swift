@@ -89,6 +89,7 @@ struct PlanEditorView: View {
     @State private var publishedVersions: [PlanVersion] = []
     @State private var publishErrorMessage: String?
     @State private var saveErrorMessage: String?
+    @State private var expandedDurationInputKeys: Set<String> = []
 
     @Environment(\.dismiss) private var dismiss
 
@@ -307,8 +308,18 @@ struct PlanEditorView: View {
 
     private var modeAFields: some View {
         Group {
-            durationInputs(title: "Work", seconds: $workSeconds, range: PlanValidationAdapter.workSecondsRange)
-            durationInputs(title: "Rest", seconds: $restSeconds, range: PlanValidationAdapter.restSecondsRange)
+            durationInputs(
+                key: "modeA.work",
+                title: "Work",
+                seconds: $workSeconds,
+                range: PlanValidationAdapter.workSecondsRange
+            )
+            durationInputs(
+                key: "modeA.rest",
+                title: "Rest",
+                seconds: $restSeconds,
+                range: PlanValidationAdapter.restSecondsRange
+            )
         }
     }
 
@@ -435,40 +446,74 @@ struct PlanEditorView: View {
             Text("Fine tune")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-            durationInputs(title: "Work", seconds: $workSeconds, range: PlanValidationAdapter.workSecondsRange)
-            durationInputs(title: "Rest", seconds: $restSeconds, range: PlanValidationAdapter.restSecondsRange)
+            durationInputs(
+                key: "modeB.work",
+                title: "Work",
+                seconds: $workSeconds,
+                range: PlanValidationAdapter.workSecondsRange
+            )
+            durationInputs(
+                key: "modeB.rest",
+                title: "Rest",
+                seconds: $restSeconds,
+                range: PlanValidationAdapter.restSecondsRange
+            )
         }
     }
 
     private func durationInputs(
+        key: String,
         title: String,
         seconds: Binding<Int>,
         range: ClosedRange<Int>
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        let isExpanded = expandedDurationInputKeys.contains(key)
+        return VStack(alignment: .leading, spacing: 8) {
             LabeledContent(title) {
-                Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
-                    .monospacedDigit()
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        toggleDurationInputs(key: key)
+                    }
+                } label: {
+                    HStack(spacing: 4) {
+                        Text(Self.formatDurationHMS(seconds: seconds.wrappedValue))
+                            .monospacedDigit()
+                        Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                            .font(.caption2)
+                    }
                     .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
             }
-            HStack(spacing: 0) {
-                durationWheelColumn(
-                    title: "小时",
-                    selection: durationComponentBinding(seconds: seconds, range: range, component: .hours),
-                    values: 0 ... max(0, range.upperBound / 3600)
-                )
-                durationWheelColumn(
-                    title: "分钟",
-                    selection: durationComponentBinding(seconds: seconds, range: range, component: .minutes),
-                    values: 0 ... 59
-                )
-                durationWheelColumn(
-                    title: "秒",
-                    selection: durationComponentBinding(seconds: seconds, range: range, component: .seconds),
-                    values: 0 ... 59
-                )
+            if isExpanded {
+                HStack(spacing: 0) {
+                    durationWheelColumn(
+                        title: "小时",
+                        selection: durationComponentBinding(seconds: seconds, range: range, component: .hours),
+                        values: 0 ... max(0, range.upperBound / 3600)
+                    )
+                    durationWheelColumn(
+                        title: "分钟",
+                        selection: durationComponentBinding(seconds: seconds, range: range, component: .minutes),
+                        values: 0 ... 59
+                    )
+                    durationWheelColumn(
+                        title: "秒",
+                        selection: durationComponentBinding(seconds: seconds, range: range, component: .seconds),
+                        values: 0 ... 59
+                    )
+                }
+                .frame(height: 150)
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
-            .frame(height: 150)
+        }
+    }
+
+    private func toggleDurationInputs(key: String) {
+        if expandedDurationInputKeys.contains(key) {
+            expandedDurationInputKeys.remove(key)
+        } else {
+            expandedDurationInputKeys.insert(key)
         }
     }
 
