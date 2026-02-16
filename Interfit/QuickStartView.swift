@@ -68,6 +68,7 @@ struct QuickStartView: View {
                                         .foregroundStyle(.tint)
                                 }
                             }
+                            .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
                         .swipeActions(edge: .trailing) {
