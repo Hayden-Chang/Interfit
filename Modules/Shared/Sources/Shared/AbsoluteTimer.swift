@@ -13,7 +13,7 @@ public struct AbsoluteTimer: Sendable, Equatable {
     public private(set) var state: State = .idle
     public let totalSeconds: Int
 
-    private var accumulatedPauseSeconds: Int = 0
+    private var accumulatedPauseSeconds: TimeInterval = 0
 
     public init(totalSeconds: Int) {
         self.totalSeconds = max(0, totalSeconds)
@@ -40,7 +40,7 @@ public struct AbsoluteTimer: Sendable, Equatable {
 
     public mutating func resume(at now: Date) {
         guard case let .paused(startedAt, pausedAt) = state else { return }
-        let pausedDelta = max(0, Int(now.timeIntervalSince(pausedAt)))
+        let pausedDelta = max(0, now.timeIntervalSince(pausedAt))
         accumulatedPauseSeconds += pausedDelta
         state = .running(startedAt: startedAt)
     }
@@ -59,15 +59,19 @@ public struct AbsoluteTimer: Sendable, Equatable {
     }
 
     public func elapsedSeconds(at now: Date) -> Int {
+        Int(elapsedTimeInterval(at: now))
+    }
+
+    public func elapsedTimeInterval(at now: Date) -> TimeInterval {
         switch state {
         case .idle:
             0
         case let .running(startedAt):
-            max(0, Int(now.timeIntervalSince(startedAt)) - accumulatedPauseSeconds)
+            max(0, now.timeIntervalSince(startedAt) - accumulatedPauseSeconds)
         case let .paused(startedAt, pausedAt):
-            max(0, Int(pausedAt.timeIntervalSince(startedAt)) - accumulatedPauseSeconds)
+            max(0, pausedAt.timeIntervalSince(startedAt) - accumulatedPauseSeconds)
         case let .ended(startedAt, endedAt):
-            max(0, Int(endedAt.timeIntervalSince(startedAt)) - accumulatedPauseSeconds)
+            max(0, endedAt.timeIntervalSince(startedAt) - accumulatedPauseSeconds)
         }
     }
 

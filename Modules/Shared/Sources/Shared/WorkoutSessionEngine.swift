@@ -203,6 +203,11 @@ public struct WorkoutSessionEngine: Sendable {
         return structure.progress(atElapsedSeconds: elapsed)
     }
 
+    /// High-resolution elapsed time for smooth UI animations.
+    public func elapsedTimeInterval(at now: Date) -> TimeInterval {
+        timer.elapsedTimeInterval(at: now)
+    }
+
     /// Snapshot used for persistence-backed recovery (3.2.1).
     public func recoverableSnapshot(at now: Date = Date()) -> RecoverableSessionSnapshot {
         RecoverableSessionSnapshot(session: session, elapsedSeconds: timer.elapsedSeconds(at: now), capturedAt: now)

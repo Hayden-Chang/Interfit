@@ -100,11 +100,6 @@ struct TrainingView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
-                Text(setProgressText)
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
                 if isSafetyPausedByHeadphoneDisconnect {
                     Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
                         .font(.footnote)
@@ -113,6 +108,32 @@ struct TrainingView: View {
                 }
 
                 Spacer()
+
+                if !timelineSegments.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(setProgressText)
+                            .font(.system(size: 34, weight: .bold, design: .rounded))
+                            .monospacedDigit()
+                            .foregroundStyle(.primary)
+
+                        TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { context in
+                            TimelineProgressBar(
+                                segments: timelineSegments,
+                                progress: overallTimelineProgress(at: context.date)
+                            )
+                            .accessibilityLabel("Overall workout timeline")
+                            .accessibilityValue(setProgressText)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                if let status = engine?.session.status, status == .running || status == .paused {
+                    Button(status == .running ? "Pause" : "Resume") {
+                        togglePauseResume()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
             }
         }
         .padding()
@@ -419,11 +440,119 @@ struct TrainingView: View {
     }
 
     private var setProgressText: String {
-        guard let progress else { return "0 / 0 sets" }
+        guard let progress else { return "0/0" }
+        let total = max(1, progress.totalSets)
         if let seg = progress.currentSegment {
-            return "\(seg.setIndex) / \(progress.totalSets) sets"
+            let current = min(max(1, seg.setIndex), total)
+            return "\(current)/\(total)"
         }
-        return "\(progress.totalSets) / \(progress.totalSets) sets"
+        return "\(total)/\(total)"
+    }
+
+    private var timelineStructure: WorkoutStructure? {
+        if let engine {
+            return engine.structure
+        }
+        if let plan {
+            return WorkoutStructure(
+                setsCount: plan.setsCount,
+                workSeconds: plan.workSeconds,
+                restSeconds: plan.restSeconds
+            )
+        }
+        if let snapshot = recoverableSnapshot?.session.planSnapshot {
+            return WorkoutStructure(
+                setsCount: snapshot.setsCount,
+                workSeconds: snapshot.workSeconds,
+                restSeconds: snapshot.restSeconds
+            )
+        }
+        return nil
+    }
+
+    private var timelineSegments: [TimelineBarSegment] {
+        guard let structure = timelineStructure, structure.setsCount > 0 else { return [] }
+
+        var segments: [TimelineBarSegment] = []
+        for setIndex in 1...structure.setsCount {
+            if structure.workSeconds > 0 {
+                segments.append(.init(kind: .work, setIndex: setIndex, durationSeconds: structure.workSeconds))
+            }
+            if structure.restSeconds > 0 {
+                segments.append(.init(kind: .rest, setIndex: setIndex, durationSeconds: structure.restSeconds))
+            }
+        }
+        return segments
+    }
+
+    private func overallTimelineProgress(at date: Date) -> Double {
+        guard !timelineSegments.isEmpty else { return 0 }
+        let total = timelineSegments.reduce(0) { $0 + $1.durationSeconds }
+        guard total > 0 else { return 0 }
+        let elapsed = min(max(0, overallTimelineElapsedSeconds(at: date)), Double(total))
+        return elapsed / Double(total)
+    }
+
+    private func overallTimelineElapsedSeconds(at date: Date) -> Double {
+        guard let structure = timelineStructure else { return 0 }
+
+        let cycleSeconds = max(0, structure.workSeconds + structure.restSeconds)
+        guard cycleSeconds > 0 else { return 0 }
+
+        let totalTimelineSeconds = Double(cycleSeconds * structure.setsCount)
+
+        if let engine {
+            let preciseEngineElapsed = max(0, engine.elapsedTimeInterval(at: date))
+            let engineProgress = engine.progress(at: date)
+            if engineProgress.isCompleted {
+                return totalTimelineSeconds
+            }
+
+            if let segment = engineProgress.currentSegment {
+                let base = Double(max(0, segment.setIndex - 1) * cycleSeconds)
+                let segmentStart = engineSegmentStartElapsedSeconds(segment: segment, structure: structure)
+                let rawSegmentElapsed = preciseEngineElapsed - segmentStart
+                let segmentElapsed = min(max(0, rawSegmentElapsed), Double(segment.durationSeconds))
+                switch segment.kind {
+                case .work:
+                    return base + segmentElapsed
+                case .rest:
+                    return base + Double(structure.workSeconds) + segmentElapsed
+                }
+            }
+
+            return min(preciseEngineElapsed, totalTimelineSeconds)
+        }
+
+        guard let progress else { return 0 }
+        if let segment = progress.currentSegment {
+            let completedCycles = max(0, segment.setIndex - 1)
+            let base = completedCycles * cycleSeconds
+            switch segment.kind {
+            case .work:
+                return Double(base + progress.currentSegmentElapsedSeconds)
+            case .rest:
+                return Double(base + structure.workSeconds + progress.currentSegmentElapsedSeconds)
+            }
+        }
+
+        if progress.isCompleted {
+            return totalTimelineSeconds
+        }
+
+        return min(Double(progress.elapsedSeconds), totalTimelineSeconds)
+    }
+
+    private func engineSegmentStartElapsedSeconds(segment: WorkoutSegment, structure: WorkoutStructure) -> Double {
+        let completedCycles = max(0, segment.setIndex - 1)
+        let cycleSeconds = max(0, structure.workSeconds + structure.restSeconds)
+        let base = Double(completedCycles * cycleSeconds)
+        switch segment.kind {
+        case .work:
+            return base
+        case .rest:
+            return base + Double(structure.workSeconds)
+        }
     }
 
     private var isSafetyPausedByHeadphoneDisconnect: Bool {
@@ -825,6 +954,64 @@ struct TrainingView: View {
         let minutes = clamped / 60
         let seconds = clamped % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+
+    private struct TimelineBarSegment: Identifiable {
+        let kind: WorkoutSegmentKind
+        let setIndex: Int
+        let durationSeconds: Int
+
+        var id: String { "\(kind.rawValue)#\(setIndex)" }
+    }
+
+    private struct TimelineProgressBar: View {
+        let segments: [TimelineBarSegment]
+        let progress: Double
+
+        private let segmentSpacing: CGFloat = 2
+
+        private var clampedProgress: CGFloat {
+            CGFloat(min(max(progress, 0), 1))
+        }
+
+        private var totalDurationSeconds: Int {
+            max(1, segments.reduce(0) { $0 + $1.durationSeconds })
+        }
+
+        var body: some View {
+            GeometryReader { proxy in
+                let width = proxy.size.width
+                let markerPosition = max(0, min(width, width * clampedProgress))
+                let totalSpacing = segmentSpacing * CGFloat(max(segments.count - 1, 0))
+                let drawableWidth = max(0, width - totalSpacing)
+
+                ZStack(alignment: .leading) {
+                    HStack(spacing: segmentSpacing) {
+                        ForEach(segments) { segment in
+                            Rectangle()
+                                .fill(segment.kind == .work ? Color.yellow : Color.green)
+                                .frame(width: drawableWidth * (CGFloat(segment.durationSeconds) / CGFloat(totalDurationSeconds)))
+                        }
+                    }
+
+                    Rectangle()
+                        .fill(Color.black.opacity(0.35))
+                        .frame(width: max(0, width - markerPosition))
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+
+                    Capsule()
+                        .fill(Color.white.opacity(0.95))
+                        .frame(width: 4, height: proxy.size.height + 4)
+                        .offset(x: max(0, min(width - 4, markerPosition - 2)))
+                }
+            }
+            .frame(height: 14)
+            .clipShape(Capsule())
+            .overlay {
+                Capsule()
+                    .strokeBorder(Color.primary.opacity(0.12), lineWidth: 1)
+            }
+        }
     }
 }
 
