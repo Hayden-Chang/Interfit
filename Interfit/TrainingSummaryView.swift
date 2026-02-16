@@ -1,6 +1,5 @@
 import SwiftUI
 import Shared
-import Persistence
 
 struct TrainingSummaryView: View {
     enum Outcome: String, Sendable {
@@ -12,10 +11,6 @@ struct TrainingSummaryView: View {
     let plan: Plan
     let session: Session?
     let onTrainAgain: () -> Void
-
-    @State private var didSaveToPlans: Bool = false
-
-    private let planRepository: any PlanRepository = CoreDataPersistenceStore()
 
     var body: some View {
         VStack(spacing: 18) {
@@ -41,19 +36,9 @@ struct TrainingSummaryView: View {
                 onTrainAgain()
             }
             .buttonStyle(.borderedProminent)
-
-            Button("Save as preset") {
-                saveToPlans()
-            }
-            .buttonStyle(.bordered)
         }
         .padding()
         .navigationTitle("Summary")
-        .alert("Saved", isPresented: $didSaveToPlans) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("Preset saved. You’ll see it in Step 1 · Choose a preset.")
-        }
     }
 
     private var title: String {
@@ -65,23 +50,6 @@ struct TrainingSummaryView: View {
         }
     }
 
-    private func saveToPlans() {
-        let now = Date()
-        let snapshot = Plan(
-            id: UUID(),
-            setsCount: plan.setsCount,
-            workSeconds: plan.workSeconds,
-            restSeconds: plan.restSeconds,
-            name: plan.name,
-            isFavorite: false,
-            createdAt: now,
-            updatedAt: now
-        )
-        Task {
-            await planRepository.upsertPlan(snapshot)
-            await MainActor.run { didSaveToPlans = true }
-        }
-    }
 }
 
 #Preview {
