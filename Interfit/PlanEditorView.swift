@@ -3,44 +3,6 @@ import Shared
 import Persistence
 
 struct PlanEditorView: View {
-    private enum TimingMode: String, CaseIterable, Identifiable {
-        case modeA
-        case modeB
-
-        var id: Self { self }
-
-        var title: String {
-            switch self {
-            case .modeA: "Mode A"
-            case .modeB: "Mode B"
-            }
-        }
-    }
-
-    private enum IntensityPreset: String, CaseIterable, Identifiable {
-        case light
-        case medium
-        case hard
-
-        var id: Self { self }
-
-        var title: String {
-            switch self {
-            case .light: "Light"
-            case .medium: "Medium"
-            case .hard: "Hard"
-            }
-        }
-
-        var ratio: (workPart: Int, restPart: Int) {
-            switch self {
-            case .light: (1, 2)
-            case .medium: (1, 1)
-            case .hard: (2, 1)
-            }
-        }
-    }
-
     private enum MusicMode: String, CaseIterable, Identifiable {
         case off
         case simple
@@ -85,11 +47,6 @@ struct PlanEditorView: View {
     @State private var workSeconds: Int
     @State private var restSeconds: Int
 
-    @State private var timingMode: TimingMode
-    @State private var modeBTotalSeconds: Int
-    @State private var modeBWorkPart: Int
-    @State private var modeBRestPart: Int
-
     @State private var musicMode: MusicMode
     @State private var musicSimpleWork: MusicSelection?
     @State private var musicSimpleRest: MusicSelection?
@@ -114,6 +71,7 @@ struct PlanEditorView: View {
         planRepository: (any PlanRepository)? = nil,
         versionRepository: (any PlanVersionRepository)? = nil
     ) {
+        _ = startInModeB
         self.plan = plan
         let defaultStore = CoreDataPersistenceStore()
         self.planRepository = planRepository ?? defaultStore
@@ -127,14 +85,6 @@ struct PlanEditorView: View {
         _restSeconds = State(initialValue: plan?.restSeconds ?? 30)
 
         let initialSets = plan?.setsCount ?? 8
-        let initialWork = plan?.workSeconds ?? 30
-        let initialRest = plan?.restSeconds ?? 30
-        let initialTotal = max(0, (initialSets * initialWork) + (max(0, initialSets - 1) * initialRest))
-        _timingMode = State(initialValue: startInModeB ? .modeB : .modeA)
-        _modeBTotalSeconds = State(initialValue: max(60, initialTotal))
-        let initialRatio = Self.normalizedRatio(workSeconds: initialWork, restSeconds: initialRest, maxPart: 20)
-        _modeBWorkPart = State(initialValue: initialRatio.workPart)
-        _modeBRestPart = State(initialValue: initialRatio.restPart)
 
         let initialStrategy = plan?.musicStrategy
         let defaultPerSet = Array(repeating: nil as MusicSelection?, count: max(0, initialSets))
@@ -232,29 +182,6 @@ struct PlanEditorView: View {
         }
     }
 
-    private var modeBInput: PlanModeBInput {
-        PlanModeBInput(
-            totalSeconds: modeBTotalSeconds,
-            setsCount: setsCount,
-            workPart: modeBWorkPart,
-            restPart: modeBRestPart
-        )
-    }
-
-    private var modeBSuggestion: PlanModeBOutput? {
-        PlanModeBCalculator.compute(modeBInput)
-    }
-
-    private var selectedIntensityPreset: IntensityPreset? {
-        for preset in IntensityPreset.allCases {
-            let ratio = preset.ratio
-            if modeBWorkPart == ratio.workPart, modeBRestPart == ratio.restPart {
-                return preset
-            }
-        }
-        return nil
-    }
-
     var body: some View {
         ZStack {
             Form {
@@ -305,167 +232,12 @@ struct PlanEditorView: View {
 
     private var timingSection: some View {
         Section("Timing") {
-            Picker("Mode", selection: $timingMode) {
-                ForEach(TimingMode.allCases) { mode in
-                    Text(mode.title).tag(mode)
-                }
-            }
-            .pickerStyle(.segmented)
-
-            timingFields
-        }
-    }
-
-    @ViewBuilder
-    private var timingFields: some View {
-        switch timingMode {
-        case .modeA:
             modeAFields
-        case .modeB:
-            modeBFields
         }
     }
 
     private var modeAFields: some View {
         Group {
-            durationInputs(
-                editorTarget: .work,
-                title: "Work",
-                seconds: $workSeconds,
-                range: PlanValidationAdapter.workSecondsRange
-            )
-            durationInputs(
-                editorTarget: .rest,
-                title: "Rest",
-                seconds: $restSeconds,
-                range: PlanValidationAdapter.restSecondsRange
-            )
-        }
-    }
-
-    private var modeBFields: some View {
-        Group {
-            modeBTotalInputs
-            modeBRatioInputs
-            modeBIntensityPresets
-            modeBSuggestionBlock
-            modeBFineTune
-        }
-    }
-
-    private var modeBTotalInputs: some View {
-        Group {
-            LabeledContent("Total") {
-                Text(Self.formatDuration(seconds: modeBTotalSeconds))
-                    .foregroundStyle(.secondary)
-            }
-            Stepper(
-                value: Binding(
-                    get: { modeBTotalSeconds / 60 },
-                    set: { newMinutes in
-                        let secondsPart = modeBTotalSeconds % 60
-                        modeBTotalSeconds = max(0, (newMinutes * 60) + secondsPart)
-                    }
-                ),
-                in: 0 ... 600,
-                step: 1
-            ) {
-                Text("Total minutes: \(modeBTotalSeconds / 60)")
-            }
-            Stepper(
-                value: Binding(
-                    get: { modeBTotalSeconds % 60 },
-                    set: { newSeconds in
-                        let minutesPart = modeBTotalSeconds / 60
-                        modeBTotalSeconds = max(0, (minutesPart * 60) + newSeconds)
-                    }
-                ),
-                in: 0 ... 59,
-                step: 5
-            ) {
-                Text("Total seconds: \(modeBTotalSeconds % 60)")
-            }
-        }
-    }
-
-    private var modeBRatioInputs: some View {
-        Group {
-            Stepper("Work part: \(modeBWorkPart)", value: $modeBWorkPart, in: 1 ... 20)
-            Stepper("Rest part: \(modeBRestPart)", value: $modeBRestPart, in: 0 ... 20)
-        }
-    }
-
-    private var modeBIntensityPresets: some View {
-        Group {
-            Text("Intensity presets")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-            HStack {
-                ForEach(IntensityPreset.allCases) { preset in
-                    let isSelected = selectedIntensityPreset == preset
-                    if isSelected {
-                        Button(preset.title) {
-                            let ratio = preset.ratio
-                            modeBWorkPart = ratio.workPart
-                            modeBRestPart = ratio.restPart
-                        }
-                        .buttonStyle(.borderedProminent)
-                    } else {
-                        Button(preset.title) {
-                            let ratio = preset.ratio
-                            modeBWorkPart = ratio.workPart
-                            modeBRestPart = ratio.restPart
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                }
-            }
-        }
-    }
-
-    private var modeBSuggestionBlock: some View {
-        Group {
-            if let suggestion = modeBSuggestion {
-                LabeledContent("Suggested") {
-                    Text("Work \(suggestion.workSeconds)s / Rest \(suggestion.restSeconds)s")
-                        .foregroundStyle(.secondary)
-                }
-                LabeledContent("Effective total") {
-                    Text(Self.formatDuration(seconds: suggestion.effectiveTotalSeconds))
-                        .foregroundStyle(.secondary)
-                }
-
-                Button("Use suggested") {
-                    workSeconds = suggestion.workSeconds
-                    restSeconds = suggestion.restSeconds
-                }
-                .disabled(!canUseSuggested(suggestion))
-
-                if !canUseSuggested(suggestion) {
-                    Text("Suggested values out of allowed range. Increase total or adjust ratio/sets.")
-                        .font(.footnote)
-                        .foregroundStyle(.red)
-                }
-            } else {
-                Text("No suggestion for current inputs.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-        }
-    }
-
-    private func canUseSuggested(_ suggestion: PlanModeBOutput) -> Bool {
-        PlanValidationAdapter.workSecondsRange.contains(suggestion.workSeconds)
-            && PlanValidationAdapter.restSecondsRange.contains(suggestion.restSeconds)
-            && PlanValidationAdapter.setsCountRange.contains(setsCount)
-    }
-
-    private var modeBFineTune: some View {
-        Group {
-            Divider()
-            Text("Fine tune")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
             durationInputs(
                 editorTarget: .work,
                 title: "Work",
@@ -836,35 +608,6 @@ struct PlanEditorView: View {
         }
     }
 
-    private static func gcd(_ a: Int, _ b: Int) -> Int {
-        var x = a
-        var y = b
-        while y != 0 {
-            let r = x % y
-            x = y
-            y = r
-        }
-        return abs(x)
-    }
-
-    private static func normalizedRatio(workSeconds: Int, restSeconds: Int, maxPart: Int) -> (workPart: Int, restPart: Int) {
-        guard maxPart > 0 else { return (1, 1) }
-        if restSeconds == 0 { return (1, 0) }
-
-        let w = max(1, abs(workSeconds))
-        let r = max(1, abs(restSeconds))
-        let g = gcd(w, r)
-        var a = max(1, w / max(1, g))
-        var b = max(1, r / max(1, g))
-
-        if a <= maxPart, b <= maxPart { return (a, b) }
-
-        let div = Int(ceil(Double(max(a, b)) / Double(maxPart)))
-        a = max(1, a / max(1, div))
-        b = max(1, b / max(1, div))
-        return (min(maxPart, a), min(maxPart, b))
-    }
-
     private static func clamp(_ value: Int, to range: ClosedRange<Int>) -> Int {
         min(max(value, range.lowerBound), range.upperBound)
     }
@@ -877,15 +620,6 @@ struct PlanEditorView: View {
     private static func formatDurationHMS(seconds: Int) -> String {
         let parts = durationComponents(seconds: seconds)
         return String(format: "%02d:%02d:%02d", parts.hours, parts.minutes, parts.seconds)
-    }
-
-    private static func formatDuration(seconds: Int) -> String {
-        let total = max(0, seconds)
-        let h = total / 3600
-        let m = (total % 3600) / 60
-        let s = total % 60
-        if h > 0 { return String(format: "%d:%02d:%02d", h, m, s) }
-        return String(format: "%d:%02d", m, s)
     }
 
     private static func normalizedPlanName(_ raw: String) -> String {
