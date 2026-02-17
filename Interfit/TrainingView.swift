@@ -131,7 +131,11 @@ struct TrainingView: View {
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
-
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .frame(minHeight: proxy.size.height, alignment: .top)
             }
         }
         .padding()
