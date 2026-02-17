@@ -131,13 +131,6 @@ struct TrainingView: View {
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
-
-                        if let status = engine?.session.status, status == .running || status == .paused {
-                            Button(status == .running ? "Pause" : "Resume") {
-                                togglePauseResume()
-                            }
-                            .buttonStyle(.borderedProminent)
-                        }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -145,6 +138,7 @@ struct TrainingView: View {
                 .frame(minHeight: proxy.size.height, alignment: .top)
             }
         }
+        .padding()
         .navigationTitle("Training")
         .onAppear { startIfNeeded() }
         .onChange(of: isShowingSummary) { isPresented in
@@ -609,12 +603,7 @@ struct TrainingView: View {
 
     private var circularCountdownTint: Color {
         guard let kind = progress?.currentSegment?.kind else { return .accentColor }
-        switch kind {
-        case .work:
-            return .orange
-        case .rest:
-            return .mint
-        }
+        return Self.segmentTint(for: kind)
     }
 
     private var pauseResumeTitle: String {
@@ -1000,6 +989,15 @@ struct TrainingView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 
+    private static func segmentTint(for kind: WorkoutSegmentKind) -> Color {
+        switch kind {
+        case .work:
+            return .orange
+        case .rest:
+            return .mint
+        }
+    }
+
     private struct TimelineBarSegment: Identifiable {
         let kind: WorkoutSegmentKind
         let setIndex: Int
@@ -1033,7 +1031,7 @@ struct TrainingView: View {
                     HStack(spacing: segmentSpacing) {
                         ForEach(segments) { segment in
                             Rectangle()
-                                .fill(segment.kind == .work ? Color.yellow : Color.green)
+                                .fill(TrainingView.segmentTint(for: segment.kind))
                                 .frame(width: drawableWidth * (CGFloat(segment.durationSeconds) / CGFloat(totalDurationSeconds)))
                         }
                     }
