@@ -11,6 +11,8 @@ struct TrainingView: View {
     let recoverableSnapshot: RecoverableSessionSnapshot?
     let onExitToCleanTraining: (() -> Void)?
 
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
     @State private var engine: WorkoutSessionEngine?
     @State private var now: Date = Date()
     @StateObject private var nowPlaying = NowPlayingManager()
@@ -58,85 +60,91 @@ struct TrainingView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            if engine == nil, plan == nil, recoverableSnapshot == nil {
-                Text("No active training")
-                    .font(.title.bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        GeometryReader { proxy in
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(spacing: contentSpacing) {
+                    if engine == nil, plan == nil, recoverableSnapshot == nil {
+                        Text("No active training")
+                            .font(.title.bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Start a workout from Train tab.")
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Start a workout from Train tab.")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                Spacer()
-            } else {
-                if let plan {
-                    Text(plan.name)
-                        .font(.headline)
-                        .foregroundStyle(.secondary)
-                }
+                        Spacer(minLength: 0)
+                    } else {
+                        if let plan {
+                            Text(plan.name)
+                                .font(.headline)
+                                .foregroundStyle(.secondary)
+                        }
 
-                Text(segmentTitle)
-                    .font(.title.bold())
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                        Text(segmentTitle)
+                            .font(.title.bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                if shouldShowCircularCountdown {
-                    VStack(spacing: 12) {
-                        Text(formattedCountdown)
-                            .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
-                            .monospacedDigit()
-                            .minimumScaleFactor(0.5)
-                            .frame(maxWidth: .infinity, alignment: .center)
+                        if shouldShowCircularCountdown {
+                            VStack(spacing: countdownBlockSpacing) {
+                                Text(formattedCountdown)
+                                    .font(.system(size: countdownDisplayFontSize, weight: .bold, design: .rounded))
+                                    .monospacedDigit()
+                                    .minimumScaleFactor(0.5)
+                                    .frame(maxWidth: .infinity, alignment: .center)
 
-                        circularCountdown
-                            .frame(maxWidth: .infinity)
-                    }
-                } else {
-                    Text(formattedCountdown)
-                        .font(.system(size: countdownFontSize, weight: .bold, design: .rounded))
-                        .monospacedDigit()
-                        .minimumScaleFactor(0.5)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                                circularCountdown
+                                    .frame(maxWidth: .infinity)
+                            }
+                        } else {
+                            Text(formattedCountdown)
+                                .font(.system(size: countdownDisplayFontSize, weight: .bold, design: .rounded))
+                                .monospacedDigit()
+                                .minimumScaleFactor(0.5)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
 
-                if isSafetyPausedByHeadphoneDisconnect {
-                    Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                        if isSafetyPausedByHeadphoneDisconnect {
+                            Text("Paused for safety (headphones disconnected). Tap Resume to continue.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
 
-                Spacer()
+                        Spacer(minLength: 0)
 
-                if !timelineSegments.isEmpty {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(setProgressText)
-                            .font(.system(size: 34, weight: .bold, design: .rounded))
-                            .monospacedDigit()
-                            .foregroundStyle(.primary)
+                        if !timelineSegments.isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(setProgressText)
+                                    .font(.system(size: setProgressFontSize, weight: .bold, design: .rounded))
+                                    .monospacedDigit()
+                                    .foregroundStyle(.primary)
 
-                        TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { context in
-                            TimelineProgressBar(
-                                segments: timelineSegments,
-                                progress: overallTimelineProgress(at: context.date)
-                            )
-                            .accessibilityLabel("Overall workout timeline")
-                            .accessibilityValue(setProgressText)
+                                TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { context in
+                                    TimelineProgressBar(
+                                        segments: timelineSegments,
+                                        progress: overallTimelineProgress(at: context.date)
+                                    )
+                                    .accessibilityLabel("Overall workout timeline")
+                                    .accessibilityValue(setProgressText)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+
+                        if let status = engine?.session.status, status == .running || status == .paused {
+                            Button(status == .running ? "Pause" : "Resume") {
+                                togglePauseResume()
+                            }
+                            .buttonStyle(.borderedProminent)
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-
-                if let status = engine?.session.status, status == .running || status == .paused {
-                    Button(status == .running ? "Pause" : "Resume") {
-                        togglePauseResume()
-                    }
-                    .buttonStyle(.borderedProminent)
-                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .frame(minHeight: proxy.size.height, alignment: .top)
             }
         }
-        .padding()
         .navigationTitle("Training")
         .onAppear { startIfNeeded() }
         .onChange(of: isShowingSummary) { isPresented in
@@ -243,6 +251,26 @@ struct TrainingView: View {
                 }
             }
         }
+    }
+
+    private var isCompactHeight: Bool {
+        verticalSizeClass == .compact
+    }
+
+    private var contentSpacing: CGFloat {
+        isCompactHeight ? 12 : 16
+    }
+
+    private var countdownDisplayFontSize: CGFloat {
+        isCompactHeight ? min(countdownFontSize, 56) : countdownFontSize
+    }
+
+    private var countdownBlockSpacing: CGFloat {
+        isCompactHeight ? 8 : 12
+    }
+
+    private var setProgressFontSize: CGFloat {
+        isCompactHeight ? 28 : 34
     }
 
     private func startIfNeeded() {
@@ -602,13 +630,13 @@ struct TrainingView: View {
     private var circularCountdown: some View {
         ZStack {
             Circle()
-                .stroke(Color.secondary.opacity(0.18), lineWidth: 14)
+                .stroke(Color.secondary.opacity(0.18), lineWidth: countdownStrokeWidth)
 
             Circle()
                 .trim(from: 0, to: circularCountdownProgress)
                 .stroke(
                     circularCountdownTint,
-                    style: StrokeStyle(lineWidth: 14, lineCap: .round)
+                    style: StrokeStyle(lineWidth: countdownStrokeWidth, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90))
                 .animation(.linear(duration: 1.0), value: progress?.currentSegmentRemainingSeconds ?? 0)
@@ -618,17 +646,33 @@ struct TrainingView: View {
             } label: {
                 VStack(spacing: 6) {
                     Image(systemName: pauseResumeSystemImage)
-                        .font(.system(size: 38, weight: .bold))
+                        .font(.system(size: countdownIconFontSize, weight: .bold))
                     Text(pauseResumeTitle)
                         .font(.headline)
                 }
-                .frame(width: 164, height: 164)
+                .frame(width: countdownButtonSize, height: countdownButtonSize)
                 .contentShape(Circle())
             }
             .buttonStyle(.plain)
             .accessibilityLabel(pauseResumeTitle)
         }
-        .frame(width: 248, height: 248)
+        .frame(width: countdownCircleSize, height: countdownCircleSize)
+    }
+
+    private var countdownStrokeWidth: CGFloat {
+        isCompactHeight ? 12 : 14
+    }
+
+    private var countdownCircleSize: CGFloat {
+        isCompactHeight ? 208 : 248
+    }
+
+    private var countdownButtonSize: CGFloat {
+        isCompactHeight ? 140 : 164
+    }
+
+    private var countdownIconFontSize: CGFloat {
+        isCompactHeight ? 32 : 38
     }
 
     private func togglePauseResume() {
