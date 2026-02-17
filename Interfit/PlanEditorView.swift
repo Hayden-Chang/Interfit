@@ -54,28 +54,22 @@ struct PlanEditorView: View {
     @State private var musicPerSetRest: MusicSelection?
 
     @State private var isSaving: Bool = false
-    @State private var isPublishing: Bool = false
-    @State private var publishedVersions: [PlanVersion] = []
-    @State private var publishErrorMessage: String?
     @State private var saveErrorMessage: String?
     @State private var activeDurationEditor: DurationEditorTarget?
 
     @Environment(\.dismiss) private var dismiss
 
     private let planRepository: any PlanRepository
-    private let versionRepository: any PlanVersionRepository
 
     init(
         plan: Plan?,
         startInModeB: Bool = false,
-        planRepository: (any PlanRepository)? = nil,
-        versionRepository: (any PlanVersionRepository)? = nil
+        planRepository: (any PlanRepository)? = nil
     ) {
         _ = startInModeB
         self.plan = plan
         let defaultStore = CoreDataPersistenceStore()
         self.planRepository = planRepository ?? defaultStore
-        self.versionRepository = versionRepository ?? defaultStore
 
         _planId = State(initialValue: plan?.id ?? UUID())
         _createdAt = State(initialValue: plan?.createdAt ?? Date())
@@ -191,7 +185,6 @@ struct PlanEditorView: View {
                 sourceSection
                 validationSection
                 saveSection
-                publishSection
 
             }
             if let target = activeDurationEditor {
@@ -208,18 +201,10 @@ struct PlanEditorView: View {
         .onChange(of: name) { _ in
             saveErrorMessage = nil
         }
-        .task(id: planId) {
-            await loadPublishedVersions()
-        }
         .alert("Save failed", isPresented: Binding(get: { saveErrorMessage != nil }, set: { if !$0 { saveErrorMessage = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {
             Text(saveErrorMessage ?? "")
-        }
-        .alert("Publish failed", isPresented: Binding(get: { publishErrorMessage != nil }, set: { if !$0 { publishErrorMessage = nil } })) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(publishErrorMessage ?? "")
         }
     }
 
@@ -302,17 +287,17 @@ struct PlanEditorView: View {
 
                 HStack(spacing: 0) {
                     durationWheelColumn(
-                        title: "小时",
+                        title: "h",
                         selection: durationComponentBinding(seconds: seconds, range: range, component: .hours),
                         values: 0 ... max(0, range.upperBound / 3600)
                     )
                     durationWheelColumn(
-                        title: "分钟",
+                        title: "min",
                         selection: durationComponentBinding(seconds: seconds, range: range, component: .minutes),
                         values: 0 ... 59
                     )
                     durationWheelColumn(
-                        title: "秒",
+                        title: "s",
                         selection: durationComponentBinding(seconds: seconds, range: range, component: .seconds),
                         values: 0 ... 59
                     )
@@ -347,7 +332,7 @@ struct PlanEditorView: View {
     ) -> some View {
         Picker(title, selection: selection) {
             ForEach(Array(values), id: \.self) { value in
-                Text("\(value) \(title)").tag(value)
+                Text("\(value)\(title)").tag(value)
             }
         }
         .pickerStyle(.wheel)
@@ -471,27 +456,6 @@ struct PlanEditorView: View {
         }
     }
 
-    private var publishSection: some View {
-        Section("Publish") {
-            Button(isPublishing ? "Publishing…" : "Publish as new version") {
-                publish()
-            }
-            .disabled(!canSave || isPublishing)
-
-            Text("发布后固定（只读）。每次发布都会创建一个新版本。")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-
-            if !publishedVersions.isEmpty {
-                NavigationLink {
-                    PlanVersionsListView(planId: planId, versionRepository: versionRepository, planRepository: planRepository)
-                } label: {
-                    Text("View published versions (\(publishedVersions.count))")
-                }
-            }
-        }
-    }
-
     private func save() {
         guard canSave else { return }
         isSaving = true
@@ -508,51 +472,6 @@ struct PlanEditorView: View {
             await MainActor.run {
                 isSaving = false
                 dismiss()
-            }
-        }
-    }
-
-    private func loadPublishedVersions() async {
-        publishedVersions = await versionRepository.fetchPlanVersions(planId: planId)
-    }
-
-    private func publish() {
-        guard canSave else { return }
-        isPublishing = true
-        saveErrorMessage = nil
-        let snapshot = draftPlan
-        Task {
-            if !(await ensurePlanNameIsCreatable(snapshot)) {
-                await MainActor.run {
-                    isPublishing = false
-                }
-                return
-            }
-            await planRepository.upsertPlan(snapshot)
-            let existing = await versionRepository.fetchPlanVersions(planId: snapshot.id)
-            let nextVersionNumber = (existing.map(\.versionNumber).max() ?? 0) + 1
-            let version = PlanVersion(
-                planId: snapshot.id,
-                status: .published,
-                versionNumber: nextVersionNumber,
-                setsCount: snapshot.setsCount,
-                workSeconds: snapshot.workSeconds,
-                restSeconds: snapshot.restSeconds,
-                name: snapshot.name,
-                musicStrategy: snapshot.musicStrategy,
-                publishedAt: Date()
-            )
-            do {
-                try await versionRepository.upsertPlanVersion(version)
-                await MainActor.run {
-                    isPublishing = false
-                }
-                await loadPublishedVersions()
-            } catch {
-                await MainActor.run {
-                    isPublishing = false
-                    publishErrorMessage = String(describing: error)
-                }
             }
         }
     }
