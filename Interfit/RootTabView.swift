@@ -68,7 +68,7 @@ struct RootTabView: View {
                         Stepper(value: threshold, in: 0...10, step: 0.5) {
                             Text("Siri pause threshold: \(threshold.wrappedValue, specifier: "%.1f")s")
                         }
-                        Text("If Siri silences your audio briefly, Interfit won’t pause the workout unless it lasts longer than this threshold.")
+                        Text("If Siri silences your audio briefly, InterBeat won’t pause the workout unless it lasts longer than this threshold.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }

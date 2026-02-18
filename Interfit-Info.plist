@@ -21,9 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Interfit can play Apple Music during training.</string>
+	<string>InterBeat can play Apple Music during training.</string>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Interfit needs network access to stream Apple Music.</string>
+	<string>InterBeat needs network access to stream Apple Music.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

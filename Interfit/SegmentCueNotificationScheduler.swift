@@ -31,7 +31,7 @@ enum SegmentCueNotificationScheduler {
             if boundaryElapsed > currentElapsed {
                 let delay = TimeInterval(boundaryElapsed - currentElapsed)
                 let content = UNMutableNotificationContent()
-                content.title = "Interfit"
+                content.title = "InterBeat"
                 content.body = "Set \(setIndex) start"
                 content.interruptionLevel = .timeSensitive
                 content.sound = workStartSound(for: setIndex)
@@ -46,7 +46,7 @@ enum SegmentCueNotificationScheduler {
                 if boundaryElapsed > currentElapsed {
                     let delay = TimeInterval(boundaryElapsed - currentElapsed)
                     let content = UNMutableNotificationContent()
-                    content.title = "Interfit"
+                    content.title = "InterBeat"
                     content.body = "Time to rest"
                     content.interruptionLevel = .timeSensitive
                     content.sound = restStartSound()
