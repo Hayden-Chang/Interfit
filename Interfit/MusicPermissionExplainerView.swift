@@ -13,7 +13,7 @@ struct MusicPermissionExplainerView: View {
     var body: some View {
         List {
             Section("Why we ask") {
-                Text("Interfit can play music during training. Permission is only requested when you tap the button below.")
+                Text("InterBeat can play music during training. Permission is only requested when you tap the button below.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

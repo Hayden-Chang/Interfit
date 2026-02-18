@@ -69,7 +69,7 @@ final class NowPlayingManager: ObservableObject {
 
         guard let progress, let seg = progress.currentSegment, !progress.isCompleted else {
             MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                MPMediaItemPropertyTitle: planName ?? "Interfit",
+                MPMediaItemPropertyTitle: planName ?? "InterBeat",
                 MPMediaItemPropertyArtist: sessionStatus == .ended ? "Ended" : "Completed",
                 MPNowPlayingInfoPropertyPlaybackRate: 0.0,
             ]
@@ -85,7 +85,7 @@ final class NowPlayingManager: ObservableObject {
         let rate: Double = (sessionStatus == .running) ? 1.0 : 0.0
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: planName ?? "Interfit",
+            MPMediaItemPropertyTitle: planName ?? "InterBeat",
             MPMediaItemPropertyArtist: subtitle,
             MPMediaItemPropertyPlaybackDuration: Double(seg.durationSeconds),
             MPNowPlayingInfoPropertyElapsedPlaybackTime: Double(progress.currentSegmentElapsedSeconds),

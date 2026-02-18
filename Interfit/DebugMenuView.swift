@@ -170,7 +170,7 @@ struct DebugMenuView: View {
                     isShowingAlert = true
                     isRunning = false
                 }
-                print("[Interfit] Backup exported to:", url.path)
+                print("[InterBeat] Backup exported to:", url.path)
             } catch {
                 await MainActor.run {
                     statusText = "Export failed."
@@ -200,7 +200,7 @@ struct DebugMenuView: View {
                     isShowingAlert = true
                     isRunning = false
                 }
-                print("[Interfit] Backup imported from:", url.path)
+                print("[InterBeat] Backup imported from:", url.path)
             } catch {
                 await MainActor.run {
                     statusText = "Import failed."
