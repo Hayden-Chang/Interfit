@@ -75,6 +75,9 @@ struct RootTabView: View {
 
                     Section("Privacy") {
                         Toggle("Allow anonymous usage data", isOn: $isAnalyticsOptIn)
+                        if let privacyPolicyURL = URL(string: "https://hayden-chang.github.io/support/privacy-policies/interfit/privacy-policy.html") {
+                            Link("Privacy Policy", destination: privacyPolicyURL)
+                        }
                         Text("Turn off to stop recording analytics events. Training and local history are not affected.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
