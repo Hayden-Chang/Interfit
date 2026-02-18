@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4FB4202A2F210AC00076B335 /* Interfit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Interfit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FB4202A2F210AC00076B335 /* InterBeat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InterBeat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,7 +47,7 @@
 		4FB4202B2F210AC00076B335 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4FB4202A2F210AC00076B335 /* Interfit.app */,
+				4FB4202A2F210AC00076B335 /* InterBeat.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -55,9 +55,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4FB420292F210AC00076B335 /* Interfit */ = {
+		4FB420292F210AC00076B335 /* InterBeat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4FB4203D2F210AC20076B335 /* Build configuration list for PBXNativeTarget "Interfit" */;
+			buildConfigurationList = 4FB4203D2F210AC20076B335 /* Build configuration list for PBXNativeTarget "InterBeat" */;
 			buildPhases = (
 				4FB420262F210AC00076B335 /* Sources */,
 				4FB420272F210AC00076B335 /* Frameworks */,
@@ -70,13 +70,13 @@
 			fileSystemSynchronizedGroups = (
 				4FB4202C2F210AC00076B335 /* Interfit */,
 			);
-			name = Interfit;
+			name = InterBeat;
 			packageProductDependencies = (
 				4FB420A12F22A0000076B335 /* Audio */,
 				4FB420B12F2300000076B335 /* Persistence */,
 			);
-			productName = Interfit;
-			productReference = 4FB4202A2F210AC00076B335 /* Interfit.app */;
+			productName = InterBeat;
+			productReference = 4FB4202A2F210AC00076B335 /* InterBeat.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4FB420292F210AC00076B335 /* Interfit */,
+				4FB420292F210AC00076B335 /* InterBeat */,
 			);
 		};
 /* End PBXProject section */
@@ -336,7 +336,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4FB4203D2F210AC20076B335 /* Build configuration list for PBXNativeTarget "Interfit" */ = {
+		4FB4203D2F210AC20076B335 /* Build configuration list for PBXNativeTarget "InterBeat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FB4203E2F210AC20076B335 /* Debug */,
