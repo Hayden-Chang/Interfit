@@ -26,6 +26,7 @@ public struct MusicSelection: Sendable, Codable, Hashable {
     public var type: MusicSelectionType
     public var externalId: String
     public var displayTitle: String
+    public var artistName: String?
     public var artworkUrl: URL?
     public var playMode: MusicPlayMode
 
@@ -34,6 +35,7 @@ public struct MusicSelection: Sendable, Codable, Hashable {
         type: MusicSelectionType,
         externalId: String,
         displayTitle: String,
+        artistName: String? = nil,
         artworkUrl: URL? = nil,
         playMode: MusicPlayMode
     ) {
@@ -41,6 +43,7 @@ public struct MusicSelection: Sendable, Codable, Hashable {
         self.type = type
         self.externalId = externalId
         self.displayTitle = displayTitle
+        self.artistName = artistName
         self.artworkUrl = artworkUrl
         self.playMode = playMode
     }
@@ -63,4 +66,3 @@ public struct MusicSelection: Sendable, Codable, Hashable {
         hasher.combine(playMode)
     }
 }
-

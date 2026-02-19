@@ -30,6 +30,7 @@ enum MusicSearchClient {
                         type: .track,
                         externalId: song.id.rawValue,
                         displayTitle: song.title,
+                        artistName: song.artistName,
                         artworkUrl: song.artwork?.url(width: 256, height: 256),
                         playMode: .continue
                     )
@@ -45,6 +46,7 @@ enum MusicSearchClient {
                         type: .album,
                         externalId: album.id.rawValue,
                         displayTitle: album.title,
+                        artistName: album.artistName,
                         artworkUrl: album.artwork?.url(width: 256, height: 256),
                         playMode: .continue
                     )
@@ -60,6 +62,7 @@ enum MusicSearchClient {
                         type: .playlist,
                         externalId: playlist.id.rawValue,
                         displayTitle: playlist.name,
+                        artistName: playlist.curatorName,
                         artworkUrl: playlist.artwork?.url(width: 256, height: 256),
                         playMode: .continue
                     )
@@ -80,4 +83,3 @@ enum MusicSearchClient {
 }
 
 #endif
-
