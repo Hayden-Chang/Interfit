@@ -101,6 +101,8 @@ struct RootTabView: View {
             .tag(Tab.me)
         }
         .task {
+            SegmentCueNotificationScheduler.cancelAll()
+            await AppTerminationCoordinator.handleRelaunchAfterTermination()
 #if DEBUG
             await DemoDataSeeder.resetIfRequested()
             await DemoDataSeeder.seedIfRequested()
@@ -195,6 +197,7 @@ struct RootTabView: View {
     }
 
     private func continueRecovery(with snapshot: RecoverableSessionSnapshot) {
+        SegmentCueNotificationScheduler.cancelAll()
         let planSnapshot = snapshot.session.planSnapshot
         recoveredTrainingPlan = planSnapshot.map {
             Plan(
@@ -215,6 +218,7 @@ struct RootTabView: View {
 
     private func endAndSaveRecovery(_ snapshot: RecoverableSessionSnapshot) {
         Task {
+            SegmentCueNotificationScheduler.cancelAll()
             var session = snapshot.session
             let now = Date()
             session.status = .ended
@@ -230,6 +234,7 @@ struct RootTabView: View {
 
     private func discardRecovery(_ snapshot: RecoverableSessionSnapshot) {
         Task {
+            SegmentCueNotificationScheduler.cancelAll()
             await persistenceStore.clearRecoverableSessionSnapshot()
             await MainActor.run {
                 pendingRecovery = nil

@@ -10,6 +10,9 @@ import UIKit
 
 @main
 struct InterfitApp: App {
+    #if canImport(UIKit)
+    @UIApplicationDelegateAdaptor(InterfitAppDelegate.self) private var appDelegate
+    #endif
     let persistenceController = PersistenceController.shared
     private let arguments = ProcessInfo.processInfo.arguments
     private var shouldLaunchModulesDemo: Bool { arguments.contains("-modulesDemo") }
