@@ -55,6 +55,10 @@ enum AutoAcceptanceRunner {
             await run_3_7_2_1(arguments: arguments)
         }
 
+        if arguments.contains("-autoAcceptance_3_7_3_1") {
+            await run_3_7_3_1(arguments: arguments)
+        }
+
         if arguments.contains("-autoAcceptance_3_4_2_1") {
             await run_3_4_2_1(arguments: arguments)
         }
@@ -215,6 +219,17 @@ enum AutoAcceptanceRunner {
 
         let report = AutoAcceptance_3_7_2_1.run()
         await report.persist(filename: "auto_acceptance_3_7_2_1.json")
+
+        defaults.set(true, forKey: seededKey)
+    }
+
+    private static func run_3_7_3_1(arguments: [String]) async {
+        let defaults = UserDefaults.standard
+        let seededKey = "interfit.autoAcceptance.3_7_3_1.completed"
+        guard !defaults.bool(forKey: seededKey) else { return }
+
+        let report = AutoAcceptance_3_7_3_1.run()
+        await report.persist(filename: "auto_acceptance_3_7_3_1.json")
 
         defaults.set(true, forKey: seededKey)
     }
@@ -1514,6 +1529,209 @@ private final class AutoAcceptance_3_4_2_1 {
             importedCounts: importedCounts,
             failures: failures
         )
+    }
+}
+
+private enum AutoAcceptance_3_7_3_1 {
+    struct Report: Codable, Sendable {
+        var name: String
+        var passed: Bool
+        var createdAt: Date
+        var immediateCleanupPassed: Bool
+        var delayedSweepPassed: Bool
+        var generationGuardPassed: Bool
+        var failures: [String]
+
+        func persist(filename: String) async {
+            do {
+                let dir = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+                let url = dir.appendingPathComponent(filename)
+                let data = try JSONEncoder.prettyISO8601.encode(self)
+                try data.write(to: url, options: [.atomic])
+            } catch {
+                NSLog("[AutoAcceptance] Failed to persist report: %@", String(describing: error))
+            }
+        }
+    }
+
+    static func run() -> Report {
+        var failures: [String] = []
+
+        let immediateCleanupPassed = runImmediateCleanupCase(failures: &failures)
+        let delayedSweepPassed = runDelayedSweepCase(failures: &failures)
+        let generationGuardPassed = runGenerationGuardCase(failures: &failures)
+
+        return Report(
+            name: "3.7.3.1",
+            passed: failures.isEmpty,
+            createdAt: Date(),
+            immediateCleanupPassed: immediateCleanupPassed,
+            delayedSweepPassed: delayedSweepPassed,
+            generationGuardPassed: generationGuardPassed,
+            failures: failures
+        )
+    }
+
+    private static func runImmediateCleanupCase(failures: inout [String]) -> Bool {
+        let center = FakeSegmentCueNotificationCenter(
+            pending: ["segmentCue-work-1", "segmentCue-rest-1", "unrelated-a"],
+            delivered: ["segmentCue-work-2", "unrelated-b"]
+        )
+        let dispatcher = FakeSegmentCueDispatcher()
+
+        SegmentCueNotificationScheduler.cancelAll(center: center, dispatcher: dispatcher)
+
+        let pending = center.pendingIdentifiers()
+        let delivered = center.deliveredIdentifiers()
+
+        if pending.contains(where: { $0.hasPrefix("segmentCue-") }) {
+            failures.append("Immediate cleanup should remove all segmentCue pending notifications.")
+            return false
+        }
+        if delivered.contains(where: { $0.hasPrefix("segmentCue-") }) {
+            failures.append("Immediate cleanup should remove all segmentCue delivered notifications.")
+            return false
+        }
+        if !pending.contains("unrelated-a") || !delivered.contains("unrelated-b") {
+            failures.append("Immediate cleanup should not remove unrelated notifications.")
+            return false
+        }
+        return true
+    }
+
+    private static func runDelayedSweepCase(failures: inout [String]) -> Bool {
+        let center = FakeSegmentCueNotificationCenter(
+            pending: ["segmentCue-work-1", "unrelated-a"],
+            delivered: []
+        )
+        let dispatcher = FakeSegmentCueDispatcher()
+
+        SegmentCueNotificationScheduler.cancelAll(center: center, dispatcher: dispatcher)
+
+        // Simulate late arrival from daemon after initial remove (race condition).
+        center.injectPending("segmentCue-rest-late")
+        if !center.pendingIdentifiers().contains("segmentCue-rest-late") {
+            failures.append("Test setup failed: expected delayed segment cue to be present before sweep.")
+            return false
+        }
+
+        dispatcher.runAll()
+        let pendingAfterSweep = center.pendingIdentifiers()
+        if pendingAfterSweep.contains(where: { $0.hasPrefix("segmentCue-") }) {
+            failures.append("Delayed sweep should remove late-arriving segmentCue notifications.")
+            return false
+        }
+        if !pendingAfterSweep.contains("unrelated-a") {
+            failures.append("Delayed sweep should preserve unrelated notifications.")
+            return false
+        }
+        return true
+    }
+
+    private static func runGenerationGuardCase(failures: inout [String]) -> Bool {
+        let center = FakeSegmentCueNotificationCenter(
+            pending: ["segmentCue-work-1"],
+            delivered: []
+        )
+        let dispatcher = FakeSegmentCueDispatcher()
+
+        SegmentCueNotificationScheduler.cancelAll(center: center, dispatcher: dispatcher)
+        let structure = WorkoutStructure(setsCount: 2, workSeconds: 5, restSeconds: 5)
+        SegmentCueNotificationScheduler.schedule(structure: structure, currentElapsed: 0, center: center)
+
+        // Old cancel sweeps should not wipe notifications from the newer generation.
+        dispatcher.runAll()
+        let pending = center.pendingIdentifiers()
+        let hasCurrentSegmentCue = pending.contains(where: { $0.hasPrefix("segmentCue-") })
+        if !hasCurrentSegmentCue {
+            failures.append("Generation guard failed: stale cancel sweep removed notifications from current schedule.")
+            return false
+        }
+        return true
+    }
+}
+
+private final class FakeSegmentCueNotificationCenter: SegmentCueNotificationCentering {
+    private let lock = NSLock()
+    private var pending: Set<String>
+    private var delivered: Set<String>
+
+    init(pending: [String], delivered: [String]) {
+        self.pending = Set(pending)
+        self.delivered = Set(delivered)
+    }
+
+    func add(_ request: UNNotificationRequest, withCompletionHandler completionHandler: ((Error?) -> Void)?) {
+        lock.lock()
+        pending.insert(request.identifier)
+        lock.unlock()
+        completionHandler?(nil)
+    }
+
+    func removePendingNotificationRequests(withIdentifiers identifiers: [String]) {
+        lock.lock()
+        for id in identifiers {
+            pending.remove(id)
+        }
+        lock.unlock()
+    }
+
+    func removeDeliveredNotifications(withIdentifiers identifiers: [String]) {
+        lock.lock()
+        for id in identifiers {
+            delivered.remove(id)
+        }
+        lock.unlock()
+    }
+
+    func getPendingNotificationRequestIdentifiers(_ completion: @escaping ([String]) -> Void) {
+        lock.lock()
+        let snapshot = Array(pending)
+        lock.unlock()
+        completion(snapshot)
+    }
+
+    func getDeliveredNotificationIdentifiers(_ completion: @escaping ([String]) -> Void) {
+        lock.lock()
+        let snapshot = Array(delivered)
+        lock.unlock()
+        completion(snapshot)
+    }
+
+    func injectPending(_ identifier: String) {
+        lock.lock()
+        pending.insert(identifier)
+        lock.unlock()
+    }
+
+    func pendingIdentifiers() -> Set<String> {
+        lock.lock()
+        let snapshot = pending
+        lock.unlock()
+        return snapshot
+    }
+
+    func deliveredIdentifiers() -> Set<String> {
+        lock.lock()
+        let snapshot = delivered
+        lock.unlock()
+        return snapshot
+    }
+}
+
+private final class FakeSegmentCueDispatcher: SegmentCueDispatching {
+    private var queue: [() -> Void] = []
+
+    func asyncAfter(seconds _: TimeInterval, execute: @escaping () -> Void) {
+        queue.append(execute)
+    }
+
+    func runAll() {
+        while !queue.isEmpty {
+            let work = queue.removeFirst()
+            work()
+        }
     }
 }
 
