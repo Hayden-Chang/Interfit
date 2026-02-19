@@ -1,12 +1,18 @@
 import Foundation
+import Combine
 import Shared
 
 #if canImport(MusicKit)
 import MusicKit
 
 @MainActor
-final class MusicPlaybackClient {
+final class MusicPlaybackClient: ObservableObject {
     static let shared = MusicPlaybackClient()
+
+    struct NowPlayingDisplay: Sendable, Equatable {
+        let title: String
+        let artist: String
+    }
 
     enum Error: Swift.Error {
         case unsupportedSource
@@ -21,6 +27,7 @@ final class MusicPlaybackClient {
     private var isPlaybackOwnedByInterfit: Bool = false
     private var savedTrackProgress: [String: TimeInterval] = [:]
     private var isCatalogAccessDisabled = false
+    @Published private(set) var nowPlayingDisplay: NowPlayingDisplay?
 
     private init() {}
 
@@ -91,6 +98,7 @@ final class MusicPlaybackClient {
 
         let player = SystemMusicPlayer.shared
         let isSameSelectionAsLast = lastSelection?.isEquivalent(to: selection) == true
+        var displayCandidate = nowPlayingDisplay
 
         if !isSameSelectionAsLast {
             try await ensureAuthorizedAndSubscribed()
@@ -104,11 +112,11 @@ final class MusicPlaybackClient {
 
             switch selection.type {
             case .track:
-                try await queueTrack(selection, player: player)
+                displayCandidate = try await queueTrack(selection, player: player)
             case .album:
-                try await queueAlbum(selection, player: player)
+                displayCandidate = try await queueAlbum(selection, player: player)
             case .playlist:
-                try await queuePlaylist(selection, player: player)
+                displayCandidate = try await queuePlaylist(selection, player: player)
             }
         }
 
@@ -116,6 +124,7 @@ final class MusicPlaybackClient {
         try await player.play()
         isPlaybackOwnedByInterfit = true
         lastSelection = selection
+        nowPlayingDisplay = displayCandidate ?? Self.makeNowPlayingDisplay(title: selection.displayTitle, artist: nil)
     }
 
     func applyDirective(_ directive: MusicPlaybackDirective) async throws {
@@ -151,6 +160,7 @@ final class MusicPlaybackClient {
         pausePlayerAndSnapshotTrackProgress(player)
         isPlaybackOwnedByInterfit = false
         lastSelection = nil
+        nowPlayingDisplay = nil
     }
 
     func pauseIfOwnedByInterfitForAppTermination() {
@@ -179,7 +189,7 @@ final class MusicPlaybackClient {
         // produce repeated -8200/40402 logs even for local-library playback paths.
     }
 
-    private func queueTrack(_ selection: MusicSelection, player: SystemMusicPlayer) async throws {
+    private func queueTrack(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
         let id = MusicItemID(selection.externalId)
         var song: Song?
 
@@ -220,9 +230,10 @@ final class MusicPlaybackClient {
         }
 
         player.state.shuffleMode = .off
+        return Self.makeNowPlayingDisplay(title: song.title, artist: song.artistName)
     }
 
-    private func queueAlbum(_ selection: MusicSelection, player: SystemMusicPlayer) async throws {
+    private func queueAlbum(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
         let id = MusicItemID(selection.externalId)
         var album: Album?
 
@@ -265,9 +276,11 @@ final class MusicPlaybackClient {
         case .continue:
             player.state.shuffleMode = .off
         }
+
+        return Self.makeNowPlayingDisplay(title: album.title, artist: album.artistName)
     }
 
-    private func queuePlaylist(_ selection: MusicSelection, player: SystemMusicPlayer) async throws {
+    private func queuePlaylist(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
         let id = MusicItemID(selection.externalId)
         var playlist: Playlist?
 
@@ -310,6 +323,8 @@ final class MusicPlaybackClient {
         case .continue:
             player.state.shuffleMode = .off
         }
+
+        return Self.makeNowPlayingDisplay(title: playlist.name, artist: nil)
     }
 
     private func fetchLibrarySong(id: MusicItemID) async throws -> Song? {
@@ -350,13 +365,29 @@ final class MusicPlaybackClient {
         }
         player.pause()
     }
+
+    private static func makeNowPlayingDisplay(title: String, artist: String?) -> NowPlayingDisplay {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedArtist = (artist ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        return .init(
+            title: trimmedTitle.isEmpty ? "Unknown Track" : trimmedTitle,
+            artist: trimmedArtist.isEmpty ? "Unknown Artist" : trimmedArtist
+        )
+    }
 }
 
 #else
 
 @MainActor
-final class MusicPlaybackClient {
+final class MusicPlaybackClient: ObservableObject {
     static let shared = MusicPlaybackClient()
+
+    struct NowPlayingDisplay: Sendable, Equatable {
+        let title: String
+        let artist: String
+    }
+
+    @Published private(set) var nowPlayingDisplay: NowPlayingDisplay?
 
     private init() {}
 

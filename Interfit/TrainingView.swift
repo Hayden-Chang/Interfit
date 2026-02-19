@@ -16,6 +16,7 @@ struct TrainingView: View {
     @State private var engine: WorkoutSessionEngine?
     @State private var now: Date = Date()
     @StateObject private var nowPlaying = NowPlayingManager()
+    @StateObject private var musicPlaybackClient = MusicPlaybackClient.shared
 
     @ScaledMetric(relativeTo: .largeTitle) private var countdownFontSize: CGFloat = 72
 
@@ -75,15 +76,13 @@ struct TrainingView: View {
 
                         Spacer(minLength: 0)
                     } else {
-                        if let plan {
-                            Text(plan.name)
-                                .font(.headline)
-                                .foregroundStyle(.secondary)
-                        }
-
                         Text(segmentTitle)
                             .font(.title.bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
+
+                        if let nowPlayingDisplay = musicPlaybackClient.nowPlayingDisplay {
+                            interfitNowPlayingView(nowPlayingDisplay)
+                        }
 
                         if shouldShowCircularCountdown {
                             VStack(spacing: countdownBlockSpacing) {
@@ -139,7 +138,7 @@ struct TrainingView: View {
             }
         }
         .padding()
-        .navigationTitle("Training")
+        .navigationTitle(trainingNameForNavigationBar)
         .onAppear { startIfNeeded() }
         .onChange(of: isShowingSummary) { isPresented in
             guard !isPresented else { return }
@@ -265,6 +264,31 @@ struct TrainingView: View {
 
     private var setProgressFontSize: CGFloat {
         isCompactHeight ? 28 : 34
+    }
+
+    private var trainingNameForNavigationBar: String {
+        let name = plan?.name ?? recoverableSnapshot?.session.planSnapshot?.name ?? "Training"
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? "Training" : trimmed
+    }
+
+    private func interfitNowPlayingView(_ display: MusicPlaybackClient.NowPlayingDisplay) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Now Playing")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Text(display.title)
+                .font(.headline)
+                .lineLimit(1)
+            Text(display.artist)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Now playing")
+        .accessibilityValue("\(display.title), \(display.artist)")
     }
 
     private func startIfNeeded() {
