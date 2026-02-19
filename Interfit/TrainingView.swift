@@ -272,7 +272,8 @@ struct TrainingView: View {
         degradeBanner = nil
 
         let sinks: [CueSink] = [
-            AudioCueSink(enabled: true),
+            // Avoid persistent ducking so Apple Music volume stays consistent with the Music app.
+            AudioCueSink(enabled: true, options: .init(duckOthers: false, mixWithOthers: true)),
             SpeechCueSink(enabled: true),
             HapticsCueSink(enabled: true),
         ]
