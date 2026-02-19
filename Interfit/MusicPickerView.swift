@@ -172,7 +172,7 @@ struct MusicPickerView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(filteredRecents, id: \.externalId) { selection in
-                        selectableMusicRow(selection, showMetadata: false)
+                        selectableMusicRow(selection, showMetadata: true)
                     }
                 }
             }
