@@ -16,6 +16,7 @@ struct TrainingView: View {
     @State private var engine: WorkoutSessionEngine?
     @State private var now: Date = Date()
     @StateObject private var nowPlaying = NowPlayingManager()
+    @StateObject private var musicPlaybackClient = MusicPlaybackClient.shared
 
     @ScaledMetric(relativeTo: .largeTitle) private var countdownFontSize: CGFloat = 72
 
@@ -77,13 +78,23 @@ struct TrainingView: View {
                     } else {
                         if let plan {
                             Text(plan.name)
-                                .font(.headline)
+                                .font(.caption)
                                 .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .minimumScaleFactor(0.85)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .accessibilityLabel("Plan")
+                                .accessibilityValue(plan.name)
                         }
 
                         Text(segmentTitle)
                             .font(.title.bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
+
+                        if let nowPlayingDisplay = musicPlaybackClient.nowPlayingDisplay {
+                            interfitNowPlayingView(nowPlayingDisplay)
+                        }
 
                         if shouldShowCircularCountdown {
                             VStack(spacing: countdownBlockSpacing) {
@@ -265,6 +276,25 @@ struct TrainingView: View {
 
     private var setProgressFontSize: CGFloat {
         isCompactHeight ? 28 : 34
+    }
+
+    private func interfitNowPlayingView(_ display: MusicPlaybackClient.NowPlayingDisplay) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Now Playing")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Text(display.title)
+                .font(.headline)
+                .lineLimit(1)
+            Text(display.artist)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Now playing")
+        .accessibilityValue("\(display.title), \(display.artist)")
     }
 
     private func startIfNeeded() {
