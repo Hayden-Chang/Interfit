@@ -51,10 +51,6 @@ enum AutoAcceptanceRunner {
             await run_3_7_1_1(arguments: arguments)
         }
 
-        if arguments.contains("-autoAcceptance_3_7_2_1") {
-            await run_3_7_2_1(arguments: arguments)
-        }
-
         if arguments.contains("-autoAcceptance_3_7_3_1") {
             await run_3_7_3_1(arguments: arguments)
         }
@@ -207,18 +203,6 @@ enum AutoAcceptanceRunner {
 
         let report = AutoAcceptance_3_7_1_1.run()
         await report.persist(filename: "auto_acceptance_3_7_1_1.json")
-
-        defaults.set(true, forKey: seededKey)
-    }
-
-    @MainActor
-    private static func run_3_7_2_1(arguments: [String]) async {
-        let defaults = UserDefaults.standard
-        let seededKey = "interfit.autoAcceptance.3_7_2_1.completed"
-        guard !defaults.bool(forKey: seededKey) else { return }
-
-        let report = AutoAcceptance_3_7_2_1.run()
-        await report.persist(filename: "auto_acceptance_3_7_2_1.json")
 
         defaults.set(true, forKey: seededKey)
     }
@@ -816,54 +800,6 @@ private enum AutoAcceptance_3_7_1_1 {
             playbackRatePaused: ratePaused,
             elapsedSeconds: elapsed,
             durationSeconds: duration,
-            failures: failures
-        )
-    }
-}
-
-@MainActor
-private enum AutoAcceptance_3_7_2_1 {
-    struct Report: Codable, Sendable {
-        var name: String
-        var passed: Bool
-        var createdAt: Date
-        var shouldShowWhenNotShown: Bool
-        var shouldShowWhenAlreadyShown: Bool
-        var shouldShowWhenRecovering: Bool
-        var failures: [String]
-
-        func persist(filename: String) async {
-            do {
-                let dir = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                let url = dir.appendingPathComponent(filename)
-                let data = try JSONEncoder.prettyISO8601.encode(self)
-                try data.write(to: url, options: [.atomic])
-            } catch {
-                NSLog("[AutoAcceptance] Failed to persist report: %@", String(describing: error))
-            }
-        }
-    }
-
-    static func run() -> Report {
-        var failures: [String] = []
-
-        let shouldShowWhenNotShown = BackgroundTimingNoticePolicy.shouldShow(hasShown: false, isRecovering: false)
-        if !shouldShowWhenNotShown { failures.append("Expected notice to show when not shown yet and not recovering.") }
-
-        let shouldShowWhenAlreadyShown = BackgroundTimingNoticePolicy.shouldShow(hasShown: true, isRecovering: false)
-        if shouldShowWhenAlreadyShown { failures.append("Expected notice to NOT show when already shown.") }
-
-        let shouldShowWhenRecovering = BackgroundTimingNoticePolicy.shouldShow(hasShown: false, isRecovering: true)
-        if shouldShowWhenRecovering { failures.append("Expected notice to NOT show on recovery path.") }
-
-        return Report(
-            name: "3.7.2.1",
-            passed: failures.isEmpty,
-            createdAt: Date(),
-            shouldShowWhenNotShown: shouldShowWhenNotShown,
-            shouldShowWhenAlreadyShown: shouldShowWhenAlreadyShown,
-            shouldShowWhenRecovering: shouldShowWhenRecovering,
             failures: failures
         )
     }

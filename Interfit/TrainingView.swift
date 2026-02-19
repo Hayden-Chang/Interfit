@@ -32,7 +32,6 @@ struct TrainingView: View {
     @State private var isShowingEndConfirm: Bool = false
     @State private var didConfirmEndFromAlert: Bool = false
     @State private var didPersistSession: Bool = false
-    @State private var isShowingBackgroundTimingNotice: Bool = false
     @State private var audioSessionObservation: AudioSessionObservationToken?
     @State private var lastRecoverableSnapshotPersistedAt: Date?
     @State private var didTriggerStartPreflight: Bool = false
@@ -40,8 +39,6 @@ struct TrainingView: View {
     @State private var siriSecondaryAudioSilenceBeganAt: Date?
     @State private var ignoreRecoverySnapshot: Bool = false
     @State private var degradeBanner: DegradeReason?
-
-    @AppStorage(BackgroundTimingNoticePolicy.userDefaultsKey) private var didShowBackgroundTimingNotice: Bool = false
 
     private let persistenceStore = CoreDataPersistenceStore()
     private var sessionRepository: any SessionRepository { persistenceStore }
@@ -206,11 +203,6 @@ struct TrainingView: View {
         } message: {
             Text("This will stop the workout and show a summary.")
         }
-        .alert(BackgroundTimingNoticePolicy.title, isPresented: $isShowingBackgroundTimingNotice) {
-            Button("Continue", role: .cancel) {}
-        } message: {
-            Text(BackgroundTimingNoticePolicy.message)
-        }
         .alert(
             "Music unavailable",
             isPresented: Binding(
@@ -348,7 +340,6 @@ struct TrainingView: View {
         Task { @MainActor in
             IdleTimerClient.setDisabled(true)
         }
-        showBackgroundTimingNoticeIfNeeded()
         simulateHeadphoneDisconnectIfRequested()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
         refreshBackgroundAudioKeepAlive()
@@ -850,16 +841,6 @@ struct TrainingView: View {
         default:
             break
         }
-    }
-
-    private func showBackgroundTimingNoticeIfNeeded() {
-        let shouldShow = BackgroundTimingNoticePolicy.shouldShow(
-            hasShown: didShowBackgroundTimingNotice,
-            isRecovering: recoverableSnapshot != nil
-        )
-        guard shouldShow else { return }
-        didShowBackgroundTimingNotice = true
-        isShowingBackgroundTimingNotice = true
     }
 
     private func scheduleBackgroundSegmentCuesIfNeeded(referenceDate: Date = Date()) {
