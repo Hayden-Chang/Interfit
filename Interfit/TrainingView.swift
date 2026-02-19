@@ -76,18 +76,6 @@ struct TrainingView: View {
 
                         Spacer(minLength: 0)
                     } else {
-                        if let plan {
-                            Text(plan.name)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                                .truncationMode(.tail)
-                                .minimumScaleFactor(0.85)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .accessibilityLabel("Plan")
-                                .accessibilityValue(plan.name)
-                        }
-
                         Text(segmentTitle)
                             .font(.title.bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -150,7 +138,7 @@ struct TrainingView: View {
             }
         }
         .padding()
-        .navigationTitle("Training")
+        .navigationTitle(trainingNameForNavigationBar)
         .onAppear { startIfNeeded() }
         .onChange(of: isShowingSummary) { isPresented in
             guard !isPresented else { return }
@@ -276,6 +264,12 @@ struct TrainingView: View {
 
     private var setProgressFontSize: CGFloat {
         isCompactHeight ? 28 : 34
+    }
+
+    private var trainingNameForNavigationBar: String {
+        let name = plan?.name ?? recoverableSnapshot?.session.planSnapshot?.name ?? "Training"
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? "Training" : trimmed
     }
 
     private func interfitNowPlayingView(_ display: MusicPlaybackClient.NowPlayingDisplay) -> some View {
