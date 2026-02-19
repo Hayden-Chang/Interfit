@@ -183,8 +183,8 @@ struct MusicPickerView: View {
         HStack(alignment: .firstTextBaseline, spacing: 10) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(selection.displayTitle)
-                if showMetadata {
-                    Text("\(selection.source.rawValue) • \(selection.type.rawValue)")
+                if showMetadata, let artistName = selection.artistName, !artistName.isEmpty {
+                    Text(artistName)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
