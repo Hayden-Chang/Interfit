@@ -5,9 +5,6 @@ import SwiftUI
 #if canImport(UIKit)
 import UIKit
 #endif
-#if canImport(MusicKit)
-import MusicKit
-#endif
 
 enum AppTerminationMarker {
     private static let terminationRequestedKey = "interfit.lifecycle.terminationRequested"
@@ -33,9 +30,7 @@ enum AppTerminationCoordinator {
         SegmentCueNotificationScheduler.cancelAll()
         BackgroundAudioKeepAlive.shared.stop()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
-        #if canImport(MusicKit)
-        SystemMusicPlayer.shared.pause()
-        #endif
+        MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
         Task {
             let store = CoreDataPersistenceStore()
             await store.clearRecoverableSessionSnapshot()
@@ -47,9 +42,7 @@ enum AppTerminationCoordinator {
         SegmentCueNotificationScheduler.cancelAll()
         BackgroundAudioKeepAlive.shared.stop()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
-        #if canImport(MusicKit)
-        SystemMusicPlayer.shared.pause()
-        #endif
+        MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
         let store = CoreDataPersistenceStore()
         await store.clearRecoverableSessionSnapshot()
     }
