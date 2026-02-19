@@ -18,6 +18,7 @@ final class MusicPlaybackClient {
     }
 
     private var lastSelection: MusicSelection?
+    private var isPlaybackOwnedByInterfit: Bool = false
     private var savedTrackProgress: [String: TimeInterval] = [:]
     private var isCatalogAccessDisabled = false
 
@@ -41,6 +42,10 @@ final class MusicPlaybackClient {
 
     static func stop() async {
         await shared.stop()
+    }
+
+    static func pauseIfOwnedByInterfitForAppTermination() {
+        shared.pauseIfOwnedByInterfitForAppTermination()
     }
 
     nonisolated static func classify(_ error: Swift.Error) -> PlaybackFailureKind {
@@ -109,6 +114,7 @@ final class MusicPlaybackClient {
 
         try await applyDirective(selection.playMode.directiveOnSegmentStart)
         try await player.play()
+        isPlaybackOwnedByInterfit = true
         lastSelection = selection
     }
 
@@ -127,25 +133,30 @@ final class MusicPlaybackClient {
     }
 
     func pause() async {
+        guard isPlaybackOwnedByInterfit else { return }
         let player = SystemMusicPlayer.shared
 
-        if let selection = lastSelection, selection.type == .track {
-            savedTrackProgress[selection.externalId] = max(0, player.playbackTime)
-        }
-        player.pause()
+        pausePlayerAndSnapshotTrackProgress(player)
     }
 
     func resume() async {
+        guard isPlaybackOwnedByInterfit else { return }
         let player = SystemMusicPlayer.shared
         try? await player.play()
     }
 
     func stop() async {
+        guard isPlaybackOwnedByInterfit else { return }
         let player = SystemMusicPlayer.shared
-        if let selection = lastSelection, selection.type == .track {
-            savedTrackProgress[selection.externalId] = max(0, player.playbackTime)
-        }
-        player.pause()
+        pausePlayerAndSnapshotTrackProgress(player)
+        isPlaybackOwnedByInterfit = false
+        lastSelection = nil
+    }
+
+    func pauseIfOwnedByInterfitForAppTermination() {
+        guard isPlaybackOwnedByInterfit else { return }
+        let player = SystemMusicPlayer.shared
+        pausePlayerAndSnapshotTrackProgress(player)
     }
 
     private func ensureAuthorizedAndSubscribed() async throws {
@@ -332,6 +343,13 @@ final class MusicPlaybackClient {
             || lower.contains("40402")
             || lower.contains("developer token")
     }
+
+    private func pausePlayerAndSnapshotTrackProgress(_ player: SystemMusicPlayer) {
+        if let selection = lastSelection, selection.type == .track {
+            savedTrackProgress[selection.externalId] = max(0, player.playbackTime)
+        }
+        player.pause()
+    }
 }
 
 #else
@@ -353,6 +371,8 @@ final class MusicPlaybackClient {
     static func resume() async {}
 
     static func stop() async {}
+
+    static func pauseIfOwnedByInterfitForAppTermination() {}
 
     nonisolated static func classify(_ error: Swift.Error) -> PlaybackFailureKind {
         _ = error

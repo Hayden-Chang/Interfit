@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @main
 struct InterfitApp: App {
@@ -31,6 +32,17 @@ struct InterfitApp: App {
                 }
             }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+                // Force-quit from app switcher often skips `willTerminate`.
+                // Pause here to guarantee "close app => pause owned playback".
+                MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification)) { _ in
+                MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIScene.didDisconnectNotification)) { _ in
+                MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
+            }
         }
     }
 }
