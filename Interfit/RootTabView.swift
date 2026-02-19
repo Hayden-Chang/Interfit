@@ -60,19 +60,6 @@ struct RootTabView: View {
                         }
                     }
 
-                    Section("Audio") {
-                        let threshold = Binding<Double>(
-                            get: { SiriInterruptionSettingsStore.pauseThresholdSeconds },
-                            set: { SiriInterruptionSettingsStore.pauseThresholdSeconds = $0 }
-                        )
-                        Stepper(value: threshold, in: 0...10, step: 0.5) {
-                            Text("Siri pause threshold: \(threshold.wrappedValue, specifier: "%.1f")s")
-                        }
-                        Text("If Siri silences your audio briefly, InterBeat won’t pause the workout unless it lasts longer than this threshold.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
-
                     Section("Privacy") {
                         Toggle("Allow anonymous usage data", isOn: $isAnalyticsOptIn)
                         if let privacyPolicyURL = URL(string: "https://hayden-chang.github.io/support/privacy-policies/interfit/privacy-policy.html") {
@@ -83,15 +70,6 @@ struct RootTabView: View {
                             .foregroundStyle(.secondary)
                     }
 
-#if DEBUG
-                    Section("Debug") {
-                        NavigationLink {
-                            DebugMenuView()
-                        } label: {
-                            Text("Debug Menu")
-                        }
-                    }
-#endif
                 }
                 .navigationTitle("Me")
             }
