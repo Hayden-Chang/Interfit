@@ -8,7 +8,7 @@ private final class CollectingPlaybackIntentSink: @unchecked Sendable, PlaybackI
 
 final class WorkoutSessionEnginePlaybackIntentTests: XCTestCase {
     func test_emitsSegmentChangedIntents() throws {
-        // Plan: 2 sets, work=5, rest=3 => w1(0-5), r1(5-8), w2(8-13)
+        // Plan: 2 sets, work=5, rest=3 => w1(0-5), r1(5-8), w2(8-13), r2(13-16)
         let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 3, name: "PlaybackPlan")
         let sink = CollectingPlaybackIntentSink()
         var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0), playback: sink)
@@ -17,6 +17,7 @@ final class WorkoutSessionEnginePlaybackIntentTests: XCTestCase {
         _ = engine.tick(at: Date(timeIntervalSince1970: 5))
         _ = engine.tick(at: Date(timeIntervalSince1970: 6))
         _ = engine.tick(at: Date(timeIntervalSince1970: 8))
+        _ = engine.tick(at: Date(timeIntervalSince1970: 13))
 
         let toIds: [String] = sink.intents.compactMap {
             guard case let .segmentChanged(_, _, to, _, _) = $0 else { return nil }
@@ -25,6 +26,7 @@ final class WorkoutSessionEnginePlaybackIntentTests: XCTestCase {
         XCTAssertTrue(toIds.contains("work#1"), "Expected intent for work#1; got \(toIds)")
         XCTAssertTrue(toIds.contains("rest#1"), "Expected intent for rest#1; got \(toIds)")
         XCTAssertTrue(toIds.contains("work#2"), "Expected intent for work#2; got \(toIds)")
+        XCTAssertTrue(toIds.contains("rest#2"), "Expected intent for rest#2; got \(toIds)")
     }
 
     func test_emitsPauseResumeAndStopIntents() throws {

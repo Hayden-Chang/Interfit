@@ -63,9 +63,9 @@ public extension PlanVersion {
         ContentHash.sha256Hex("planContent:v1;sets=\(setsCount);work=\(workSeconds);rest=\(restSeconds)")
     }
 
-    /// Total seconds if we assume rest happens between sets (i.e. \(setsCount - 1\) rests).
+    /// Total seconds if we assume each set includes its configured rest segment.
     var estimatedTotalSeconds: Int {
-        let rests = max(0, setsCount - 1)
-        return (setsCount * workSeconds) + (rests * restSeconds)
+        let sets = max(0, setsCount)
+        return (sets * workSeconds) + (sets * restSeconds)
     }
 }

@@ -6,10 +6,10 @@ public enum WorkoutSegmentKind: String, Sendable, Codable, CaseIterable {
 }
 
 /// A pure (side-effect free) description of an interval workout:
-/// Work + Rest repeated for `setsCount` sets, with rest only **between** sets.
+/// Work + Rest repeated for `setsCount` sets.
 ///
 /// Segment timeline example (sets=3, rest>0):
-/// Work(1) → Rest(1) → Work(2) → Rest(2) → Work(3)
+/// Work(1) → Rest(1) → Work(2) → Rest(2) → Work(3) → Rest(3)
 ///
 /// M0 scope: supports `restSeconds = 0` (no rest segments).
 public struct WorkoutStructure: Sendable, Equatable {
@@ -23,18 +23,17 @@ public struct WorkoutStructure: Sendable, Equatable {
         self.restSeconds = max(0, restSeconds)
     }
 
-    /// Total seconds if we assume rest happens between sets (i.e. `setsCount - 1` rests).
+    /// Total seconds if we assume each set includes its configured rest segment.
     public var totalSeconds: Int {
         guard setsCount > 0 else { return 0 }
-        let rests = max(0, setsCount - 1)
-        return (setsCount * workSeconds) + (rests * restSeconds)
+        return (setsCount * workSeconds) + (setsCount * restSeconds)
     }
 
     /// Segment count in the linear timeline. If `restSeconds == 0`, it is `setsCount`.
-    /// Otherwise, it is `setsCount * 2 - 1` (no rest after the last set).
+    /// Otherwise, it is `setsCount * 2`.
     public var segmentCount: Int {
         guard setsCount > 0 else { return 0 }
-        return restSeconds > 0 ? (setsCount * 2 - 1) : setsCount
+        return restSeconds > 0 ? (setsCount * 2) : setsCount
     }
 
     public func progress(atElapsedSeconds elapsedSeconds: Int) -> WorkoutProgress {
@@ -107,9 +106,7 @@ public struct WorkoutProgress: Sendable, Equatable {
             }
             completedSets += 1
 
-            // No rest after the last set.
-            let hasRestAfterThisSet = setIndex < structure.setsCount
-            let restDuration = hasRestAfterThisSet ? structure.restSeconds : 0
+            let restDuration = structure.restSeconds
             if restDuration > 0 {
                 if t < restDuration {
                     let seg = WorkoutSegment(kind: .rest, setIndex: setIndex, durationSeconds: restDuration)
@@ -145,4 +142,3 @@ public struct WorkoutSegment: Sendable, Equatable {
         self.durationSeconds = max(0, durationSeconds)
     }
 }
-

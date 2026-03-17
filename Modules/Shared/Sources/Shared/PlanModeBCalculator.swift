@@ -37,7 +37,7 @@ public enum PlanModeBCalculator {
         let sets = input.setsCount
         let a = input.workPart
         let b = input.restPart
-        let rests = max(0, sets - 1)
+        let rests = sets
 
         guard total > 0, sets > 0 else { return nil }
         guard a > 0, b >= 0 else { return nil }
@@ -61,4 +61,3 @@ public enum PlanModeBCalculator {
         return PlanModeBOutput(workSeconds: work, restSeconds: rest, effectiveTotalSeconds: effective)
     }
 }
-

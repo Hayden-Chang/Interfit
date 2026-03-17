@@ -41,10 +41,15 @@ final class WorkoutSegmentSchedulerTests: XCTestCase {
         XCTAssertEqual(c30?.to.kind, .work)
         XCTAssertEqual(c30?.to.setIndex, 3)
 
+        // work3 -> rest3
+        let c40 = scheduler.update(elapsedSeconds: 40)
+        XCTAssertEqual(c40?.to.kind, .rest)
+        XCTAssertEqual(c40?.to.setIndex, 3)
+
         // Completion: should reset current to nil and not emit segmentChanged repeatedly.
-        XCTAssertNil(scheduler.update(elapsedSeconds: 40))
+        XCTAssertNil(scheduler.update(elapsedSeconds: 45))
         XCTAssertNil(scheduler.current)
-        XCTAssertNil(scheduler.update(elapsedSeconds: 41))
+        XCTAssertNil(scheduler.update(elapsedSeconds: 46))
     }
 
     func test_largeJump_emitsSingleLatestSegmentChange() {
@@ -54,7 +59,7 @@ final class WorkoutSegmentSchedulerTests: XCTestCase {
         XCTAssertEqual(scheduler.update(elapsedSeconds: 0)?.to.stableId, "work#1")
 
         // Simulate background jump forward: should emit a single change to the current segment (not multiple).
-        // Total timeline: w1(30) r1(10) w2(30) r2(10) w3(30) r3(10) w4(30)
+        // Total timeline: w1(30) r1(10) w2(30) r2(10) w3(30) r3(10) w4(30) r4(10)
         // elapsed 85 lands in w3 (30+10+30+10+5)
         let change = scheduler.update(elapsedSeconds: 85)
         XCTAssertEqual(change?.to.stableId, "work#3")
@@ -63,4 +68,3 @@ final class WorkoutSegmentSchedulerTests: XCTestCase {
         XCTAssertNil(scheduler.update(elapsedSeconds: 90))
     }
 }
-

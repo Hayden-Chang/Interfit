@@ -3,7 +3,7 @@ import XCTest
 
 final class WorkoutSessionEngineHapticsTests: XCTestCase {
     func test_engine_emits_haptic_patterns_for_key_events() throws {
-        // Plan: 2 sets, work=5, rest=3 => timeline: w1(0-5), r1(5-8), w2(8-13)
+        // Plan: 2 sets, work=5, rest=3 => timeline: w1(0-5), r1(5-8), w2(8-13), r2(13-16)
         let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 3, name: "HapticsPlan")
         let captured = Locked<[HapticPattern]>([])
         let sink = HapticsCueSink(enabled: true) { patterns in
@@ -18,7 +18,8 @@ final class WorkoutSessionEngineHapticsTests: XCTestCase {
         _ = engine.tick(at: Date(timeIntervalSince1970: 5))   // last3s(rest#1) -> light (fires at entry)
         _ = engine.tick(at: Date(timeIntervalSince1970: 8))   // rest->work -> success + rigid
         _ = engine.tick(at: Date(timeIntervalSince1970: 10))  // last3s(work#2) -> light
-        _ = engine.tick(at: Date(timeIntervalSince1970: 13))  // completed -> success
+        _ = engine.tick(at: Date(timeIntervalSince1970: 13))  // work->final rest -> warning + soft + light
+        _ = engine.tick(at: Date(timeIntervalSince1970: 16))  // completed -> success
 
         // We don't assert exact counts; ensure key patterns appear in reasonable order.
         func containsSubsequence(_ subseq: [HapticPattern]) -> Bool {
@@ -39,6 +40,9 @@ final class WorkoutSessionEngineHapticsTests: XCTestCase {
                 .impactRigid,         // segmentStart(work)
                 .notificationSuccess, // rest->work
                 .impactLight,         // last3s
+                .impactSoft,          // segmentStart(rest)
+                .notificationWarning, // work->rest
+                .impactLight,         // last3s(rest)
                 .notificationSuccess  // completed
             ]),
             "Haptic patterns order did not contain expected subsequence: \(captured.value)"
