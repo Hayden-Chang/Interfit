@@ -13,6 +13,17 @@ final class PlanTests: XCTestCase {
         XCTAssertEqual(plan.estimatedTotalSeconds, 120)
     }
 
+    func test_estimatedTotalSeconds_includesFinalRest() {
+        let plan = Plan(
+            setsCount: 3,
+            workSeconds: 10,
+            restSeconds: 5,
+            name: "3 x (10+5)"
+        )
+
+        XCTAssertEqual(plan.estimatedTotalSeconds, (3 * 10) + (3 * 5))
+    }
+
     func test_codable_roundTrip() throws {
         let plan = Plan(
             id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,

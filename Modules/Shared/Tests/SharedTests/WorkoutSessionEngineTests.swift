@@ -94,6 +94,22 @@ final class WorkoutSessionEngineTests: XCTestCase {
         XCTAssertEqual(engine.session.status, .completed)
     }
 
+    func test_doesNotCompleteUntilFinalRestEnds() throws {
+        let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 3, name: "Final Rest")
+        var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0))
+
+        let didCompleteAtFinalWorkBoundary = engine.tick(at: Date(timeIntervalSince1970: 13))
+        XCTAssertFalse(didCompleteAtFinalWorkBoundary)
+        XCTAssertEqual(engine.session.status, .running)
+        XCTAssertEqual(engine.progress(at: Date(timeIntervalSince1970: 13)).currentSegment?.kind, .rest)
+        XCTAssertEqual(engine.progress(at: Date(timeIntervalSince1970: 13)).currentSegment?.setIndex, 2)
+
+        let didCompleteAtFinalRestBoundary = engine.tick(at: Date(timeIntervalSince1970: 16))
+        XCTAssertTrue(didCompleteAtFinalRestBoundary)
+        XCTAssertEqual(engine.session.status, .completed)
+        XCTAssertEqual(engine.session.endedAt, Date(timeIntervalSince1970: 16))
+    }
+
     func test_recordInterruption_appendsSessionEvent() throws {
         let plan = Plan(setsCount: 1, workSeconds: 5, restSeconds: 0, name: "Test")
         var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0))

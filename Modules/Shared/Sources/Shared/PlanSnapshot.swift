@@ -42,8 +42,8 @@ public struct PlanSnapshot: Sendable, Codable, Equatable {
 
 public extension PlanSnapshot {
     var estimatedTotalSeconds: Int {
-        let rests = max(0, setsCount - 1)
-        return (setsCount * workSeconds) + (rests * restSeconds)
+        let sets = max(0, setsCount)
+        return (sets * workSeconds) + (sets * restSeconds)
     }
 }
 

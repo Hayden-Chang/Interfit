@@ -8,7 +8,7 @@ final class WorkoutSessionEngineCueCoalescingTests: XCTestCase {
     }
 
     func test_same_second_cues_are_coalesced_and_segmentStart_is_prioritized() throws {
-        // Plan: work=5, rest=3 -> boundaries at t=0 (start), t=5 (to rest), t=8 (to work), t=13 (complete)
+        // Plan: work=5, rest=3 -> boundaries at t=0 (start), t=5 (to rest), t=8 (to work), t=13 (to final rest), t=16 (complete)
         let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 3, name: "CoalescePlan")
         let base = Date(timeIntervalSince1970: 0)
         let collector = CollectingSink()
@@ -37,9 +37,14 @@ final class WorkoutSessionEngineCueCoalescingTests: XCTestCase {
         XCTAssertEqual(sec10.count, 1)
         XCTAssertEqual(sec10.first?.kind, .last3s)
 
-        _ = engine.tick(at: Date(timeIntervalSince1970: 13))  // completed
+        _ = engine.tick(at: Date(timeIntervalSince1970: 13))  // work -> final rest
         let sec13 = collector.events.filter { Int($0.occurredAt.timeIntervalSince1970) == 13 }
         XCTAssertEqual(sec13.count, 1)
-        XCTAssertEqual(sec13.first?.kind, .completed)
+        XCTAssertEqual(sec13.first?.kind, .segmentStart)
+
+        _ = engine.tick(at: Date(timeIntervalSince1970: 16))  // completed
+        let sec16 = collector.events.filter { Int($0.occurredAt.timeIntervalSince1970) == 16 }
+        XCTAssertEqual(sec16.count, 1)
+        XCTAssertEqual(sec16.first?.kind, .completed)
     }
 }

@@ -100,8 +100,8 @@ enum SegmentCueNotificationScheduler {
             }
             boundaryElapsed += structure.workSeconds
 
-            // Rest segment start (no rest after last set)
-            if setIndex < structure.setsCount, structure.restSeconds > 0 {
+            // Rest segment start
+            if structure.restSeconds > 0 {
                 if boundaryElapsed > currentElapsed {
                     let delay = TimeInterval(boundaryElapsed - currentElapsed)
                     let content = UNMutableNotificationContent()

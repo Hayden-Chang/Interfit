@@ -15,7 +15,7 @@ private final class CollectingCueSink: @unchecked Sendable, CueSink {
 
 final class WorkoutSessionEngineCueTests: XCTestCase {
     func test_emits_segmentStart_and_transitions_and_last3s_and_completed() throws {
-        // Plan: 2 sets, work=5, rest=3 => timeline: w1(0-5), r1(5-8), w2(8-13)
+        // Plan: 2 sets, work=5, rest=3 => timeline: w1(0-5), r1(5-8), w2(8-13), r2(13-16)
         let plan = Plan(setsCount: 2, workSeconds: 5, restSeconds: 3, name: "CuePlan")
         let cues = CollectingCueSink()
         var engine = try WorkoutSessionEngine(plan: plan, now: Date(timeIntervalSince1970: 0), cues: cues)
@@ -34,8 +34,10 @@ final class WorkoutSessionEngineCueTests: XCTestCase {
         _ = engine.tick(at: Date(timeIntervalSince1970: 8))
         // last3s for work#2 at t=10
         _ = engine.tick(at: Date(timeIntervalSince1970: 10))
-        // completion at t=13
+        // work->rest at t=13
         _ = engine.tick(at: Date(timeIntervalSince1970: 13))
+        // completion at t=16
+        _ = engine.tick(at: Date(timeIntervalSince1970: 16))
 
         // Collect kinds sequence for assertion
         let kinds = cues.events.map { $0.kind }
@@ -46,6 +48,8 @@ final class WorkoutSessionEngineCueTests: XCTestCase {
         // - last3s(rest#1)
         // - restToWork + segmentStart(work#2)
         // - last3s(work#2)
+        // - workToRest + segmentStart(rest#2)
+        // - last3s(rest#2)
         // - completed
         // We check subsequence order rather than exact counts to keep test resilient.
         func containsSubsequence(_ subseq: [CueEventKind]) -> Bool {
@@ -63,6 +67,8 @@ final class WorkoutSessionEngineCueTests: XCTestCase {
                 .segmentStart, .workToRest,
                 .last3s,
                 .segmentStart, .restToWork,
+                .last3s,
+                .segmentStart, .workToRest,
                 .last3s,
                 .completed
             ]),

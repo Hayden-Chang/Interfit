@@ -12,7 +12,7 @@ final class PlanVersionTests: XCTestCase {
             restSeconds: 5,
             name: "Test"
         )
-        XCTAssertEqual(version.estimatedTotalSeconds, (3 * 10) + (2 * 5))
+        XCTAssertEqual(version.estimatedTotalSeconds, (3 * 10) + (3 * 5))
     }
 
     func testCodableRoundTrip() throws {

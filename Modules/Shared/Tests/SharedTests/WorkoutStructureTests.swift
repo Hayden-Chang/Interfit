@@ -4,8 +4,8 @@ import XCTest
 final class WorkoutStructureTests: XCTestCase {
     func test_totalSeconds_formula_matchesPlanRule() {
         let structure = WorkoutStructure(setsCount: 3, workSeconds: 10, restSeconds: 5)
-        XCTAssertEqual(structure.totalSeconds, (3 * 10) + (2 * 5))
-        XCTAssertEqual(structure.segmentCount, 5)
+        XCTAssertEqual(structure.totalSeconds, (3 * 10) + (3 * 5))
+        XCTAssertEqual(structure.segmentCount, 6)
     }
 
     func test_restZero_hasOnlyWorkSegments() {
@@ -39,7 +39,7 @@ final class WorkoutStructureTests: XCTestCase {
         XCTAssertEqual(p120.currentSegmentRemainingSeconds, 0)
     }
 
-    func test_workRestAlternates_andNoRestAfterLastSet() {
+    func test_workRestAlternates_andIncludesRestAfterLastSet() {
         let structure = WorkoutStructure(setsCount: 3, workSeconds: 10, restSeconds: 5)
 
         // 0..9: work 1
@@ -74,7 +74,7 @@ final class WorkoutStructureTests: XCTestCase {
         XCTAssertEqual(p25.currentSegment?.setIndex, 2)
         XCTAssertEqual(p25.completedSets, 2)
 
-        // 30..39: work 3 (no rest after last set)
+        // 30..39: work 3
         let p30 = structure.progress(atElapsedSeconds: 30)
         XCTAssertEqual(p30.currentSegment?.kind, .work)
         XCTAssertEqual(p30.currentSegment?.setIndex, 3)
@@ -84,10 +84,20 @@ final class WorkoutStructureTests: XCTestCase {
         XCTAssertEqual(p39.currentSegment?.kind, .work)
         XCTAssertEqual(p39.currentSegmentRemainingSeconds, 1)
 
+        // 40..44: rest after set 3
         let p40 = structure.progress(atElapsedSeconds: 40)
-        XCTAssertTrue(p40.isCompleted)
+        XCTAssertEqual(p40.currentSegment?.kind, .rest)
+        XCTAssertEqual(p40.currentSegment?.setIndex, 3)
         XCTAssertEqual(p40.completedSets, 3)
-        XCTAssertNil(p40.currentSegment)
+        XCTAssertEqual(p40.currentSegmentRemainingSeconds, 5)
+
+        let p44 = structure.progress(atElapsedSeconds: 44)
+        XCTAssertEqual(p44.currentSegment?.kind, .rest)
+        XCTAssertEqual(p44.currentSegmentRemainingSeconds, 1)
+
+        let p45 = structure.progress(atElapsedSeconds: 45)
+        XCTAssertTrue(p45.isCompleted)
+        XCTAssertEqual(p45.completedSets, 3)
+        XCTAssertNil(p45.currentSegment)
     }
 }
-

@@ -26,5 +26,12 @@ final class PlanModeBCalculatorTests: XCTestCase {
             XCTAssertLessThanOrEqual(out.effectiveTotalSeconds, input.totalSeconds)
         }
     }
-}
 
+    func test_compute_usesRestForEverySetWhenRestPartPositive() {
+        let out = PlanModeBCalculator.compute(.init(totalSeconds: 16, setsCount: 2, workPart: 1, restPart: 1))
+
+        XCTAssertEqual(out?.workSeconds, 4)
+        XCTAssertEqual(out?.restSeconds, 4)
+        XCTAssertEqual(out?.effectiveTotalSeconds, 16)
+    }
+}

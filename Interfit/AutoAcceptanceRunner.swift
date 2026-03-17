@@ -385,7 +385,7 @@ private enum AutoAcceptance_3_5_1_1 {
                 outputRestSeconds = output.restSeconds
                 outputEffectiveTotalSeconds = output.effectiveTotalSeconds
 
-                let computedTotal = (input.setsCount * output.workSeconds) + (max(0, input.setsCount - 1) * output.restSeconds)
+                let computedTotal = (input.setsCount * output.workSeconds) + (input.setsCount * output.restSeconds)
                 if computedTotal != output.effectiveTotalSeconds {
                     localFailures.append("effectiveTotalSeconds mismatch: expected \(computedTotal), got \(output.effectiveTotalSeconds).")
                 }
