@@ -610,15 +610,28 @@ struct TrainingView: View {
         return progress?.currentSegment != nil
     }
 
-    private var circularCountdownProgress: CGFloat {
-        guard let progress, let segment = progress.currentSegment else { return 0 }
-        guard segment.durationSeconds > 0 else { return 0 }
-        let ratio = Double(progress.currentSegmentRemainingSeconds) / Double(segment.durationSeconds)
-        return CGFloat(min(max(ratio, 0), 1))
+    private func circularCountdownProgress(at date: Date) -> CGFloat {
+        guard let engine, let structure = timelineStructure else {
+            guard let progress, let segment = progress.currentSegment, segment.durationSeconds > 0 else { return 0 }
+            let ratio = Double(progress.currentSegmentRemainingSeconds) / Double(segment.durationSeconds)
+            return CGFloat(min(max(ratio, 0), 1))
+        }
+
+        let progress = engine.progress(at: date)
+        guard let segment = progress.currentSegment, segment.durationSeconds > 0 else { return progress.isCompleted ? 0 : 1 }
+
+        let segmentStart = engineSegmentStartElapsedSeconds(segment: segment, structure: structure)
+        let segmentElapsed = min(
+            max(0, engine.elapsedTimeInterval(at: date) - segmentStart),
+            Double(segment.durationSeconds)
+        )
+        let remainingRatio = 1 - (segmentElapsed / Double(segment.durationSeconds))
+        return CGFloat(min(max(remainingRatio, 0), 1))
     }
 
-    private var circularCountdownTint: Color {
-        guard let kind = progress?.currentSegment?.kind else { return .accentColor }
+    private func circularCountdownTint(at date: Date) -> Color {
+        let kind = engine?.progress(at: date).currentSegment?.kind ?? progress?.currentSegment?.kind
+        guard let kind else { return .accentColor }
         return Self.segmentTint(for: kind)
     }
 
@@ -633,33 +646,34 @@ struct TrainingView: View {
     }
 
     private var circularCountdown: some View {
-        ZStack {
-            Circle()
-                .stroke(Color.secondary.opacity(0.18), lineWidth: countdownStrokeWidth)
+        TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { context in
+            ZStack {
+                Circle()
+                    .stroke(Color.secondary.opacity(0.18), lineWidth: countdownStrokeWidth)
 
-            Circle()
-                .trim(from: 0, to: circularCountdownProgress)
-                .stroke(
-                    circularCountdownTint,
-                    style: StrokeStyle(lineWidth: countdownStrokeWidth, lineCap: .round)
-                )
-                .rotationEffect(.degrees(-90))
-                .animation(.linear(duration: 1.0), value: progress?.currentSegmentRemainingSeconds ?? 0)
+                Circle()
+                    .trim(from: 0, to: circularCountdownProgress(at: context.date))
+                    .stroke(
+                        circularCountdownTint(at: context.date),
+                        style: StrokeStyle(lineWidth: countdownStrokeWidth, lineCap: .round)
+                    )
+                    .rotationEffect(.degrees(-90))
 
-            Button {
-                togglePauseResume()
-            } label: {
-                VStack(spacing: 6) {
-                    Image(systemName: pauseResumeSystemImage)
-                        .font(.system(size: countdownIconFontSize, weight: .bold))
-                    Text(pauseResumeTitle)
-                        .font(.headline)
+                Button {
+                    togglePauseResume()
+                } label: {
+                    VStack(spacing: 6) {
+                        Image(systemName: pauseResumeSystemImage)
+                            .font(.system(size: countdownIconFontSize, weight: .bold))
+                        Text(pauseResumeTitle)
+                            .font(.headline)
+                    }
+                    .frame(width: countdownButtonSize, height: countdownButtonSize)
+                    .contentShape(Circle())
                 }
-                .frame(width: countdownButtonSize, height: countdownButtonSize)
-                .contentShape(Circle())
+                .buttonStyle(.plain)
+                .accessibilityLabel(pauseResumeTitle)
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel(pauseResumeTitle)
         }
         .frame(width: countdownCircleSize, height: countdownCircleSize)
     }
