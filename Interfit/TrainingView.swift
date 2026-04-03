@@ -40,6 +40,7 @@ struct TrainingView: View {
     @State private var siriSecondaryAudioSilenceBeganAt: Date?
     @State private var ignoreRecoverySnapshot: Bool = false
     @State private var degradeBanner: DegradeReason?
+    @State private var reportedPlaybackDegradeReasons: Set<DegradeReason> = []
 
     private let persistenceStore = CoreDataPersistenceStore()
     private var sessionRepository: any SessionRepository { persistenceStore }
@@ -286,6 +287,7 @@ struct TrainingView: View {
     private func startIfNeeded() {
         guard engine == nil else { return }
         degradeBanner = nil
+        reportedPlaybackDegradeReasons = []
 
         let sinks: [CueSink] = [
             // Avoid persistent ducking so Apple Music volume stays consistent with the Music app.
@@ -335,20 +337,25 @@ struct TrainingView: View {
                 simulatePlaybackLoadFailure ? .timeout : MusicPlaybackClient.classify(error)
             },
             onFallback: { kind, outcome in
-            Task { @MainActor in
-                guard var eng = engine else { return }
-                eng.recordDegrade(
-                    outcome.degradeReason,
-                    attributes: [
-                        "source": "playback",
-                        "kind": kind.rawValue,
-                        "action": String(describing: outcome.action),
-                    ]
-                )
-                engine = eng
-                degradeBanner = outcome.degradeReason
+                Task { @MainActor in
+                    var reportedReasons = reportedPlaybackDegradeReasons
+                    let firstReportForReason = reportedReasons.insert(outcome.degradeReason).inserted
+                    guard firstReportForReason else { return }
+                    reportedPlaybackDegradeReasons = reportedReasons
+                    guard var eng = engine else { return }
+                    eng.recordDegrade(
+                        outcome.degradeReason,
+                        attributes: [
+                            "source": "playback",
+                            "kind": kind.rawValue,
+                            "action": String(describing: outcome.action),
+                        ]
+                    )
+                    engine = eng
+                    degradeBanner = outcome.degradeReason
+                }
             }
-        })
+        )
 
         if !ignoreRecoverySnapshot, let recoverableSnapshot {
             engine = try? WorkoutSessionEngine(recovering: recoverableSnapshot, now: Date(), cues: cues, playback: playback)
