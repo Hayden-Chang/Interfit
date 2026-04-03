@@ -27,6 +27,10 @@ final class MusicPlaybackClient: ObservableObject {
     private var isPlaybackOwnedByInterfit: Bool = false
     private var savedTrackProgress: [String: TimeInterval] = [:]
     private var isCatalogAccessDisabled = false
+    private var resolvedSongsByExternalId: [String: Song] = [:]
+    private var resolvedAlbumsByExternalId: [String: Album] = [:]
+    private var resolvedPlaylistsByExternalId: [String: Playlist] = [:]
+    private var prewarmedSelectionExternalIds: Set<String> = []
     @Published private(set) var nowPlayingDisplay: NowPlayingDisplay?
 
     private init() {}
@@ -49,6 +53,10 @@ final class MusicPlaybackClient: ObservableObject {
 
     static func stop() async {
         await shared.stop()
+    }
+
+    static func prewarm(selections: [MusicSelection]) async {
+        await shared.prewarm(selections: selections)
     }
 
     static func pauseIfOwnedByInterfitForAppTermination() {
@@ -169,6 +177,31 @@ final class MusicPlaybackClient: ObservableObject {
         pausePlayerAndSnapshotTrackProgress(player)
     }
 
+    func prewarm(selections: [MusicSelection]) async {
+        let candidates = selections.filter { selection in
+            selection.source == .appleMusic
+                && !selection.externalId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+
+        guard !candidates.isEmpty else { return }
+        _ = SystemMusicPlayer.shared
+        do {
+            try await ensureAuthorizedAndSubscribed()
+        } catch {
+            return
+        }
+
+        for selection in candidates {
+            guard !prewarmedSelectionExternalIds.contains(selection.externalId) else { continue }
+            do {
+                try await resolveSelection(selection)
+                prewarmedSelectionExternalIds.insert(selection.externalId)
+            } catch {
+                continue
+            }
+        }
+    }
+
     private func ensureAuthorizedAndSubscribed() async throws {
         switch MusicAuthorization.currentStatus {
         case .authorized:
@@ -189,16 +222,27 @@ final class MusicPlaybackClient: ObservableObject {
         // produce repeated -8200/40402 logs even for local-library playback paths.
     }
 
-    private func queueTrack(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
+    private func resolveSelection(_ selection: MusicSelection) async throws {
+        switch selection.type {
+        case .track:
+            _ = try await resolveTrack(selection)
+        case .album:
+            _ = try await resolveAlbum(selection)
+        case .playlist:
+            _ = try await resolvePlaylist(selection)
+        }
+    }
+
+    private func resolveTrack(_ selection: MusicSelection) async throws -> Song {
+        if let cached = resolvedSongsByExternalId[selection.externalId] {
+            return cached
+        }
+
         let id = MusicItemID(selection.externalId)
         var song: Song?
 
-        if let librarySong = try? await fetchLibrarySong(id: id) {
-            song = librarySong
-        }
-
-        // Only try catalog if source is appleMusic
-        if song == nil && selection.source == .appleMusic {
+        switch selection.source {
+        case .appleMusic:
             if isCatalogAccessDisabled {
                 throw Error.developerTokenConfiguration
             }
@@ -213,11 +257,104 @@ final class MusicPlaybackClient: ObservableObject {
                 }
                 throw error
             }
+        case .localLibrary:
+            if let librarySong = try? await fetchLibrarySong(id: id) {
+                song = librarySong
+            }
+        case .none:
+            break
         }
 
         guard let song else {
             throw Error.itemNotFound
         }
+
+        resolvedSongsByExternalId[selection.externalId] = song
+        return song
+    }
+
+    private func resolveAlbum(_ selection: MusicSelection) async throws -> Album {
+        if let cached = resolvedAlbumsByExternalId[selection.externalId] {
+            return cached
+        }
+
+        let id = MusicItemID(selection.externalId)
+        var album: Album?
+
+        switch selection.source {
+        case .appleMusic:
+            if isCatalogAccessDisabled {
+                throw Error.developerTokenConfiguration
+            }
+            do {
+                let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
+                let response = try await request.response()
+                album = response.items.first
+            } catch {
+                if isDeveloperTokenConfigurationError(error) {
+                    isCatalogAccessDisabled = true
+                    throw Error.developerTokenConfiguration
+                }
+                throw error
+            }
+        case .localLibrary:
+            if let libraryAlbum = try? await fetchLibraryAlbum(id: id) {
+                album = libraryAlbum
+            }
+        case .none:
+            break
+        }
+
+        guard let album else {
+            throw Error.itemNotFound
+        }
+
+        resolvedAlbumsByExternalId[selection.externalId] = album
+        return album
+    }
+
+    private func resolvePlaylist(_ selection: MusicSelection) async throws -> Playlist {
+        if let cached = resolvedPlaylistsByExternalId[selection.externalId] {
+            return cached
+        }
+
+        let id = MusicItemID(selection.externalId)
+        var playlist: Playlist?
+
+        switch selection.source {
+        case .appleMusic:
+            if isCatalogAccessDisabled {
+                throw Error.developerTokenConfiguration
+            }
+            do {
+                let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
+                let response = try await request.response()
+                playlist = response.items.first
+            } catch {
+                if isDeveloperTokenConfigurationError(error) {
+                    isCatalogAccessDisabled = true
+                    throw Error.developerTokenConfiguration
+                }
+                throw error
+            }
+        case .localLibrary:
+            if let libraryPlaylist = try? await fetchLibraryPlaylist(id: id) {
+                playlist = libraryPlaylist
+            }
+        case .none:
+            break
+        }
+
+        guard let playlist else {
+            throw Error.itemNotFound
+        }
+
+        resolvedPlaylistsByExternalId[selection.externalId] = playlist
+        return playlist
+    }
+
+    private func queueTrack(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
+        let song = try await resolveTrack(selection)
 
         player.queue = [song]
         player.state.repeatMode = .one
@@ -234,34 +371,7 @@ final class MusicPlaybackClient: ObservableObject {
     }
 
     private func queueAlbum(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
-        let id = MusicItemID(selection.externalId)
-        var album: Album?
-
-        if let libraryAlbum = try? await fetchLibraryAlbum(id: id) {
-            album = libraryAlbum
-        }
-
-        // Only try catalog if source is appleMusic
-        if album == nil && selection.source == .appleMusic {
-            if isCatalogAccessDisabled {
-                throw Error.developerTokenConfiguration
-            }
-            do {
-                let request = MusicCatalogResourceRequest<Album>(matching: \.id, equalTo: id)
-                let response = try await request.response()
-                album = response.items.first
-            } catch {
-                if isDeveloperTokenConfigurationError(error) {
-                    isCatalogAccessDisabled = true
-                    throw Error.developerTokenConfiguration
-                }
-                throw error
-            }
-        }
-
-        guard let album else {
-            throw Error.itemNotFound
-        }
+        let album = try await resolveAlbum(selection)
 
         player.queue = [album]
         player.state.repeatMode = .all
@@ -281,34 +391,7 @@ final class MusicPlaybackClient: ObservableObject {
     }
 
     private func queuePlaylist(_ selection: MusicSelection, player: SystemMusicPlayer) async throws -> NowPlayingDisplay {
-        let id = MusicItemID(selection.externalId)
-        var playlist: Playlist?
-
-        if let libraryPlaylist = try? await fetchLibraryPlaylist(id: id) {
-            playlist = libraryPlaylist
-        }
-
-        // Only try catalog if source is appleMusic
-        if playlist == nil && selection.source == .appleMusic {
-            if isCatalogAccessDisabled {
-                throw Error.developerTokenConfiguration
-            }
-            do {
-                let request = MusicCatalogResourceRequest<Playlist>(matching: \.id, equalTo: id)
-                let response = try await request.response()
-                playlist = response.items.first
-            } catch {
-                if isDeveloperTokenConfigurationError(error) {
-                    isCatalogAccessDisabled = true
-                    throw Error.developerTokenConfiguration
-                }
-                throw error
-            }
-        }
-
-        guard let playlist else {
-            throw Error.itemNotFound
-        }
+        let playlist = try await resolvePlaylist(selection)
 
         player.queue = [playlist]
         player.state.repeatMode = .all
@@ -402,6 +485,8 @@ final class MusicPlaybackClient: ObservableObject {
     static func resume() async {}
 
     static func stop() async {}
+
+    static func prewarm(selections _: [MusicSelection]) async {}
 
     static func pauseIfOwnedByInterfitForAppTermination() {}
 

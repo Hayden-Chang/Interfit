@@ -298,6 +298,9 @@ struct TrainingView: View {
         let cues = CueCoalescingSink(MultiCueSink(sinks))
 
         let strategy = recoverableSnapshot?.session.planSnapshot?.musicStrategy ?? plan?.musicStrategy
+        Task {
+            await MusicPlaybackClient.prewarm(selections: MusicWarmupPlanner.initialAppleMusicSelections(strategy: strategy))
+        }
         let simulatePlaybackLoadFailure = ProcessInfo.processInfo.arguments.contains("-simulatePlaybackLoadFailure")
         let debugSelection = MusicSelection(
             source: .appleMusic,
