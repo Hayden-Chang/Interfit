@@ -149,16 +149,13 @@ struct TrainingView: View {
         }
         .onReceive(tickTimer) { now in tickIfNeeded(now: now) }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-            scheduleBackgroundSegmentCuesIfNeeded()
-            refreshBackgroundAudioKeepAlive()
+            refreshBackgroundCueNotifications()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
-            scheduleBackgroundSegmentCuesIfNeeded()
-            refreshBackgroundAudioKeepAlive()
+            refreshBackgroundCueNotifications()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            SegmentCueNotificationScheduler.cancelAll()
-            refreshBackgroundAudioKeepAlive()
+            refreshBackgroundCueNotifications()
         }
         .onReceive(NotificationCenter.default.publisher(for: NowPlayingManager.remotePlayNotification)) { _ in
             handleRemotePlay()
@@ -376,7 +373,7 @@ struct TrainingView: View {
         }
         simulateHeadphoneDisconnectIfRequested()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
-        refreshBackgroundAudioKeepAlive()
+        refreshBackgroundCueNotifications()
     }
 
     private func tickIfNeeded(now: Date) {
@@ -720,7 +717,7 @@ struct TrainingView: View {
         self.now = now
         nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
         persistRecoverableSnapshotIfNeeded(eng, now: now, force: true)
-        refreshBackgroundAudioKeepAlive()
+        refreshBackgroundCueNotifications(referenceDate: now)
     }
 
     private func endWorkout(confirmed: Bool) {
@@ -730,7 +727,7 @@ struct TrainingView: View {
         engine = eng
         self.now = now
         nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
-        refreshBackgroundAudioKeepAlive()
+        refreshBackgroundCueNotifications(referenceDate: now)
 
         switch result {
         case .requiresConfirmation:
@@ -827,7 +824,6 @@ struct TrainingView: View {
         stopObservingAudioSession()
         nowPlaying.stop()
         SegmentCueNotificationScheduler.cancelAll()
-        BackgroundAudioKeepAlive.shared.stop()
         Task { @MainActor in
             await MusicPlaybackClient.stop()
             IdleTimerClient.setDisabled(false)
@@ -862,7 +858,7 @@ struct TrainingView: View {
             self.now = now
             nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
             persistRecoverableSnapshotIfNeeded(eng, now: now, force: true)
-            refreshBackgroundAudioKeepAlive()
+            refreshBackgroundCueNotifications(referenceDate: now)
         }
     }
 
@@ -875,7 +871,7 @@ struct TrainingView: View {
             self.now = now
             nowPlaying.update(planName: plan?.name, progress: eng.progress(at: now), sessionStatus: eng.session.status)
             persistRecoverableSnapshotIfNeeded(eng, now: now, force: true)
-            refreshBackgroundAudioKeepAlive()
+            refreshBackgroundCueNotifications(referenceDate: now)
         }
     }
 
@@ -891,25 +887,25 @@ struct TrainingView: View {
         }
     }
 
-    private func scheduleBackgroundSegmentCuesIfNeeded(referenceDate: Date = Date()) {
-        guard let eng = engine, eng.session.status == .running else { return }
+    private func refreshBackgroundCueNotifications(referenceDate: Date = Date()) {
+        let action = BackgroundCueNotificationRefreshPolicy.decide(
+            sessionStatus: engine?.session.status,
+            appIsActive: UIApplication.shared.applicationState == .active
+        )
+
+        switch action {
+        case .noOp:
+            return
+        case .cancel:
+            SegmentCueNotificationScheduler.cancelAll()
+            return
+        case .schedule:
+            break
+        }
+
+        guard let eng = engine else { return }
         let elapsed = eng.progress(at: referenceDate).elapsedSeconds
         SegmentCueNotificationScheduler.schedule(structure: eng.structure, currentElapsed: elapsed)
-    }
-
-    private func refreshBackgroundAudioKeepAlive() {
-        guard let eng = engine else {
-            BackgroundAudioKeepAlive.shared.stop()
-            return
-        }
-
-        let appState = UIApplication.shared.applicationState
-        let shouldKeepAlive = (eng.session.status == .running) && (appState != .active)
-        if shouldKeepAlive {
-            BackgroundAudioKeepAlive.shared.start()
-        } else {
-            BackgroundAudioKeepAlive.shared.stop()
-        }
     }
 
     private func simulateHeadphoneDisconnectIfRequested() {

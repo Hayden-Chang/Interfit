@@ -28,7 +28,6 @@ enum AppTerminationCoordinator {
     static func handleWillTerminate() {
         AppTerminationMarker.markTerminationRequested()
         SegmentCueNotificationScheduler.cancelAll()
-        BackgroundAudioKeepAlive.shared.stop()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
         MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
         Task {
@@ -40,7 +39,6 @@ enum AppTerminationCoordinator {
     static func handleRelaunchAfterTermination() async {
         guard AppTerminationMarker.consumeTerminationRequested() else { return }
         SegmentCueNotificationScheduler.cancelAll()
-        BackgroundAudioKeepAlive.shared.stop()
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
         MusicPlaybackClient.pauseIfOwnedByInterfitForAppTermination()
         let store = CoreDataPersistenceStore()
