@@ -20,6 +20,10 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>music</string>
+	</array>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>InterBeat can play Apple Music during training.</string>
 	<key>NSLocalNetworkUsageDescription</key>

@@ -19,7 +19,7 @@ struct MusicPickerView: View {
     @State private var pendingSelection: MusicSelection?
     @State private var activePreviewSelection: MusicSelection?
     @State private var isPreviewPlaying: Bool = false
-    @State private var previewErrorMessage: String?
+    @State private var previewErrorAlert: PreviewErrorAlert?
 
     #if canImport(MusicKit)
     @State private var authStatus: MusicAuthorization.Status = MusicAuthorization.currentStatus
@@ -47,7 +47,13 @@ struct MusicPickerView: View {
             }
         }
         .navigationTitle("Music Picker")
-        .onAppear { refreshAuthorizationStatus() }
+        .onAppear {
+            refreshAuthorizationStatus()
+            #if canImport(MusicKit)
+            MusicPlaybackClient.refreshMusicAppAvailability()
+            Task { await MusicPlaybackClient.refreshSubscriptionSnapshot() }
+            #endif
+        }
         .onChange(of: query) { _ in
             scheduleSearch()
         }
@@ -67,6 +73,13 @@ struct MusicPickerView: View {
                     commitSelectionAndDismiss(pendingSelection)
                 }
             }
+        }
+        .alert(item: $previewErrorAlert) { alert in
+            Alert(
+                title: Text(alert.title),
+                message: Text(alert.message),
+                dismissButton: .default(Text("OK"))
+            )
         }
     }
 
@@ -131,12 +144,6 @@ struct MusicPickerView: View {
         Group {
             Section("Search") {
                 TextField("搜索歌曲或歌手", text: $query)
-
-                if let previewErrorMessage {
-                    Text(previewErrorMessage)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
 
                 #if canImport(MusicKit)
                 if isSearching {
@@ -229,17 +236,28 @@ struct MusicPickerView: View {
     private func previewSelection(_ selection: MusicSelection) {
         Task {
             do {
+                MusicPlaybackClient.refreshMusicAppAvailability()
+                await MusicPlaybackClient.refreshSubscriptionSnapshot()
                 try await MusicPlaybackClient.apply(selection: selection)
                 await MainActor.run {
                     activePreviewSelection = selection
                     isPreviewPlaying = true
-                    previewErrorMessage = nil
+                    previewErrorAlert = nil
                 }
             } catch {
                 await MainActor.run {
                     activePreviewSelection = nil
                     isPreviewPlaying = false
-                    previewErrorMessage = "Couldn’t play this right now. Try another item or check Apple Music availability."
+                    let presentation = MusicPlaybackClient.previewErrorPresentation(for: error)
+                    MusicPlaybackDiagnosticsStore.shared.recordFailure(
+                        source: "musicPicker.preview",
+                        selection: selection,
+                        error: error
+                    )
+                    previewErrorAlert = .init(
+                        title: presentation.displayName,
+                        message: presentation.message
+                    )
                 }
             }
         }
@@ -251,7 +269,7 @@ struct MusicPickerView: View {
             await MainActor.run {
                 activePreviewSelection = nil
                 isPreviewPlaying = false
-                previewErrorMessage = nil
+                previewErrorAlert = nil
             }
         }
     }
@@ -274,6 +292,8 @@ struct MusicPickerView: View {
         await MainActor.run { isRequestingAuth = true }
         defer { Task { @MainActor in isRequestingAuth = false } }
         _ = await MusicAuthorization.request()
+        MusicPlaybackClient.refreshMusicAppAvailability()
+        await MusicPlaybackClient.refreshSubscriptionSnapshot()
         await MainActor.run { refreshAuthorizationStatus() }
         #endif
     }
@@ -309,7 +329,7 @@ struct MusicPickerView: View {
                 await MainActor.run {
                     searchResults = []
                     isSearching = false
-                    searchError = "Couldn’t search Apple Music right now."
+                    searchError = MusicPlaybackClient.previewErrorPresentation(for: error).message
                 }
             }
         }
@@ -322,6 +342,12 @@ struct MusicPickerView: View {
         UIApplication.shared.open(url)
         #endif
     }
+}
+
+private struct PreviewErrorAlert: Identifiable {
+    let id = UUID()
+    let title: String
+    let message: String
 }
 
 private enum MusicRecentsStore {

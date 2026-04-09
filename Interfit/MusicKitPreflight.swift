@@ -40,15 +40,17 @@ enum MusicKitPreflight {
         #else
         // On iOS we can’t reliably read entitlements via `SecTaskCopyValueForEntitlement`.
         // For dev/ad-hoc builds, we can parse the embedded provisioning profile as a best-effort signal.
-        if let entitlements = embeddedMobileProvisionEntitlements(),
-           let raw = entitlements["com.apple.developer.music-user-token"] {
-            if let bool = raw as? Bool { return bool ? .present : .missing }
-            if let number = raw as? NSNumber { return number.boolValue ? .present : .missing }
-            if let string = raw as? String {
-                let normalized = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).lowercased()
-                return (normalized == "true" || normalized == "1") ? .present : .missing
+        if let entitlements = embeddedMobileProvisionEntitlements() {
+            if let raw = entitlements["com.apple.developer.music-user-token"] {
+                if let bool = raw as? Bool { return bool ? .present : .missing }
+                if let number = raw as? NSNumber { return number.boolValue ? .present : .missing }
+                if let string = raw as? String {
+                    let normalized = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).lowercased()
+                    return (normalized == "true" || normalized == "1") ? .present : .missing
+                }
+                return .unknown
             }
-            return .unknown
+            return .missing
         }
 
         return .unknown

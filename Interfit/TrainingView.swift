@@ -39,8 +39,8 @@ struct TrainingView: View {
     @State private var didSimulateHeadphoneDisconnect: Bool = false
     @State private var siriSecondaryAudioSilenceBeganAt: Date?
     @State private var ignoreRecoverySnapshot: Bool = false
-    @State private var degradeBanner: DegradeReason?
-    @State private var reportedPlaybackDegradeReasons: Set<DegradeReason> = []
+    @State private var playbackDegradeAlert: PlaybackDegradeAlert?
+    @State private var reportedPlaybackAlertKeys: Set<String> = []
 
     private let persistenceStore = CoreDataPersistenceStore()
     private var sessionRepository: any SessionRepository { persistenceStore }
@@ -204,23 +204,13 @@ struct TrainingView: View {
             Text("This will stop the workout and show a summary.")
         }
         .alert(
-            "Music unavailable",
-            isPresented: Binding(
-                get: { degradeBanner != nil },
-                set: { isPresented in
-                    if !isPresented {
-                        degradeBanner = nil
-                    }
-                }
+            item: $playbackDegradeAlert
+        ) { alert in
+            Alert(
+                title: Text(alert.title),
+                message: Text(alert.message),
+                dismissButton: .default(Text("OK"))
             )
-        ) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            if let degradeBanner {
-                Text("\(degradeBanner.message)\n\nTry: subscribe/authorize Apple Music, pick another song, or check network.")
-            } else {
-                Text("Training will continue with timer and cues only.")
-            }
         }
         .onChange(of: didConfirmEndFromAlert) { confirmed in
             guard confirmed else { return }
@@ -286,8 +276,10 @@ struct TrainingView: View {
 
     private func startIfNeeded() {
         guard engine == nil else { return }
-        degradeBanner = nil
-        reportedPlaybackDegradeReasons = []
+        playbackDegradeAlert = nil
+        reportedPlaybackAlertKeys = []
+        MusicPlaybackClient.refreshMusicAppAvailability()
+        Task { await MusicPlaybackClient.refreshSubscriptionSnapshot() }
 
         let sinks: [CueSink] = [
             // Avoid persistent ducking so Apple Music volume stays consistent with the Music app.
@@ -322,7 +314,18 @@ struct TrainingView: View {
                     struct SimulatedPlaybackLoadError: Error {}
                     throw SimulatedPlaybackLoadError()
                 }
-                try await MusicPlaybackClient.apply(selection: selection)
+                do {
+                    try await MusicPlaybackClient.apply(selection: selection)
+                } catch {
+                    await MainActor.run {
+                        MusicPlaybackDiagnosticsStore.shared.recordFailure(
+                            source: "training.segmentSwitch",
+                            selection: selection,
+                            error: error
+                        )
+                    }
+                    throw error
+                }
             },
             selectionDirectiveApplier: { directive in
                 try await MusicPlaybackClient.applyDirective(directive)
@@ -339,12 +342,11 @@ struct TrainingView: View {
             failureClassifier: { error in
                 simulatePlaybackLoadFailure ? .timeout : MusicPlaybackClient.classify(error)
             },
-            onFallback: { kind, outcome in
+            onFallback: { kind, outcome, error in
                 Task { @MainActor in
-                    var reportedReasons = reportedPlaybackDegradeReasons
-                    let firstReportForReason = reportedReasons.insert(outcome.degradeReason).inserted
-                    guard firstReportForReason else { return }
-                    reportedPlaybackDegradeReasons = reportedReasons
+                    let alert = makePlaybackDegradeAlert(kind: kind, outcome: outcome, error: error)
+                    let firstReportForKey = reportedPlaybackAlertKeys.insert(alert.dedupKey).inserted
+                    guard firstReportForKey else { return }
                     guard var eng = engine else { return }
                     eng.recordDegrade(
                         outcome.degradeReason,
@@ -355,7 +357,7 @@ struct TrainingView: View {
                         ]
                     )
                     engine = eng
-                    degradeBanner = outcome.degradeReason
+                    playbackDegradeAlert = alert
                 }
             }
         )
@@ -1019,6 +1021,27 @@ struct TrainingView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 
+    private func makePlaybackDegradeAlert(
+        kind: PlaybackFailureKind,
+        outcome: PlaybackFailureOutcome,
+        error: Error?
+    ) -> PlaybackDegradeAlert {
+        if let error {
+            let presentation = MusicPlaybackClient.previewErrorPresentation(for: error)
+            return .init(
+                dedupKey: "presentation:\(presentation.rawValue)",
+                title: presentation.displayName,
+                message: "\(presentation.message)\n\nTraining will continue with timer and cues only."
+            )
+        }
+
+        return .init(
+            dedupKey: "degrade:\(kind.rawValue):\(outcome.degradeReason.rawValue)",
+            title: outcome.degradeReason.title,
+            message: "\(outcome.degradeReason.message)\n\nTraining will continue with timer and cues only."
+        )
+    }
+
     private static func segmentTint(for kind: WorkoutSegmentKind) -> Color {
         switch kind {
         case .work:
@@ -1085,6 +1108,13 @@ struct TrainingView: View {
             }
         }
     }
+}
+
+private struct PlaybackDegradeAlert: Identifiable {
+    let id = UUID()
+    let dedupKey: String
+    let title: String
+    let message: String
 }
 
 #Preview {
