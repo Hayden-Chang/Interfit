@@ -4,6 +4,9 @@ import Shared
 
 #if canImport(MusicKit)
 import MusicKit
+#if os(iOS)
+import UIKit
+#endif
 
 @MainActor
 final class MusicPlaybackClient: ObservableObject {
@@ -18,9 +21,19 @@ final class MusicPlaybackClient: ObservableObject {
         case unsupportedSource
         case authorizationDenied
         case authorizationRestricted
+        case appleMusicAppUnavailable
         case notSubscribed
         case itemNotFound
         case developerTokenConfiguration
+    }
+
+    private struct SubscriptionSnapshot: Codable, Sendable {
+        let canPlayCatalogContent: Bool?
+        let canBecomeSubscriber: Bool?
+        let hasCloudLibraryEnabled: Bool?
+        let errorKind: String?
+        let errorDescription: String?
+        let updatedAt: Date
     }
 
     private var lastSelection: MusicSelection?
@@ -32,6 +45,8 @@ final class MusicPlaybackClient: ObservableObject {
     private var resolvedPlaylistsByExternalId: [String: Playlist] = [:]
     private var prewarmedSelectionExternalIds: Set<String> = []
     @Published private(set) var nowPlayingDisplay: NowPlayingDisplay?
+
+    nonisolated private static let subscriptionSnapshotKey = "interfit.music.subscriptionSnapshot.v1"
 
     private init() {}
 
@@ -63,6 +78,10 @@ final class MusicPlaybackClient: ObservableObject {
         shared.pauseIfOwnedByInterfitForAppTermination()
     }
 
+    nonisolated static func previewErrorMessage(for error: Swift.Error) -> String {
+        previewErrorPresentation(for: error).message
+    }
+
     nonisolated static func classify(_ error: Swift.Error) -> PlaybackFailureKind {
         if let e = error as? Error {
             switch e {
@@ -70,33 +89,234 @@ final class MusicPlaybackClient: ObservableObject {
                 return .permission
             case .authorizationRestricted:
                 return .restriction
-            case .notSubscribed, .itemNotFound:
+            case .appleMusicAppUnavailable, .notSubscribed, .itemNotFound:
                 return .resource
             case .unsupportedSource:
                 return .resource
             }
         }
 
-        let lower = String(describing: error).lowercased()
-        if lower.contains("client not found") || lower.contains("40402") {
+        switch previewErrorPresentation(for: error) {
+        case .unauthorized, .configurationError:
             return .permission
-        }
-        if lower.contains("developertokenrequestfailed") || lower.contains("token service") {
-            return .permission
-        }
-        if lower.contains("not authorized") || lower.contains("permission") || lower.contains("denied") {
-            return .permission
-        }
-        if lower.contains("restricted") {
-            return .restriction
-        }
-        if lower.contains("offline") || lower.contains("network") || lower.contains("timeout") {
-            return .offline
-        }
-        if lower.contains("unavailable") || lower.contains("not found") || lower.contains("subscription") {
+        case .musicAppUnavailable, .subscriptionUnavailable, .itemUnavailable:
             return .resource
+        case .networkUnavailable:
+            return .offline
+        case .unknown:
+            return .unknown
         }
-        return .unknown
+    }
+
+    nonisolated static func previewErrorPresentation(for error: Swift.Error) -> MusicPlaybackErrorPresentation {
+        if let e = error as? Error {
+            let presentation: MusicPlaybackErrorPresentation
+            switch e {
+            case .authorizationDenied, .authorizationRestricted:
+                presentation = .unauthorized
+            case .appleMusicAppUnavailable:
+                presentation = .musicAppUnavailable
+            case .notSubscribed:
+                presentation = .subscriptionUnavailable
+            case .developerTokenConfiguration:
+                presentation = .configurationError
+            case .itemNotFound, .unsupportedSource:
+                presentation = .itemUnavailable
+            }
+
+            return MusicPlaybackErrorPresentation.adjustForEnvironment(
+                presentation,
+                musicAppAvailability: musicAppAvailabilityDescription(),
+                subscriptionErrorKind: cachedSubscriptionSnapshot()?.errorKind
+            )
+        }
+
+        return inferredPresentation(for: error)
+    }
+
+    nonisolated static func entitlementStatusDescription() -> String {
+        switch MusicKitPreflight.musicUserTokenEntitlementStatus() {
+        case .present:
+            return "present"
+        case .missing:
+            return "missing"
+        case .unknown:
+            return "unknown"
+        }
+    }
+
+    nonisolated static func authorizationStatusDescription() -> String {
+        #if canImport(MusicKit)
+        return String(describing: MusicAuthorization.currentStatus)
+        #else
+        return "unavailable"
+        #endif
+    }
+
+    nonisolated static func subscriptionAvailabilityDescription() -> String {
+        guard let available = subscriptionAvailability() else { return "unknown" }
+        return available ? "true" : "false"
+    }
+
+    nonisolated static func musicAppAvailabilityDescription() -> String {
+        cachedMusicAppAvailability() ?? "unknown"
+    }
+
+    nonisolated static func subscriptionDiagnosticDescription() -> String? {
+        guard let snapshot = cachedSubscriptionSnapshot() else { return nil }
+
+        var components: [String] = []
+        if let canPlayCatalogContent = snapshot.canPlayCatalogContent {
+            components.append("canPlayCatalogContent=\(canPlayCatalogContent)")
+        }
+        if let canBecomeSubscriber = snapshot.canBecomeSubscriber {
+            components.append("canBecomeSubscriber=\(canBecomeSubscriber)")
+        }
+        if let hasCloudLibraryEnabled = snapshot.hasCloudLibraryEnabled {
+            components.append("hasCloudLibraryEnabled=\(hasCloudLibraryEnabled)")
+        }
+        if let errorKind = snapshot.errorKind, !errorKind.isEmpty {
+            components.append("errorKind=\(errorKind)")
+        }
+        if let errorDescription = snapshot.errorDescription, !errorDescription.isEmpty {
+            components.append("error=\(errorDescription)")
+        }
+
+        return components.isEmpty ? nil : components.joined(separator: ", ")
+    }
+
+    nonisolated static func refreshSubscriptionSnapshot() async {
+        _ = try? await refreshSubscriptionSnapshotValue()
+    }
+
+    static func refreshMusicAppAvailability() {
+        #if os(iOS)
+        guard let url = URL(string: "music://") else { return }
+        persistMusicAppAvailability(UIApplication.shared.canOpenURL(url))
+        #endif
+    }
+
+    nonisolated private static func subscriptionAvailability() -> Bool? {
+        if let snapshot = cachedSubscriptionSnapshot() {
+            if let canPlayCatalogContent = snapshot.canPlayCatalogContent {
+                return canPlayCatalogContent
+            }
+            if snapshot.errorKind == "appUnavailable" {
+                return nil
+            }
+            if snapshot.errorKind == "account" {
+                return false
+            }
+            if snapshot.errorKind == "configuration" {
+                return nil
+            }
+        }
+
+        return legacySubscriptionAvailability()
+    }
+
+    nonisolated private static func legacySubscriptionAvailability() -> Bool? {
+        UserDefaults.standard.object(forKey: "_MPCloudServiceStatusControllerSubscriptionAvailability") as? Bool
+    }
+
+    nonisolated private static func cachedMusicAppAvailability() -> String? {
+        UserDefaults.standard.string(forKey: "interfit.music.appAvailability.v1")
+    }
+
+    private static func persistMusicAppAvailability(_ available: Bool) {
+        UserDefaults.standard.set(available ? "available" : "missing", forKey: "interfit.music.appAvailability.v1")
+    }
+
+    nonisolated private static func cachedSubscriptionSnapshot() -> SubscriptionSnapshot? {
+        guard let data = UserDefaults.standard.data(forKey: subscriptionSnapshotKey) else { return nil }
+        return try? JSONDecoder().decode(SubscriptionSnapshot.self, from: data)
+    }
+
+    nonisolated private static func persistSubscriptionSnapshot(_ snapshot: SubscriptionSnapshot) {
+        guard let data = try? JSONEncoder().encode(snapshot) else { return }
+        UserDefaults.standard.set(data, forKey: subscriptionSnapshotKey)
+    }
+
+    nonisolated private static func refreshSubscriptionSnapshotValue() async throws -> MusicSubscription {
+        do {
+            let subscription = try await MusicSubscription.current
+            persistSubscriptionSnapshot(
+                .init(
+                    canPlayCatalogContent: subscription.canPlayCatalogContent,
+                    canBecomeSubscriber: subscription.canBecomeSubscriber,
+                    hasCloudLibraryEnabled: subscription.hasCloudLibraryEnabled,
+                    errorKind: nil,
+                    errorDescription: nil,
+                    updatedAt: Date()
+                )
+            )
+            return subscription
+        } catch {
+            persistSubscriptionSnapshot(
+                .init(
+                    canPlayCatalogContent: nil,
+                    canBecomeSubscriber: nil,
+                    hasCloudLibraryEnabled: nil,
+                    errorKind: subscriptionErrorKind(for: error),
+                    errorDescription: describeSubscriptionError(error),
+                    updatedAt: Date()
+                )
+            )
+            throw error
+        }
+    }
+
+    nonisolated private static func subscriptionErrorKind(for error: Swift.Error) -> String {
+        if isAppleMusicAppUnavailableError(error) {
+            return "appUnavailable"
+        }
+        if isSubscriptionAccountError(error) {
+            return "account"
+        }
+        if isDeveloperTokenConfigurationError(error) {
+            return "configuration"
+        }
+        return "unknown"
+    }
+
+    nonisolated private static func describeSubscriptionError(_ error: Swift.Error) -> String {
+        ErrorDescriptionFormatter.describe(error).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    nonisolated private static func inferredPresentation(for error: Swift.Error) -> MusicPlaybackErrorPresentation {
+        let snapshot = cachedSubscriptionSnapshot()
+        return MusicPlaybackErrorPresentation.infer(
+            fromErrorDescription: ErrorDescriptionFormatter.describe(error),
+            entitlementStatus: entitlementStatusDescription(),
+            authorizationStatus: authorizationStatusDescription(),
+            subscriptionAvailable: subscriptionAvailabilityDescription(),
+            musicAppAvailability: musicAppAvailabilityDescription(),
+            subscriptionErrorKind: snapshot?.errorKind,
+            subscriptionErrorDescription: snapshot?.errorDescription
+        )
+    }
+
+    nonisolated private static func isSubscriptionAccountError(_ error: Swift.Error) -> Bool {
+        if let subscriptionError = error as? MusicSubscription.Error {
+            switch subscriptionError {
+            case .permissionDenied, .privacyAcknowledgementRequired:
+                return true
+            case .unknown:
+                return false
+            @unknown default:
+                return false
+            }
+        }
+
+        let lower = ErrorDescriptionFormatter.describe(error).lowercased()
+        return lower.contains("permissiondenied")
+            || lower.contains("privacyacknowledgementrequired")
+            || lower.contains("not subscribed")
+            || lower.contains("subscription required")
+    }
+
+    nonisolated private static func isAppleMusicAppUnavailableError(_ error: Swift.Error) -> Bool {
+        inferredPresentation(for: error) == .musicAppUnavailable
     }
 
     func apply(selection: MusicSelection) async throws {
@@ -109,6 +329,9 @@ final class MusicPlaybackClient: ObservableObject {
         var displayCandidate = nowPlayingDisplay
 
         if !isSameSelectionAsLast {
+            if selection.source == .appleMusic {
+                try ensureAppleMusicAppAvailable()
+            }
             try await ensureAuthorizedAndSubscribed()
 
             if let previous = lastSelection,
@@ -186,6 +409,7 @@ final class MusicPlaybackClient: ObservableObject {
         guard !candidates.isEmpty else { return }
         _ = SystemMusicPlayer.shared
         do {
+            try ensureAppleMusicAppAvailable()
             try await ensureAuthorizedAndSubscribed()
         } catch {
             return
@@ -222,6 +446,50 @@ final class MusicPlaybackClient: ObservableObject {
         // produce repeated -8200/40402 logs even for local-library playback paths.
     }
 
+    private func ensureAppleMusicAppAvailable() throws {
+        #if os(iOS)
+        guard let url = URL(string: "music://") else { return }
+        let isAvailable = UIApplication.shared.canOpenURL(url)
+        Self.persistMusicAppAvailability(isAvailable)
+        guard isAvailable else {
+            throw Error.appleMusicAppUnavailable
+        }
+        #endif
+    }
+
+    private func ensureAppleMusicAccountReady() async throws {
+        do {
+            let subscription = try await Self.refreshSubscriptionSnapshotValue()
+            guard subscription.canPlayCatalogContent else {
+                throw Error.notSubscribed
+            }
+        } catch let subscriptionError as MusicSubscription.Error {
+            if Self.isAppleMusicAppUnavailableError(subscriptionError) {
+                throw Error.appleMusicAppUnavailable
+            }
+            if Self.isSubscriptionAccountError(subscriptionError) {
+                throw Error.notSubscribed
+            }
+            if Self.isDeveloperTokenConfigurationError(subscriptionError) {
+                isCatalogAccessDisabled = true
+                throw Error.developerTokenConfiguration
+            }
+            throw Error.notSubscribed
+        } catch {
+            if Self.isAppleMusicAppUnavailableError(error) {
+                throw Error.appleMusicAppUnavailable
+            }
+            if Self.isDeveloperTokenConfigurationError(error) {
+                isCatalogAccessDisabled = true
+                throw Error.developerTokenConfiguration
+            }
+            if Self.isSubscriptionAccountError(error) {
+                throw Error.notSubscribed
+            }
+            throw Error.notSubscribed
+        }
+    }
+
     private func resolveSelection(_ selection: MusicSelection) async throws {
         switch selection.type {
         case .track:
@@ -251,7 +519,10 @@ final class MusicPlaybackClient: ObservableObject {
                 let response = try await request.response()
                 song = response.items.first
             } catch {
-                if isDeveloperTokenConfigurationError(error) {
+                if Self.isAppleMusicAppUnavailableError(error) {
+                    throw Error.appleMusicAppUnavailable
+                }
+                if Self.isDeveloperTokenConfigurationError(error) {
                     isCatalogAccessDisabled = true
                     throw Error.developerTokenConfiguration
                 }
@@ -291,7 +562,10 @@ final class MusicPlaybackClient: ObservableObject {
                 let response = try await request.response()
                 album = response.items.first
             } catch {
-                if isDeveloperTokenConfigurationError(error) {
+                if Self.isAppleMusicAppUnavailableError(error) {
+                    throw Error.appleMusicAppUnavailable
+                }
+                if Self.isDeveloperTokenConfigurationError(error) {
                     isCatalogAccessDisabled = true
                     throw Error.developerTokenConfiguration
                 }
@@ -331,7 +605,10 @@ final class MusicPlaybackClient: ObservableObject {
                 let response = try await request.response()
                 playlist = response.items.first
             } catch {
-                if isDeveloperTokenConfigurationError(error) {
+                if Self.isAppleMusicAppUnavailableError(error) {
+                    throw Error.appleMusicAppUnavailable
+                }
+                if Self.isDeveloperTokenConfigurationError(error) {
                     isCatalogAccessDisabled = true
                     throw Error.developerTokenConfiguration
                 }
@@ -434,8 +711,8 @@ final class MusicPlaybackClient: ObservableObject {
         return response.items.first
     }
 
-    private func isDeveloperTokenConfigurationError(_ error: Swift.Error) -> Bool {
-        let lower = String(describing: error).lowercased()
+    nonisolated private static func isDeveloperTokenConfigurationError(_ error: Swift.Error) -> Bool {
+        let lower = ErrorDescriptionFormatter.describe(error).lowercased()
         return lower.contains("developertokenrequestfailed")
             || lower.contains("client not found")
             || lower.contains("40402")
@@ -489,6 +766,36 @@ final class MusicPlaybackClient: ObservableObject {
     static func prewarm(selections _: [MusicSelection]) async {}
 
     static func pauseIfOwnedByInterfitForAppTermination() {}
+
+    nonisolated static func previewErrorMessage(for error: Swift.Error) -> String {
+        _ = error
+        return MusicPlaybackErrorPresentation.unknown.message
+    }
+
+    nonisolated static func previewErrorPresentation(for error: Swift.Error) -> MusicPlaybackErrorPresentation {
+        _ = error
+        return .unknown
+    }
+
+    nonisolated static func entitlementStatusDescription() -> String {
+        "unknown"
+    }
+
+    nonisolated static func authorizationStatusDescription() -> String {
+        "unavailable"
+    }
+
+    nonisolated static func subscriptionAvailabilityDescription() -> String {
+        "unknown"
+    }
+
+    nonisolated static func musicAppAvailabilityDescription() -> String {
+        "unavailable"
+    }
+
+    nonisolated static func subscriptionDiagnosticDescription() -> String? {
+        nil
+    }
 
     nonisolated static func classify(_ error: Swift.Error) -> PlaybackFailureKind {
         _ = error

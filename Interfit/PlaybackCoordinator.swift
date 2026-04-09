@@ -20,7 +20,7 @@ private actor PlaybackCoordinatorState {
     private let resumePlayback: @Sendable () async -> Void
     private let stopPlayback: @Sendable () async -> Void
     private let failureClassifier: @Sendable (Error) -> PlaybackFailureKind
-    private let onFallback: @Sendable (PlaybackFailureKind, PlaybackFailureOutcome) -> Void
+    private let onFallback: @Sendable (PlaybackFailureKind, PlaybackFailureOutcome, Error?) -> Void
 
     private var pendingSelectionExternalId: String?
     private var applyTask: Task<Void, Never>?
@@ -33,7 +33,7 @@ private actor PlaybackCoordinatorState {
         resumePlayback: @escaping @Sendable () async -> Void,
         stopPlayback: @escaping @Sendable () async -> Void,
         failureClassifier: @escaping @Sendable (Error) -> PlaybackFailureKind,
-        onFallback: @escaping @Sendable (PlaybackFailureKind, PlaybackFailureOutcome) -> Void
+        onFallback: @escaping @Sendable (PlaybackFailureKind, PlaybackFailureOutcome, Error?) -> Void
     ) {
         self.selectionProvider = selectionProvider
         self.selectionApplier = selectionApplier
@@ -106,7 +106,7 @@ private actor PlaybackCoordinatorState {
                                 cuesEnabled: true
                             )
                         )
-                        onFallback(kind, .init(action: outcome.action, degradeReason: kind.degradeReason))
+                        onFallback(kind, .init(action: outcome.action, degradeReason: kind.degradeReason), error)
                     }
                 }
             }
@@ -171,7 +171,7 @@ private actor PlaybackCoordinatorState {
                             currentSelection = nil
                         }
                     }
-                    onFallback(kind, outcome)
+                    onFallback(kind, outcome, error)
                     return
                 }
             }
@@ -195,7 +195,7 @@ final class PlaybackCoordinator: @unchecked Sendable, PlaybackIntentSink {
         resumePlayback: @escaping @Sendable () async -> Void = {},
         stopPlayback: @escaping @Sendable () async -> Void = {},
         failureClassifier: @escaping @Sendable (Error) -> PlaybackFailureKind = { _ in .unknown },
-        onFallback: @escaping @Sendable (PlaybackFailureKind, PlaybackFailureOutcome) -> Void = { _, _ in }
+        onFallback: @escaping @Sendable (PlaybackFailureKind, PlaybackFailureOutcome, Error?) -> Void = { _, _, _ in }
     ) {
         state = PlaybackCoordinatorState(
             selectionProvider: selectionProvider,

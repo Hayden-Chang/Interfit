@@ -1227,7 +1227,7 @@ private final class AutoAcceptance_3_3_2_1 {
             failureClassifier: { _ in
                 self.simulatePlaybackLoadFailure ? .timeout : .unknown
             },
-            onFallback: { kind, outcome in
+            onFallback: { kind, outcome, _ in
                 Task { @MainActor in
                     guard var eng = self.engine else { return }
                     eng.recordDegrade(

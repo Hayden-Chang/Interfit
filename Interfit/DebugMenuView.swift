@@ -40,6 +40,9 @@ struct DebugMenuView: View {
                     NavigationLink("Music access (explainer)") {
                         MusicPermissionExplainerView()
                     }
+                    NavigationLink("Music diagnostics") {
+                        MusicDiagnosticsView()
+                    }
                     NavigationLink("Music picker (placeholder)") {
                         MusicPickerView()
                     }
