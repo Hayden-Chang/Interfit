@@ -55,10 +55,6 @@ enum AutoAcceptanceRunner {
             await run_3_7_3_1(arguments: arguments)
         }
 
-        if arguments.contains("-autoAcceptance_3_7_4_1") {
-            await run_3_7_4_1(arguments: arguments)
-        }
-
         if arguments.contains("-autoAcceptance_3_4_2_1") {
             await run_3_4_2_1(arguments: arguments)
         }
@@ -218,17 +214,6 @@ enum AutoAcceptanceRunner {
 
         let report = AutoAcceptance_3_7_3_1.run()
         await report.persist(filename: "auto_acceptance_3_7_3_1.json")
-
-        defaults.set(true, forKey: seededKey)
-    }
-
-    private static func run_3_7_4_1(arguments: [String]) async {
-        let defaults = UserDefaults.standard
-        let seededKey = "interfit.autoAcceptance.3_7_4_1.completed"
-        guard !defaults.bool(forKey: seededKey) else { return }
-
-        let report = AutoAcceptance_3_7_4_1.run()
-        await report.persist(filename: "auto_acceptance_3_7_4_1.json")
 
         defaults.set(true, forKey: seededKey)
     }
@@ -1600,45 +1585,6 @@ private enum AutoAcceptance_3_7_3_1 {
             return false
         }
         return true
-    }
-}
-
-private enum AutoAcceptance_3_7_4_1 {
-    struct Report: Codable, Sendable {
-        var name: String
-        var passed: Bool
-        var createdAt: Date
-        var backgroundModes: [String]
-        var failures: [String]
-
-        func persist(filename: String) async {
-            do {
-                let dir = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-                let url = dir.appendingPathComponent(filename)
-                let data = try JSONEncoder.prettyISO8601.encode(self)
-                try data.write(to: url, options: [.atomic])
-            } catch {
-                NSLog("[AutoAcceptance] Failed to persist report: %@", String(describing: error))
-            }
-        }
-    }
-
-    static func run(bundle: Bundle = .main) -> Report {
-        var failures: [String] = []
-        let modes = bundle.object(forInfoDictionaryKey: "UIBackgroundModes") as? [String] ?? []
-
-        if modes.contains("audio") {
-            failures.append("Expected UIBackgroundModes to exclude 'audio', got \(modes).")
-        }
-
-        return Report(
-            name: "3.7.4.1",
-            passed: failures.isEmpty,
-            createdAt: Date(),
-            backgroundModes: modes,
-            failures: failures
-        )
     }
 }
 
